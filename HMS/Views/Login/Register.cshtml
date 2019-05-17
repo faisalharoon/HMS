@@ -1,0 +1,186 @@
+﻿@model HMS.Models.User
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<!-- Mirrored from thememakker.com/templates/swift/hospital/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 12 Mar 2019 18:29:48 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>::  - Hospital Admin ::</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" type="text/css">
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="~/assets/css/main.css" />
+
+</head>
+<body class="theme-cyan authentication">
+    <div class="container">
+        <div class="card-top"></div>
+        <div class="card">
+            <h1 class="title"><span> Hospital</span>Register <span class="msg">Register a new membership</span></h1>
+            <div class="body">
+                @using (Html.BeginForm())
+                {
+
+                    <div class="input-group icon before_span">
+                        <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+                        <div class="form-line">
+                            @Html.TextBoxFor(x => x.UserName, new { @type = "text", @class = "form-control", @id = "txtUsername", @placeholder = "User Name", @required = "required" })
+
+                        </div>
+                    </div>
+                    <div class="input-group icon before_span">
+                        <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                        <div class="form-line">
+                            @Html.TextBoxFor(x => x.Email, new { @type = "email", @class = "form-control", @id = "txtemail", @placeholder = "Email Address", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="input-group icon before_span">
+                        <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+                        <div class="form-line">
+                            @Html.TextBoxFor(x => x.UserPassword, new { @type = "password", @minlength = "8", @class = "form-control", @id = "txtPassword", @placeholder = "Password", @required = "required" })
+
+                        </div>
+                    </div>
+                    <div class="input-group icon before_span">
+                        <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+                        <div class="form-line">
+
+                            <input type="password" class="form-control" name="confirm" minlength="8" id="txtcnfrmpass" placeholder="Confirm Password" required="required">
+                        <label id="lblmsg" style="color:red;"></label>
+                        </div>
+                    </div>
+
+                    <div class="input-group icon before_span">
+                        <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+                        <div class="form-line">
+
+
+                            @Html.DropDownListFor(model => model.PasswordQuestion,
+
+    new List<SelectListItem>
+    {
+    new SelectListItem {Text = "Select Question",
+    Value = "0",
+    Selected = true},
+    new SelectListItem { Text = "What is your favourite movie?",
+    Value = "1"},
+    new SelectListItem {  Text = "What primary school did you attend?",
+    Value = "2"},
+    new SelectListItem {  Text = " where you were born?",
+    Value = "3"},
+    new SelectListItem {    Text = "What is the name of your first pet?",
+    Value = "4"},
+    },
+    new { @id = "ddlQuestion", @class = "form-control", @required="required" })
+
+                        </div>
+                    </div>
+                    
+                    <div class="input-group icon before_span">
+                        <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+                        <div class="form-line">
+
+                            @Html.TextBoxFor(x => x.PasswordAnswer, new { @type = "text", @class = "form-control", @id = "txtanswer", @placeholder = "Password Answer", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="input-group icon before_span">
+                        <input type="checkbox" name="chkSupper" id="chkSupper" class="filled-in chk-col-blue">
+                        <label for="chkSupper">Super Admin</label>
+                    </div>
+                    <div class="input-group icon before_span">
+                        @Html.DropDownListFor(model => model.UserInRoles, new SelectList(ViewBag.ListRole, "ID", "RoleName"), "---Select User Role---", new { @class = "form-control", @id = "ddlUser", @name = "ddlUser" })
+
+
+
+                    </div>
+                    <div class="input-group icon before_span">
+                        @Html.DropDownListFor(model => model.Hospital_ID, new SelectList(ViewBag.ExemploList, "ID", "HospitalName"), "---Select Hospital---", new { @class = "form-control", @id = "ddlhospital" })
+
+
+
+                    </div>
+
+                    <div>
+                        <input type="checkbox" name="terms" required="required" id="terms" class="filled-in chk-col-pink">
+                        <label for="terms">I read and agree to the <a href="javascript:void(0);">terms of usage</a>.</label>
+                    </div>
+                    <div class="text-center">
+                        @Html.ActionLink("Login", "Register", new { @class = "btn btn-raised g-bg-cyan waves-effect" })
+                        <input type="submit" onclick="check();" class="btn btn-raised g-bg-cyan waves-effect" value="SIGN UP" />
+
+                    </div>
+                    <div class="align-center">
+                        <a href="sign-in.html">You already have a membership?</a>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="theme-bg"></div>
+    <!-- Jquery Core Js -->
+    <script src="~/assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
+    <script src="~/assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
+    <script src="~/assets/bundles/mainscripts.bundle.js"></script><!-- Custom Js -->
+    <script>
+        $(document).ready(function () {
+            $("#lblmsg").hide();
+        
+             $('#chkSupper').change(function () {
+                debugger;
+                if ($(this).is(":checked")) {
+                    $("#ddlhospital").hide();
+                  //  $("#ddlUser").hide();
+
+                }
+                else {
+                    $("#ddlhospital").show();
+                   // $("#ddlUser").show();
+                }
+            });
+            $("#txtcnfrmpass").change(function () {
+                debugger;
+                var pass = $("#txtPassword").val();
+                var c = $("#txtcnfrmpass").val();
+                if (pass != c) {
+                    $("#lblmsg").show();
+                    debugger;
+                    $("#lblmsg").text("Password does not match.");
+                }
+                else {
+                    $("#lblmsg").text("");
+                    $("#lblmsg").hide();
+                }
+                
+                
+            })
+
+        });
+
+        function check() {
+            var pass = $("#txtPassword").val();
+            var c = $("#txtcnfrmpass").val();
+            if (pass != c) {
+                $("#lblmsg").show();
+                debugger;
+                $("#lblmsg").text("Password does not match.");
+                event.preventDefault();
+                return false;
+
+            }
+            else {
+                $("#lblmsg").text("");
+                $("#lblmsg").hide();
+                return true;
+            }
+        }
+    </script>
+</body>
+<!-- Mirrored from thememakker.com/templates/swift/hospital/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 12 Mar 2019 18:29:48 GMT -->
+</html>

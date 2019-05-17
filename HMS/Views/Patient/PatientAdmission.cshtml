@@ -1,0 +1,110 @@
+﻿@model HMS.Models.tblPatientAdmission
+@{
+    ViewBag.Title = "PatientAdmission";
+}
+@using (Html.BeginForm("PatientAdmission", "Patient"))
+{
+    @Html.ValidationSummary(true)
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h2>Add Patient</h2>
+                <small class="text-muted">Welcome [Hospital Name]</small>
+            </div>
+
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Patient Addmission Information <small>Description text here...</small> </h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="form-line">
+
+                                            @Html.DropDownListFor(model => model.HospitalRoomID, new SelectList(ViewBag.ListRoom, "ID", "RoomName"), "---Select Room---", new { @class = "form-control show-tick", @id = "ddlRooms" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            @Html.DropDownListFor(model => model.AdmissionTypeID, new SelectList(ViewBag.listAdmitType, "ID", "AdmissionTypeName"), "---Select Admission Type---", new { @class = "form-control show-tick", @id = "ddlAdmissionType" })
+
+                                              </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            @Html.TextBoxFor(x => x.AdmissionDate, new { @class = "datetimepicker form-control", @required = "required", @id = "txtAdmitDate", @placeholder = "Please choose Addmission date & time" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            @Html.TextBoxFor(x => x.DisChargeDate, new { @class = "datetimepicker form-control", @required = "required", @id = "txtDischargeDate", @placeholder = "Please choose Discharge date & time" })
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            @Html.TextAreaFor(x => x.Description, new { @type = "text", @rows = "4", @class = "form-control no-resize", @id = "txtnote", @placeholder = "Description" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    @{
+                                        string Text = "Add Patient Addmission";
+                                        string Appointment_id = "";
+                                        if (Model != null)
+                                        {
+                                            Appointment_id = Model.PatientAppointmentID.ToString();
+
+                                            if (Model.ID != 0)
+                                            {
+                                                Text = "Update Patient Addmission";
+                                            }
+                                        }
+                                    }
+                                    <input type="hidden" value="@Appointment_id" name="hdnAppointmentId" />
+                                    <input type="hidden" value="" name="A_Date" id="A_Date" />
+                                    <input type="hidden" value="" name="DischargeDate" />
+
+                                    <input type="submit" id="btnSave" class="btn btn-raised g-bg-cyan" value="@Text" onclick="GetDates();" name="Save" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        function GetDates() {
+            debugger;
+            var AppointmentDate= $("#txtAdmitDate").val();
+            var DischargeDate = $("#txtDischargeDate").val();
+            $("#DischargeDate").val(DischargeDate);
+            $("#A_Date").val(AppointmentDate);
+        
+
+        }
+    </script>
+}
+

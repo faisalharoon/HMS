@@ -1,0 +1,55 @@
+﻿@model HMS.Models.tblHospital
+@{
+    ViewBag.Title = "AddHospital";
+}
+@using (Html.BeginForm("AddHospital", "Hospital", new { Hospital_id = Request.QueryString["Hospital_id"] }))
+{
+    @Html.ValidationSummary(true)
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h2>Add Hospital</h2>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            @Html.TextBoxFor(x => x.HospitalName, new { @type = "Text", @class = "form-control", @id = "txtName", @placeholder = "Hospital Name", @required = "required" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            @Html.TextBoxFor(x => x.Description, new { @type = "Text", @class = "form-control", @id = "txtDescription", @placeholder = "Hospital Description", @required = "required" })
+                                        </div>
+                                    </div>
+                                </div>
+                                @{
+                                    string Text = "Add Hospital";
+                                    if (Model.ID != 0)
+                                    {
+                                        Text = "Update Hospital";
+                                    }
+                                }
+                                <input type="submit" id="btnSave" class="btn btn-raised g-bg-cyan waves-effect" value="@Text" name="Save" />
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+}

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="007233c9c47d4a3b8a2c44cd32a963c3" Name="Diagram1" ZoomLevel="50">
+        <EntityTypeShape EntityType="HMS_DBModel.tblAdmissionType" Width="1.5" PointX="7.5" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblDoctor" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblEmployeeType" Width="1.5" PointX="7.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblHospital" Width="1.5" PointX="0.75" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblHospitalRoom" Width="1.5" PointX="6" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblMedicine" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblMedicineCategory" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblMedicineOccurance" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblMedicineTiming" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblPatient" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblPatientAdmission" Width="1.5" PointX="9.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblPatientAppointment" Width="1.5" PointX="5.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblPatientBill" Width="1.5" PointX="7.5" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblPatientBillDetail" Width="1.5" PointX="9.75" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblPatientMedicine" Width="1.5" PointX="7.5" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblPatientStatu" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblPatientTest" Width="1.5" PointX="10.5" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblPatientTestDetail" Width="1.5" PointX="12.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblPatientType" Width="1.5" PointX="12.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblRoomType" Width="1.5" PointX="3.75" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblTest" Width="1.5" PointX="8.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblTestAttribute" Width="1.5" PointX="10.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblTestCategory" Width="1.5" PointX="6" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.UserInRole" Width="1.5" PointX="5.25" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.UserLoginHistory" Width="1.5" PointX="5.25" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.UserRole" Width="1.5" PointX="3" PointY="25.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.User" Width="1.5" PointX="3" PointY="18.25" IsExpanded="true" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatientAdmission_tblAdmissionType" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblDoctor_tblHospital" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatientAppointment_tblDoctor" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblHospitalRoom_tblHospital" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_Users_tblHospital" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblHospitalRoom_tblRoomType" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatient_room_tblHospitalRoom" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblMedicine_tblMedicineCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatientMedicine_tblMedicine" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatientAppointment_tblPatient" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatient_room_tblPatient" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatient_room_tblPatientBill" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatientBill_tblPatient" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatientMedicine_tblPatient" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatientTest_tblPatient" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatientBillDetails_tblPatientBill" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatientTest_tblTest" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatientTestDetails_tblPatientTest" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatientTestDetails_tblTestAttributes" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblTest_tblTestCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblTestAttributes_tblTest" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_UserInRole_RoleID" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_UserInRole_UserID" ManuallyRouted="false" />
+        <AssociationConnector Association="HMS_DBModel.FK_UserLoginHistory_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblEmployeeSatu" Width="1.5" PointX="12.375" PointY="14.75" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblEmpDesignation" Width="2.625" PointX="14.375" PointY="14.75" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblEmployeeQualification" Width="1.5" PointX="15.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblEmployee" Width="1.5" PointX="17.75" PointY="6.5" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblEmployee_tblEmpDesignation" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblEmployee_tblEmployeeQualification" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblEmployee_tblEmployeeSatus" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblEmployee_tblEmployeeType" />
+        <AssociationConnector Association="HMS_DBModel.FK_tblPatientAppointment_tblDoctor1" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

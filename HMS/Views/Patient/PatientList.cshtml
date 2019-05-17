@@ -1,0 +1,103 @@
+﻿@model HMS.Models.GetPatientList_Result
+@{
+    ViewBag.Title = "PatientList";
+}
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>Patients</h2>
+
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>Patients</h2>
+                        <select class="form-control show-tick">
+                            @{
+                                if (ViewBag.doctors != null)
+                                {
+                                    foreach (var item in ViewBag.doctors)
+                                    {
+                                        <option value="@item.ID">@item.Name</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Patient ID</th>
+                                    <th>Patient Name</th>
+                                    <th>Contact_no</th>
+                                    <th>Doctor Name</th>
+                                    <th>AppointmentDate</th>
+                                  
+                                    @*<th>Actions</th>*@
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @{
+                                    var list = ViewData["GetPatientList"];
+                                    if (list != null)
+                                    {
+                                        foreach (var item in ViewData["GetPatientList"] as IEnumerable<HMS.Models.GetPatientList_Result>)
+                                        {
+                                            <tr>
+                                                <td>@item.Patient_id</td>
+                                                <td>@item.Patient_Name</td>
+                                                <td>@item.Contact_no</td>
+                                                <td>@item.Name</td>
+                                                <td>@item.AppointmentDate</td>
+                                              
+                                                @*<td>
+                                                    <a href='/add-patient?Patient_id=@item.Patient_id'>Edit</a>
+                                                    <a href='#' onclick="Delete(@item.Patient_id);">
+                                                        Delete
+                                                    </a>
+                                                </td>*@
+
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td>
+                                                <label>Record Not Exist</label>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function Delete(id) {
+        var r = confirm("Are you sure");
+        if (r == true) {
+            var url = '/delete-patient?Patient_id=' + id + '';
+
+            window.location.href = url;
+
+        }
+        return false;
+
+    }
+
+</script>
+
+
