@@ -13,7 +13,10 @@ namespace HMS.Controllers
 
       public ActionResult MedicineCategory()
         {
+            var model = new MedicineDAL().GetCategories().ToList();
+              ViewData["GetMedicineCatory"] = model;
             return View();
+           
         }
         public ActionResult AddMedicineCat(int? cat_id)
         {
@@ -92,23 +95,13 @@ namespace HMS.Controllers
         // GET: Medicine/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            new MedicineDAL().DeleteCategory(id);
+            TempData["AlertTask"] = "Category deleted successfully";
+            return Redirect("/medicine-categories");
+
         }
 
         // POST: Medicine/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+  
     }
 }

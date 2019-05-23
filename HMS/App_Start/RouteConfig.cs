@@ -24,6 +24,11 @@ name: "AddMedicineCat",
 url: "add-medicine-category",
 defaults: new { controller = "Medicine", action = "AddMedicineCat" }
 );
+            routes.MapRoute(
+name: "Delete",
+url: "delete-category",
+defaults: new { controller = "Medicine", action = "Delete" }
+);
 
             routes.MapRoute(
 name: "PatientList",

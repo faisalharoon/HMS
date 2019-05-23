@@ -1,7 +1,92 @@
-﻿
+﻿@model HMS.Models.tblMedicineCategory
+
 @{
     ViewBag.Title = "MedicineCategory";
 }
 
-<h2>MedicineCategory</h2>
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>Medicine Categories</h2>
+
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>Categories</h2>
+                        <a href='/add-medicine-category' style="margin-left:808px;" class="btn btn-raised g-bg-cyan">Add Medicine Category</a>
+
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Category ID</th>
+                                    <th>Medicine Name</th>
+                                    <th>Description</th>
+                                
+
+                                    <th>Actions</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @{
+                                    var list = ViewData["GetMedicineCatory"];
+                                    if (list != null)
+                                    {
+                                        foreach (var item in ViewData["GetMedicineCatory"] as IEnumerable<HMS.Models.tblMedicineCategory>)
+                                        {
+                                            <tr>
+                                                <td>@item.ID</td>
+                                                <td>@item.MedicineCategoryName</td>
+                                                <td>@item.Description</td>
+                                            
+
+                                                <td>
+                                                        <a href='/add-medicine-category?cat_id=@item.ID'>Edit</a>
+                                                        <a href='#' onclick="Delete(@item.ID);">
+                                                            Delete
+                                                        </a>
+                                                    </td>
+
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td>
+                                                <label>Record Not Exist</label>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function Delete(id) {
+        var r = confirm("Are you sure");
+        if (r == true) {
+            var url = '/delete-category?id=' + id + '';
+
+            window.location.href = url;
+
+        }
+        return false;
+
+    }
+
+</script>
+
 

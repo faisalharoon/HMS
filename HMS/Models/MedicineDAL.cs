@@ -32,5 +32,16 @@ namespace HMS.Models
             update.Property(x => x.MedicineCategoryName).IsModified = true;
             db.SaveChanges();
         }
+        public List<tblMedicineCategory> GetCategories()
+        {
+            return db.tblMedicineCategories.Where(x=>x.isActive==true).ToList();
+
+        }
+        public void DeleteCategory(int id)
+        {
+            var del = db.tblMedicineCategories.FirstOrDefault(x => x.ID == id);
+            db.tblMedicineCategories.Remove(del);
+            db.SaveChanges();
+        }
     }
 }
