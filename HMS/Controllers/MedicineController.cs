@@ -11,12 +11,12 @@ namespace HMS.Controllers
     {
         HMS_DBEntity db = new HMS_DBEntity();
 
-      public ActionResult MedicineCategory()
+        public ActionResult MedicineCategory()
         {
             var model = new MedicineDAL().GetCategories().ToList();
-              ViewData["GetMedicineCatory"] = model;
+            ViewData["GetMedicineCatory"] = model;
             return View();
-           
+
         }
         public ActionResult AddMedicineCat(int? cat_id)
         {
@@ -34,7 +34,7 @@ namespace HMS.Controllers
 
         // POST: Medicine/Create
         [HttpPost]
-        public ActionResult AddMedicineCat(int? cat_id,tblMedicineCategory medicineCategory)
+        public ActionResult AddMedicineCat(int? cat_id, tblMedicineCategory medicineCategory)
         {
             string username = "";
             HttpCookie cookie = HttpContext.Request.Cookies["AdminCookies"];
@@ -58,7 +58,7 @@ namespace HMS.Controllers
                     medicineCategory.CreatedBy = username;
                     medicineCategory.isActive = true;
                     medicineCategory.CreatedAt = DateTime.UtcNow;
-                   cat_id= new MedicineDAL().InsertRecord(medicineCategory);
+                    cat_id = new MedicineDAL().InsertRecord(medicineCategory);
                     TempData["AlertTask"] = "medicine added successfully";
                 }
 
@@ -70,27 +70,7 @@ namespace HMS.Controllers
             }
         }
 
-        // GET: Medicine/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: Medicine/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         // GET: Medicine/Delete/5
         public ActionResult Delete(int id)
@@ -101,7 +81,71 @@ namespace HMS.Controllers
 
         }
 
-        // POST: Medicine/Delete/5
-  
+        public ActionResult AddMedicine(int? medicine_id)
+        {
+            var model = new tblMedicine();
+            var cat = new MedicineDAL().GetCategories().ToList();
+            ViewBag.MedicineCat = cat;
+            if (medicine_id != null)
+            {
+
+                model = new MedicineDAL().GetMedicine(Convert.ToInt32(medicine_id));
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddMedicine(int? medicine_id, tblMedicine Obj)
+        {
+            string username = "";
+            HttpCookie cookie = HttpContext.Request.Cookies["AdminCookies"];
+            if (cookie != null)
+            {
+                username = Convert.ToString(cookie.Values["UserName"]);
+            }
+
+            try
+            {
+                // TODO: Add insert logic here
+                if (medicine_id != null)
+                {
+                    Obj.ID = Convert.ToInt32(medicine_id);
+                    new MedicineDAL().UpdateMedicine(Obj);
+                    TempData["AlertTask"] = "medicine updated successfully";
+
+                }
+                else
+                {
+                    Obj.CreatedBy = username;
+                    Obj.isActive = true;
+                    Obj.CreatedAt = DateTime.UtcNow;
+                    medicine_id = new MedicineDAL().AddMedicine(Obj);
+                    TempData["AlertTask"] = "medicine added successfully";
+                }
+
+                return Redirect("/medicine");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+        public ActionResult MedicineList()
+        {
+            {
+                var model = new MedicineDAL().GetAllMedicine().ToList();
+                ViewData["GetMedicine"] = model;
+                return View();
+            }
+        }
+        public ActionResult DeleteMedicine(int id)
+        {
+            new MedicineDAL().DeleteMedicine(id);
+            TempData["AlertTask"] = "Medicine deleted successfully";
+            return Redirect("/medicine");
+
+        }
     }
 }

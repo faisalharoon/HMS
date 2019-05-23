@@ -43,5 +43,45 @@ namespace HMS.Models
             db.tblMedicineCategories.Remove(del);
             db.SaveChanges();
         }
+
+
+
+
+        public int AddMedicine(tblMedicine obj)
+        {
+            //obj.ID = 18;
+
+            db.tblMedicines.Add(obj);
+            db.SaveChanges();
+            return obj.ID;
+        }
+        public tblMedicine GetMedicine(int Medicine_id)
+        {
+            return db.tblMedicines.FirstOrDefault(x => x.ID==Medicine_id);
+        }
+
+        public void UpdateMedicine(tblMedicine obj)
+        {
+
+            db.tblMedicines.Attach(obj);
+            var update = db.Entry(obj);
+            update.Property(x => x.Description).IsModified = true;
+
+            update.Property(x => x.isActive).IsModified = true;
+            update.Property(x => x.MedicineCategoryID).IsModified = true;
+            update.Property(x => x.MedicineName).IsModified = true;
+            db.SaveChanges();
+        }
+        public List<tblMedicine> GetAllMedicine()
+        {
+            return db.tblMedicines.Where(x => x.isActive == true).ToList();
+
+        }
+        public void DeleteMedicine(int id)
+        {
+            var del = db.tblMedicines.FirstOrDefault(x => x.ID == id);
+            db.tblMedicines.Remove(del);
+            db.SaveChanges();
+        }
     }
 }
