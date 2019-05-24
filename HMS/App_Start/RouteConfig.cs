@@ -46,7 +46,22 @@ name: "test-categories",
 url: "test-categories",
 defaults: new { controller = "Test", action = "TestCategory" }
 );
-
+            routes.MapRoute(
+name: "add-attribute",
+url: "add-attribute",
+defaults: new { controller = "Test", action = "AddTestAttribute" }
+);
+            routes.MapRoute(
+name: "test-attributes",
+url: "test-attributes",
+defaults: new { controller = "Test", action = "TestAttributes" }
+);
+            routes.MapRoute(
+name: "delete-attribute",
+url: "delete-attribute",
+defaults: new { controller = "Test", action = "deleteattribute" }
+);
+           
             //End test
             routes.MapRoute(
 name: "medicine",

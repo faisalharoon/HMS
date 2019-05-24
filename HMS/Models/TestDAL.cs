@@ -80,5 +80,41 @@ namespace HMS.Models
             db.tblTests.Remove(del);
             db.SaveChanges();
         }
+
+
+        public tblTestAttribute GetTestAttributes(int test_id, int att_id)
+        {
+            return db.tblTestAttributes.Where(x => x.ID == att_id && x.TestID == test_id).FirstOrDefault();
+        }
+        public void UpdateTestAttribute(tblTestAttribute obj)
+        {
+
+            db.tblTestAttributes.Attach(obj);
+            var update = db.Entry(obj);
+            update.Property(x => x.AttributeName).IsModified = true;
+
+            update.Property(x => x.NormalRange).IsModified = true;
+            update.Property(x => x.TestID).IsModified = true;
+            db.SaveChanges();
+        }
+        public int AddTestAttribute(tblTestAttribute obj)
+        {
+            //obj.ID = 18;
+
+            db.tblTestAttributes.Add(obj);
+            db.SaveChanges();
+            return obj.ID;
+        }
+        public List<tblTestAttribute> GetAllTestAttribute()
+        {
+            return db.tblTestAttributes.ToList();
+
+        }
+        public void DeleteAttribute(int id)
+        {
+            var del = db.tblTestAttributes.FirstOrDefault(x => x.ID == id);
+            db.tblTestAttributes.Remove(del);
+            db.SaveChanges();
+        }
     }
 }

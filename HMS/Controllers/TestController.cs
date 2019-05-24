@@ -139,5 +139,73 @@ namespace HMS.Controllers
             return Redirect("/tests");
 
         }
+
+
+        public ActionResult AddTestAttribute(int? attribute_id, int? test_id)
+        {
+            var model = new tblTestAttribute();
+            var test = new TestDAL().GetAllTests().ToList();
+            ViewBag.Test = test;
+
+            if (test_id != null && attribute_id!=null)
+            {
+
+                model = new TestDAL().GetTestAttributes(Convert.ToInt32(test_id),Convert.ToInt32(attribute_id));
+            }
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public ActionResult AddTestAttribute(int? attribute_id, int? test_id, tblTestAttribute obj)
+        {
+            string username = "";
+            HttpCookie cookie = HttpContext.Request.Cookies["AdminCookies"];
+            if (cookie != null)
+            {
+                username = Convert.ToString(cookie.Values["UserName"]);
+            }
+
+            try
+            {
+                // TODO: Add insert logic here
+                if (attribute_id != null)
+                {
+                    obj.ID = Convert.ToInt32(attribute_id);
+                    new TestDAL().UpdateTestAttribute(obj);
+                    TempData["AlertTask"] = "Test Attribute updated successfully";
+
+                }
+                else
+                {
+                    obj.CreatedAt = DateTime.UtcNow;
+                    obj.CreatedBy = username;
+                   
+                    attribute_id = new TestDAL().AddTestAttribute(obj);
+                    TempData["AlertTask"] = "Test Attribute added successfully";
+                }
+
+                return Redirect("/test-attributes");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult TestAttributes()
+        {
+            {
+                var model = new TestDAL().GetAllTestAttribute().ToList();
+                ViewData["GetAttributes"] = model;
+                return View();
+            }
+        }
+        public ActionResult deleteattribute(int id)
+        {
+            new TestDAL().DeleteAttribute(id);
+            TempData["AlertTask"] = "Test Attribute deleted successfully";
+            return Redirect("/test-attributes");
+        }
     }
 }
