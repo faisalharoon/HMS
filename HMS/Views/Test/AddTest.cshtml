@@ -1,0 +1,72 @@
+﻿@model HMS.Models.tblTest
+
+@{
+    ViewBag.Title = "AddTest";
+}
+
+@using (Html.BeginForm("AddTest", "Test", new { test_id = Request.QueryString["test_id"] }))
+{
+    @Html.ValidationSummary(true)
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h2>Add Test </h2>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="form-group drop-custum">
+                                            @Html.DropDownListFor(model => model.TestCategoryID, new SelectList(ViewBag.TestCat, "ID", "TestCategory"), "---Select Test Category---", new { @class = "form-control show-tick", @id = "ddlCat" })
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            @Html.TextBoxFor(x => x.TestName, new { @type = "Text", @class = "form-control", @id = "txtName", @placeholder = "Test Name", @required = "required" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            @Html.TextBoxFor(x => x.Description, new { @type = "Text", @class = "form-control", @id = "txtDescription", @placeholder = "Description", @required = "required" })
+                                        </div>
+                                    </div>
+                                </div>
+                                @{
+                                    string Text = "Add Test";
+                                    if (Model.ID != 0)
+                                    {
+                                        Text = "Update Test";
+                                    }
+                                }
+                                <input type="submit" id="btnSave" class="btn btn-raised g-bg-cyan waves-effect" value="@Text" name="Save" />
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+}
+

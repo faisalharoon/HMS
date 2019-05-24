@@ -141,6 +141,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -248,6 +249,7 @@
     <Compile Include="Models\tblTestCategory.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TestDAL.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
@@ -405,6 +407,10 @@
     <Content Include="Views\Medicine\MedicineCategory.cshtml" />
     <Content Include="Views\Medicine\AddMedicine.cshtml" />
     <Content Include="Views\Medicine\MedicineList.cshtml" />
+    <Content Include="Views\Test\TestCategory.cshtml" />
+    <Content Include="Views\Test\AddTestCat.cshtml" />
+    <Content Include="Views\Test\AddTest.cshtml" />
+    <Content Include="Views\Test\TestList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

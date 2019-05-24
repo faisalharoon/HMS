@@ -13,6 +13,41 @@ namespace HMS
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+
+            //Test
+            routes.MapRoute(
+name: "tests",
+url: "tests",
+defaults: new { controller = "Test", action = "TestList" }
+);
+            routes.MapRoute(
+name: "add-test",
+url: "add-test",
+defaults: new { controller = "Test", action = "AddTest" }
+);
+            routes.MapRoute(
+name: "delete-test",
+url: "delete-test",
+defaults: new { controller = "Test", action = "DeleteTest" }
+);
+            routes.MapRoute(
+name: "delete-testCat",
+url: "delete-test-category",
+defaults: new { controller = "Test", action = "Delete" }
+);
+            routes.MapRoute(
+name: "add-testCat",
+url: "add-test-category",
+defaults: new { controller = "Test", action = "AddTestCat" }
+);
+            routes.MapRoute(
+name: "test-categories",
+url: "test-categories",
+defaults: new { controller = "Test", action = "TestCategory" }
+);
+
+            //End test
             routes.MapRoute(
 name: "medicine",
 url: "medicine",
