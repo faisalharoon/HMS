@@ -3,334 +3,341 @@
     ViewBag.Title = "AddDoctor";
 }
 
-
-@using (Html.BeginForm("AddDoctor", "Doctor", FormMethod.Post, new { enctype = "multipart/form-data" },new{Doctor_id = Request.QueryString["Doctor_id"] }))
+@using (Html.BeginForm("AddDoctor", "Doctor", new { Doctor_id = Request.QueryString["Doctor_id"] }))
 {
-    @Html.ValidationSummary(true)
-    <section class="content">
-        <div class="container-fluid">
-            <div class="block-header">
-                <h2>Add Doctor</h2>
-            </div>
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>Basic Information</h2>
+@*}
+    @using (Html.BeginForm("AddDoctor", "Doctor", FormMethod.Post, new { enctype = "multipart/form-data" }, new { Doctor_id = Request.QueryString["Doctor_id"] }))
+    {*@
+        @Html.ValidationSummary(true)
+        <section class="content">
+            <div class="container-fluid">
+                <div class="block-header">
+                    <h2>Add Doctor</h2>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>Basic Information</h2>
 
-                        </div>
-                        <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            @Html.TextBoxFor(x => x.Name, new { @type = "Text", @class = "form-control", @id = "txtName", @placeholder = "Full Name", @required = "required" })
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            @Html.TextBoxFor(x => x.Address, new { @type = "Text", @class = "form-control", @id = "txtAddress", @placeholder = "Address", @required = "required" })
-
-
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-                            <div class="row clearfix">
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                @Html.TextBoxFor(x => x.Name, new { @type = "Text", @class = "form-control", @id = "txtName", @placeholder = "Full Name", @required = "required" })
 
-                                <div class="col-sm-3">
-                                    <div class="form-group drop-custum">
-                                        @Html.DropDownListFor(model => model.Gender,
-
-new List<SelectListItem>
-{
-new SelectListItem {Text = "---Gender---",
-Value = "0",
-Selected = true},
-new SelectListItem { Text = "Male",
-Value = "1"},
-new SelectListItem {  Text = "Female",
-Value = "2"},
-
-},
-new { @id = "ddlGender", @class = "form-control show-tick", @required="required", })
-
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            @Html.TextBoxFor(x => x.Mobile_no, new { @type = "Text", @class = "form-control", @id = "txtMobile", @placeholder = "Mobile", @required = "required" })
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                @Html.TextBoxFor(x => x.Address, new { @type = "Text", @class = "form-control", @id = "txtAddress", @placeholder = "Address", @required = "required" })
 
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            @Html.TextBoxFor(x => x.Phone_no, new { @type = "Text", @class = "form-control", @id = "txtPhone", @placeholder = "Phone" })
+                                <div class="row clearfix">
 
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            @Html.TextBoxFor(x => x.Email, new { @type = "Text", @class = "form-control", @id = "txtEmail", @placeholder = "Email", @required = "required" })
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-
+                                    <div class="col-sm-3">
+         
                                         <div class="form-group drop-custum">
-                                            @Html.DropDownListFor(model => model.Qualification_id, new SelectList(ViewBag.lstQualification, "Qualification_id", "Qualification"), "---Select Qualifications---", new { @class = "form-control show-tick", @id = "ddlQualifications" })
+                                          
+                                            @Html.DropDownListFor(model => model.Gender,
 
+        new List<SelectListItem>
+        {
+        new SelectListItem {Text = "---Gender---",
+        Value = "0"},
+        new SelectListItem { Text = "Male",
+        Value = "1"},
+        new SelectListItem {  Text = "Female",
+        Value = "2"},
 
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-
-                                        <div class="form-group drop-custum">
-
-                                            @Html.DropDownListFor(model => model.designation_id, new SelectList(ViewBag.designation, "designation_id", "Designation"), "---Select Designations---", new { @class = "form-control show-tick", @id = "ddlDesignation" })
-
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-
-                                        <div class="form-group drop-custum">
-
-                                            @Html.DropDownListFor(model => model.status_id, new SelectList(ViewBag.status, "Status_id", "Satus"), "---Select Status---", new { @class = "form-control show-tick", @id = "ddlStatus" })
-
+        },
+        new { @id = "ddlGender", @class = "form-control show-tick", @required="required", })
 
                                         </div>
+
                                     </div>
-                                </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                @Html.TextBoxFor(x => x.Mobile_no, new { @type = "Text", @class = "form-control", @id = "txtMobile", @placeholder = "Mobile", @required = "required" })
 
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                  
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                @Html.TextBoxFor(x => x.Phone_no, new { @type = "Text", @class = "form-control", @id = "txtPhone", @placeholder = "Phone" })
 
-                                    <div class="">
-                                        <label>Image (max 2MB) :*</label>
-                                        <br />
-                                        <span class="btn btn-file">
 
-                                            <input type="file" id="image_0" name="image_0" />
-                                        </span>
-                                        <input type="hidden" id="hdnImages" name="hdnImages" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                @Html.TextBoxFor(x => x.Email, new { @type = "Text", @class = "form-control", @id = "txtEmail", @placeholder = "Email", @required = "required" })
 
-                                        <ul class="prophotos" id="prophotos"></ul>
-                                        @if (ViewBag.image!= null && ViewBag.image != "")
-                                                {
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+
+                                            <div class="form-group drop-custum">
+                                                @Html.DropDownListFor(model => model.Qualification_id, new SelectList(ViewBag.lstQualification, "Qualification_id", "Qualification"), "---Select Qualifications---", new { @class = "form-control show-tick", @id = "ddlQualifications" })
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+
+                                            <div class="form-group drop-custum">
+
+                                                @Html.DropDownListFor(model => model.designation_id, new SelectList(ViewBag.designation, "designation_id", "Designation"), "---Select Designations---", new { @class = "form-control show-tick", @id = "ddlDesignation" })
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+
+                                            <div class="form-group drop-custum">
+
+                                                @Html.DropDownListFor(model => model.status_id, new SelectList(ViewBag.status, "Status_id", "Satus"), "---Select Status---", new { @class = "form-control show-tick", @id = "ddlStatus" })
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+                                        <div class="">
+                                            <label>Image (max 2MB) :*</label>
+                                            <br />
+                                            <span class="btn btn-file">
+
+                                                <input type="file" id="image_0" name="image_0" />
+                                            </span>
+                                            <input type="hidden" id="hdnImages" name="hdnImages" />
+
+                                            <ul class="prophotos" id="prophotos"></ul>
+                                            @if (ViewData["image"] != null && ViewData["image"].ToString() != "")
+                                            {
                                                 <ul class="prophotos" id="">
-                                           
-                                            <li><div class='dlt'><a><img onclick='ImageRemove(this);' src='/Admin/img/del.jpg' style='height:15px; width:15px; position:absolute; cursor:pointer;'></a></div>
-                                            <img src='/assets/images/Doctor_Images/@ViewBag.image' width='177' height='121'></li>
 
-                                        </ul>
+                                                    <li>
+                                                        <div class='dlt'><a><img onclick='ImageRemove(this);' src='/Admin/img/del.jpg' style='height:15px; width:15px; position:absolute; cursor:pointer;'></a></div>
+                                                        <img src='/assets/images/Doctor_Images/@ViewData["image"].ToString()' width='177' height='121'>
+                                                    </li>
 
-                                        }
+                                                </ul>
+                                                <input type="hidden" id="hdnimageName" name="hdnimageName" value="@ViewData["image"].ToString()" />
 
+                                            }
+
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <div class="col-sm-12">
+                                            @{
+                                               string Text = "Add Doctor";
+                                                if (Model.ID != 0)
+                                                {
+                                                    Text = "Update Doctor";
+                                                }
+                                            }
+                                            <button type="submit" onclick="GetImageName();" class="btn btn-raised g-bg-cyan">@Text</button>
+                                        </div>
                                     </div>
-                                <br />
-                                <br />
-                                <br />
-                                <div class="col-sm-12">
-                                    @{
-                                        string Text = "Add Doctor";
-                                        if (Model.ID != 0)
-                                        {
-                                            Text = "Update Doctor";
-                                        }
-                                    }
-                                    <button type="submit" onclick="GetImageName();" class="btn btn-raised g-bg-cyan">@Text</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
-            </div>
-
-        </div>
-        <div class="overlay">
-            <div id="loading-img"></div>
-            Loading...
-        </div>
-    </section>
-}
-<script>
-    $(document).ready(function () {
-        $('#ddlQualifications').change(function () {
-            debugger;
-            var id = $('#ddlQualifications').find(":selected").val();
-            if (id != 0 && id != "") {
+                <div class="overlay">
+                    <div id="loading-img"></div>
+                    Loading...
+                </div>
+        </section>
+    }
+    <script>
+        $(document).ready(function () {
+            $('#ddlQualifications').change(function () {
                 debugger;
-                $.ajax({
-                    url: "/getDesignationByQulif_id",
-                    type: 'post',
-                    contentType: 'application/json',
-                    dataType: 'json',
-                    data: '{"qualification_id":"' + id + '"}',
+                var id = $('#ddlQualifications').find(":selected").val();
+                if (id != 0 && id != "") {
+                    debugger;
+                    $.ajax({
+                        url: "/getDesignationByQulif_id",
+                        type: 'post',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        data: '{"qualification_id":"' + id + '"}',
 
-                    beforeSend: function () {
-                        $('#ddlDesignation').html("");
-                        $('#ddlDesignation').append('<option value="0" selected>---Select Designation---</optoin>');
-                        //  showLoader();
-                    },
-                    success: function (data) {
-                        debugger;
-                        if (data.Success === "true") {
-                            var lstDesignation = data.Data.lstDesignation;
-                            if (lstDesignation.length > 0) {
-                                for (var i = 0; i < lstDesignation.length; i++) {
-                                    var des = '<option value=' + lstDesignation[i].Designation_id + '>' + lstDesignation[i].Designation + '</option>'
-                                    $('#ddlDesignation').append(des);
+                        beforeSend: function () {
+                            $('#ddlDesignation').html("");
+                            $('#ddlDesignation').append('<option value="0" selected>---Select Designation---</optoin>');
+                            //  showLoader();
+                        },
+                        success: function (data) {
+                            debugger;
+                            if (data.Success === "true") {
+                                var lstDesignation = data.Data.lstDesignation;
+                                if (lstDesignation.length > 0) {
+                                    for (var i = 0; i < lstDesignation.length; i++) {
+                                        var des = '<option value=' + lstDesignation[i].Designation_id + '>' + lstDesignation[i].Designation + '</option>'
+                                        $('#ddlDesignation').append(des);
+                                    }
                                 }
+
                             }
-
+                        },
+                        error: function () {
+                        },
+                        complete: function () {
+                            // hideLoader();
                         }
-                    },
-                    error: function () {
-                    },
-                    complete: function () {
-                        // hideLoader();
-                    }
-                });
-            }
+                    });
+                }
+            });
         });
-    });
-    function showLoader() {
-        $(".overlay").show();
-    }
-    function hideLoader() {
-        $(".overlay").hide();
-    }
-
-
-    $(function () {
-        $("#image_0").change(function () {
-            debugger;
-            if (typeof (FileReader) != "undefined") {
-                debugger;
-                var prophotos = $("#prophotos");
-                //dvPreview.html("");
-                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.png)$/;
-                $($(this)[0].files).each(function () {
-                    var file = $(this);
-                    if (regex.test(file[0].name.toLowerCase())) {
-
-                        debugger;
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            var image = new Image();
-                            debugger;
-
-                            prophotos.append("<li><div class='dlt'><a><img onclick='ImageRemove(this);' src='/Admin/img/del.jpg' style='height:15px; width:15px; position:absolute; cursor:pointer;'></a></div><img src='" + e.target.result + "' width='177' height='121'></li>");
-
-                            debugger;
-                        }
-                        reader.readAsDataURL(file[0]);
-                    } else {
-                        alert(file[0].name + " is not a valid image file.");
-                        prophotos.html("");
-                        return false;
-                    }
-                });
-            } else {
-                alert("This browser does not support HTML5 FileReader.");
-            }
-        });
-    });
-
-
-    function ImageRemove(Image) {
-
-        debugger;
-        $(Image).closest('li').remove();
-        var Img = "";
-        $("#hdnImages").val(Img);
-
-    }
-
-    function GetImageName() {
-        debugger;
-
-
-        var Img_aw = "";
-        $("#prophotos li").each(function (i, li) {
-
-            Img_aw += $(li).children('img').attr('src');
-
-            Img_aw += "#####";
-        });
-        $("#hdnImages_0").val(Img_aw);
-        
-
-
-    }
-</script>
-
-<style>
-    ul.prophotos {
-        list-style: none;
-        width: 100%;
-        float: left;
-    }
-
-        ul.prophotos li {
-            list-style: none;
-            width: 110px;
-            height: 110px;
-            position: relative;
-            float: left;
-            background: #ececec;
-            padding: 5px;
-            margin: 10px;
+        function showLoader() {
+            $(".overlay").show();
+        }
+        function hideLoader() {
+            $(".overlay").hide();
         }
 
-            ul.prophotos li img {
-                height: 110px;
+
+        $(function () {
+            $("#image_0").change(function () {
+                debugger;
+                if (typeof (FileReader) != "undefined") {
+                    debugger;
+                    var prophotos = $("#prophotos");
+                    //dvPreview.html("");
+                    var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.png)$/;
+                    $($(this)[0].files).each(function () {
+                        var file = $(this);
+                        if (regex.test(file[0].name.toLowerCase())) {
+
+                            debugger;
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                var image = new Image();
+                                debugger;
+
+                                prophotos.append("<li><div class='dlt'><a><img onclick='ImageRemove(this);' src='/Admin/img/del.jpg' style='height:15px; width:15px; position:absolute; cursor:pointer;'></a></div><img src='" + e.target.result + "' width='177' height='121'></li>");
+
+                                debugger;
+                            }
+                            reader.readAsDataURL(file[0]);
+                        } else {
+                            alert(file[0].name + " is not a valid image file.");
+                            prophotos.html("");
+                            return false;
+                        }
+                    });
+                } else {
+                    alert("This browser does not support HTML5 FileReader.");
+                }
+            });
+        });
+
+
+        function ImageRemove(Image) {
+
+            debugger;
+            $(Image).closest('li').remove();
+            var Img = "";
+            $("#hdnImages").val(Img);
+
+        }
+
+        function GetImageName() {
+            debugger;
+
+
+            var Img_aw = "";
+            $("#prophotos li").each(function (i, li) {
+
+                Img_aw += $(li).children('img').attr('src');
+
+                Img_aw += "#####";
+            });
+            $("#hdnImages").val(Img_aw);
+
+  
+
+        }
+    </script>
+
+    <style>
+        ul.prophotos {
+            list-style: none;
+            width: 100%;
+            float: left;
+        }
+
+            ul.prophotos li {
+                list-style: none;
                 width: 110px;
+                height: 110px;
+                position: relative;
+                float: left;
+                background: #ececec;
+                padding: 5px;
+                margin: 10px;
             }
 
-            ul.prophotos li .dlt img {
-                height: 15px;
-                width: 15px;
-                position: absolute;
-                top: 0;
-                right: 0;
-                cursor: pointer;
-            }
+                ul.prophotos li img {
+                    height: 110px;
+                    width: 110px;
+                }
+
+                ul.prophotos li .dlt img {
+                    height: 15px;
+                    width: 15px;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    cursor: pointer;
+                }
 
 
 
-    #loading-img {
-        z-index: 50000;
-        background: url('../assets/images/loader.gif')center center no-repeat;
-        height: 100%;
-    }
+        #loading-img {
+            z-index: 50000;
+            background: url('../assets/images/loader.gif')center center no-repeat;
+            height: 100%;
+        }
 
-    .overlay {
-        background: #e9e9e9;
-        display: none;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        opacity: 0.5;
-    }
-</style>
+        .overlay {
+            background: #e9e9e9;
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            opacity: 0.5;
+        }
+    </style>

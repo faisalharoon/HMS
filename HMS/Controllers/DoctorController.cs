@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HMS.Models;
 
 namespace HMS.Controllers
 {
@@ -25,6 +26,9 @@ namespace HMS.Controllers
         // GET: Doctor/Create
         public ActionResult AddDoctor(int? Doctor_id)
         {
+ 
+
+
             var lstQualification = db.tblEmployeeQualifications.Where(x=>x.employee_type==1).ToList();
             ViewBag.lstQualification = lstQualification;
 
@@ -36,9 +40,10 @@ namespace HMS.Controllers
             {
                 model = new DoctorsDAL().SingleRecord(Convert.ToInt32(Doctor_id));
                 designation = designation.Where(x => x.Qualification_id == model.Qualification_id).ToList();
+                ViewBag.gender = model.Gender;
                 if(model.Image!=null && model.Image!="")
                 {
-                    ViewBag.image = model.Image;
+                    ViewData["image"] =model.Image;
                 }
             }
             ViewBag.designation = designation;
@@ -48,45 +53,77 @@ namespace HMS.Controllers
 
         // POST: Doctor/Create
         [HttpPost]
-        public ActionResult AddDoctor(tblEmployee employee, HttpPostedFileBase pic, string hdnImages, int? Doctor_id)
+        public ActionResult AddDoctor(tblEmployee employee, int? Doctor_id)
         {
             try
             {
                 string file_name = "";
-                if (Request.Files.Count > 0)
-                {
-                    for (int i = 0; i < Request.Files.Count; i++)
-                    {
-                        var file = Request.Files[i];
-                
-                        //Upload file on server
-                        if (file != null)
-                        {
-                            file_name = file.FileName;
-                            String path = Server.MapPath("/assets/images/Doctor_Images/");
-                            file.SaveAs(path + file_name);
-
-                   
-                        }
-                    }
-                }
-                else if(ViewBag.image!=null && ViewBag.image!="")
-                {
-                    file_name = "/assets/images/Doctor_Images/" + ViewBag.image;
-                }
-           
+                string hdnImages = Request.Form["hdnImages"];
+                string hdnimageName = Request.Form["hdnimageName"];
 
                 employee.EmployeeTypeID = 1;
-                employee.Image = file_name;
+
                 employee.Is_active = true;
-                if(employee.Gender=="1")
+                if (employee.Gender == "1")
                 {
-                    employee.Gender = "Male";
+                    // employee.Gender = "Male";
                 }
                 if (employee.Gender == "2")
                 {
-                    employee.Gender = "Female";
+                    //  employee.Gender = "Female";
                 }
+                if (hdnImages != "")
+                {
+
+                    String path = Server.MapPath("/assets/images/Doctor_Images/");
+
+                    List<string> Imglst = new List<string>();
+                    string[] stringSeparators = new string[] { "#####" };
+                    Imglst = hdnImages.Split(stringSeparators, StringSplitOptions.None).ToList();
+                    int a = Imglst.Count();
+                    Imglst.RemoveAt(a - 1);
+                    string Images = null;
+                    foreach (var item in Imglst)
+                    {
+
+
+                        if (!item.Contains("/images"))
+                        {
+                            Images += new GernalFunction().ImageCroping(item, "/assets/images/Doctor_Images/");
+                            Images += ",";
+                        }
+                        else
+                        {
+                            Images += System.IO.Path.GetFileName(item);
+                            Images += ",";
+                        }
+                    }
+
+                    List<string> splitimgs = new List<string>();
+                    splitimgs = Images.Split(',').ToList();
+                    int b = splitimgs.Count();
+                    splitimgs.RemoveAt(b - 1);
+                    foreach (var item in splitimgs)
+                    {
+                        file_name = new GernalFunction().Resize_MedImage(path, item, path);//Medium images
+
+                    }
+                }
+
+
+
+
+            
+
+
+                else if (hdnimageName != null && hdnimageName != "")
+                {
+                    file_name = hdnimageName;
+                }
+           
+
+                employee.Image = file_name;
+               
                 if (Doctor_id!=null &&Doctor_id != 0)
                 {
                     employee.ID = Convert.ToInt32(Doctor_id);
@@ -104,8 +141,9 @@ namespace HMS.Controllers
 
                     return Redirect("/doctors");
             }
-            catch
+            catch(Exception ex)
             {
+                string err = ex.ToString();
                 TempData["AlertTask"] = "Error Occured.";
                 return View();
             }
