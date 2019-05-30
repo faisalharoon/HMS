@@ -40,11 +40,11 @@ namespace HMS.Controllers
             int patient_id = 0;
             if (obj.Gender == "1")
             {
-                obj.Gender = "Male";
+                //obj.Gender = "Male";
             }
             if (obj.Gender == "2")
             {
-                obj.Gender = "Female";
+               //obj.Gender = "Female";
             }
             try
             {
@@ -64,7 +64,7 @@ namespace HMS.Controllers
                     TempData["AlertTask"] = "Patient updated successfully";
                 }
 
-                return Redirect("patient-appointment?patient_id=" + patient_id);
+                return Redirect("/patients");
             }
             catch
             {
@@ -74,7 +74,7 @@ namespace HMS.Controllers
 
         public ActionResult PatientList()
         {
-            var model = new PatientDAL().GetAllPatients().ToList();
+            var model = new PatientDAL().ListOfRecords().ToList();
             var lstDoctors = new DoctorsDAL().ListOfRecords().Where(x => x.EmployeeTypeID == 1).ToList();
             ViewBag.doctors = lstDoctors;
             ViewData["GetPatientList"] = model;
@@ -165,6 +165,11 @@ namespace HMS.Controllers
             {
 
                 model = new PatientDAL().GetPatientAppointment(Convert.ToInt32(patient_id), Convert.ToInt32(appointment_id));
+                string time = Convert.ToDateTime(model.AppointmentDate).ToShortTimeString();
+                string date = Convert.ToDateTime(model.AppointmentDate).ToLongDateString();
+                DateTime c_date = DateTime.Parse(date + " " + time);
+                model.AppointmentDate = Convert.ToDateTime(date + " " + time);
+
             }
             return View(model);
         }
@@ -173,6 +178,8 @@ namespace HMS.Controllers
         {
 
             string p_id = Request.Form["hdnPatientId"];
+            string hdndate = Request.Form["hdndate"];
+            string[] date = hdndate.Split('-');
             try
             {
                 string username = "";
@@ -185,75 +192,46 @@ namespace HMS.Controllers
                 obj.CreatedBy = username;
                 obj.isActive = true;
                 obj.PatientID = Convert.ToInt32(p_id);
-                string time = DateTime.UtcNow.ToLongTimeString();
-                string Date = Convert.ToDateTime(obj.AppointmentDate).ToString("dd-MMM-yyyy");
-                DateTime c_date = DateTime.Parse(Date + " " + time);
+                string time = Convert.ToDateTime(date[1]).ToLongTimeString();
+                string Date = Convert.ToDateTime(date[0]).ToLongDateString();
+                DateTime c_date = DateTime.Parse(Date + " "+ time);
                 obj.AppointmentDate = c_date;
                 // TODO: Add insert logic here
-                if (obj.ID == 0)
-                {
-                    new PatientDAL().SavePatientAppointment(obj);
-                    appointment_id = obj.ID;
-                    TempData["AlertTask"] = "Patient Admit added successfully";
-                }
-                else
+                if (appointment_id!=null && appointment_id != 0 )
                 {
                     obj.ID = Convert.ToInt32(appointment_id);
                     new PatientDAL().UpdatePatientAppointment(obj);
                     appointment_id = obj.ID;
                     TempData["AlertTask"] = "Patient updated successfully";
+                   
+                }
+                else
+                {
+                    new PatientDAL().SavePatientAppointment(obj);
+                    appointment_id = obj.ID;
+                    TempData["AlertTask"] = "Patient Admit added successfully";
                 }
 
                 return Redirect("patient-admission?appointment_id=" + appointment_id+ "&patient_id=" + p_id);
             }
-            catch
+            catch(Exception ex)
             {
+                string error = ex.ToString();
                 return View();
             }
 
         }
-        // GET: Patient/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: Patient/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         // GET: Patient/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            new PatientDAL().Delete(id);
+            TempData["AlertTask"] = "Patientdeleted successfully";
+            return Redirect("/patients");
         }
 
         // POST: Patient/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+    
     }
 }

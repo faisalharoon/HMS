@@ -20,11 +20,13 @@
     <!-- Custom Css -->
 
     <link href="~/assets/css/main.css" rel="stylesheet" />
+    <!-- JQuery DataTable Css -->
+    <link href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
+
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 
 
- 
-   </head>
+</head>
 <body class="theme-cyan">
     @{ int ID = 0; string Name = "";
         HttpCookie cookie = HttpContext.Current.Request.Cookies["AdminCookies"];
@@ -89,7 +91,7 @@
                 <button class="morphsearch-submit" type="submit">Search</button>
             </div>
         </form>
-
+        <span class="morphsearch-close"></span>
     </div>
     <!-- Top Bar -->
     <nav class="navbar clearHeader">
@@ -147,12 +149,12 @@
                     </li>
 
                     @*<li>
-            <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-calendar-check"></i><span>Appointment</span> </a>
-            <ul class="ml-menu">
+                            <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-calendar-check"></i><span>Appointment</span> </a>
+                            <ul class="ml-menu">
 
-                <li><a href="book-appointment.html">Book Appointment</a></li>
-            </ul>
-        </li>*@
+                                <li><a href="book-appointment.html">Book Appointment</a></li>
+                            </ul>
+                        </li>*@
 
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-account-add"></i><span>Doctors</span> </a>
@@ -168,7 +170,7 @@
                             <li><a href="/patients">All Patients</a></li>
                             <li><a href="/add-patient">Add Patient</a></li>
                             @*<li><a href="/patient-profile">Patient Profile</a></li>
-                <li><a href="/patient-invoice">Patient Invoice</a></li>*@
+                                <li><a href="/patient-invoice">Patient Invoice</a></li>*@
                         </ul>
                     </li>
                     <li>
@@ -178,7 +180,7 @@
                             <li><a href="/medicine">Medicine</a></li>
 
                             @*<li><a href="/patient-profile">Patient Profile</a></li>
-                <li><a href="/patient-invoice">Patient Invoice</a></li>*@
+                                <li><a href="/patient-invoice">Patient Invoice</a></li>*@
                         </ul>
                     </li>
                     <li>
@@ -189,17 +191,17 @@
                             <li><a href="/test-attributes">Test Attributes</a></li>
 
                             @*<li><a href="/patient-profile">Patient Profile</a></li>
-                <li><a href="/patient-invoice">Patient Invoice</a></li>*@
+                                <li><a href="/patient-invoice">Patient Invoice</a></li>*@
                         </ul>
                     </li>
                     @*<li>
-            <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-balance-wallet"></i><span>Payments</span> </a>
-            <ul class="ml-menu">
-                <li> <a href="payments.html">Payments</a></li>
-                <li> <a href="add-payments.html">Add Payment</a></li>
-                <li> <a href="patient-invoice.html">Patient Invoice</a></li>
-            </ul>
-        </li>*@
+                            <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-balance-wallet"></i><span>Payments</span> </a>
+                            <ul class="ml-menu">
+                                <li> <a href="payments.html">Payments</a></li>
+                                <li> <a href="add-payments.html">Add Payment</a></li>
+                                <li> <a href="patient-invoice.html">Patient Invoice</a></li>
+                            </ul>
+                        </li>*@
 
 
                 </ul>
@@ -228,6 +230,10 @@
     <!-- Bootstrap Material Datetime Picker Plugin Js -->
     <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
     <script src="~/assets/js/pages/forms/basic-form-elements.js"></script>
+    <script src="~/assets/bundles/datatablescripts.bundle.js"></script>
+    <script src="~/assets/js/morphing.js"></script><!-- Custom Js -->
+    <script src="~/assets/js/pages/tables/jquery-datatable.js"></script>
+
     @RenderBody()
 
 

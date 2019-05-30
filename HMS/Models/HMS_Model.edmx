@@ -1751,6 +1751,7 @@
           <Property Type="DateTime" Name="AppointmentDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="Appointment_id" Nullable="false" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2149,6 +2150,7 @@
                 <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Appointment_id" ColumnName="Appointment_id" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

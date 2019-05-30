@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "PatientAppointment";
 }
-@using (Html.BeginForm("PatientAppointment", "Patient"))
+@using (Html.BeginForm("PatientAppointment", "Patient", new { appointment_id = Request.QueryString["appointment_id"] }))
 {
     @Html.ValidationSummary(true)
     <section class="content">
@@ -32,7 +32,7 @@
                                 <div class="col-lg-4 col-sm-12">
                                     <div class="form-group">
                                         <div class="form-line">
-                                            @Html.TextBoxFor(x => x.AppointmentDate, new { @type = "text", @class = "datepicker form-control", @id = "txtAppointemtDate", @placeholder = "Appointment Date", @required = "required" })
+                                            @Html.TextBoxFor(x => x.AppointmentDate, new { @type = "text", @class = "datetimepicker form-control", @id = "txtAppointemtDate", @placeholder = "Appointment Date", @required = "required" })
 
                                         </div>
                                     </div>
@@ -59,15 +59,15 @@
                                                         if (Model != null)
                                                         {
                                                             patient_id = Model.PatientID.ToString();
-                                                            if ( Model.ID != 0)
+                                                            if (Model.ID != 0)
                                                             { Text = "Update Patient's Appointment"; }
 
                                                         }
 
-                                                        }
-                                                       <input type="hidden"value="@patient_id" name="hdnPatientId" />
-                                                  
-                                                    <input type="submit" id="btnSave" class="btn btn-raised g-bg-cyan" value="@Text" name="Save" />
+                                                    }
+                                                    <input type="hidden" value="@patient_id" name="hdnPatientId" />
+                                                    <input type="hidden" value="" name="hdndate"  id="hdnDate"/>
+                                                    <input type="submit" id="btnSave" class="btn btn-raised g-bg-cyan" onclick="getdate();" value="@Text" name="Save" />
 
                                                 </div>
                                             </div>
@@ -80,4 +80,10 @@
     </section>
 
 }
-
+<script>
+    function getdate() {
+        debugger;
+        var date = $("#txtAppointemtDate").val();
+        $("#hdnDate").val(date);
+    }
+</script>

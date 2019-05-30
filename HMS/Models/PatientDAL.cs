@@ -56,7 +56,7 @@ namespace HMS.Models
         }
         public tblPatientAppointment GetPatientAppointment(int Patient_id, int appoint_id)
         {
-            return db.tblPatientAppointments.FirstOrDefault(x => x.ID == Patient_id & x.ID == appoint_id);
+            return db.tblPatientAppointments.FirstOrDefault(x => x.PatientID == Patient_id & x.ID == appoint_id);
         }
 
        

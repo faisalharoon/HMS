@@ -15,7 +15,8 @@
                 <div class="card">
                     <div class="header">
                         <h2>Patients</h2>
-                        <select class="form-control show-tick">
+                        @*<select class="form-control show-tick">
+                            
                             @{
                                 if (ViewBag.doctors != null)
                                 {
@@ -25,10 +26,11 @@
                                     }
                                 }
                             }
-                        </select>
+                        </select>*@
                     </div>
                     <div class="body table-responsive">
                         <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+
                             <thead>
                                 <tr>
                                     <th>Patient ID</th>
@@ -36,8 +38,8 @@
                                     <th>Contact_no</th>
                                     <th>Doctor Name</th>
                                     <th>AppointmentDate</th>
-                                  
-                                    @*<th>Actions</th>*@
+
+                                    <th>Actions</th>
 
                                 </tr>
                             </thead>
@@ -45,23 +47,64 @@
                             <tbody>
                                 @{
                                     var list = ViewData["GetPatientList"];
+                                    List<HMS.Models.tblEmployee> doclist = ViewBag.doctors;
+
+
                                     if (list != null)
                                     {
-                                        foreach (var item in ViewData["GetPatientList"] as IEnumerable<HMS.Models.GetPatientList_Result>)
+                                        foreach (var item in list as IEnumerable<HMS.Models.tblPatient>)
                                         {
+                                            var appoint_id = item.tblPatientAppointments.Where(x=>x.PatientID==item.Patient_id).FirstOrDefault();
+                                            string admission_style = "style='display:none;'";
+                                            string appoint_url = "";
+                                            string Doctor_name = "";
+                                            string admission_url = "";
+                                            string AppointmentDate = "";
+                                            // string admission_text = "";
+                                            string appointement_text = "";
+                                            if(appoint_id!=null)
+                                            {
+                                                var doc = doclist.Where(x => x.ID == appoint_id.DoctorID).FirstOrDefault();
+                                                Doctor_name = doc.Name;
+                                                appointement_text = "Update Appointment";
+
+                                                admission_style = "style='display:block;'";
+                                                appoint_url= "/patient-appointment?patient_id="+item.Patient_id+ "&appointment_id="+ appoint_id.ID;
+                                                admission_url = "/patient-admission?appointment_id="+ appoint_id.ID+"&patient_id=" + item.Patient_id;
+                                                AppointmentDate = appoint_id.AppointmentDate.ToString();
+                                            }
+                                            else
+                                            {
+                                                appoint_url = "/patient-appointment?patient_id="+item.Patient_id;
+                                                appointement_text = "Add Appointment";
+                                            }
                                             <tr>
                                                 <td>@item.Patient_id</td>
                                                 <td>@item.Patient_Name</td>
                                                 <td>@item.Contact_no</td>
-                                                <td>@item.Name</td>
-                                                <td>@item.AppointmentDate</td>
-                                              
-                                                @*<td>
-                                                    <a href='/add-patient?Patient_id=@item.Patient_id'>Edit</a>
-                                                    <a href='#' onclick="Delete(@item.Patient_id);">
+                                                <td>@Doctor_name</td>
+                                                <td>@AppointmentDate</td>
+
+                                                <td>
+
+
+
+
+
+                                                            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                   Actions</a>
+                                                            <ul class="dropdown-menu pull-right">
+                                                                <li> <a href='/add-patient?Patient_id=@item.Patient_id'>Update</a></li>
+                                                                <li>   <a href='#' onclick="Delete(@item.Patient_id);">
                                                         Delete
-                                                    </a>
-                                                </td>*@
+                                                    </a></li>
+                                                                <li ><a href="@appoint_url">@appointement_text</a></li>
+                                                                <li @admission_style><a href="@admission_url">Admission</a></li>
+                                                            </ul>
+
+
+
+                                                </td>
 
                                             </tr>
                                         }

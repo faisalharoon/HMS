@@ -24,5 +24,6 @@ namespace HMS.Models
         public Nullable<System.DateTime> AppointmentDate { get; set; }
         public string Name { get; set; }
         public int ID { get; set; }
+        public int Appointment_id { get; set; }
     }
 }

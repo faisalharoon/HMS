@@ -153,8 +153,12 @@ defaults: new { controller = "Patient", action = "PatientAppointment", id = UrlP
          url: "add-patient",
          defaults: new { controller = "Patient", action = "AddPatient", id = UrlParameter.Optional }
      );
-            
-                            routes.MapRoute(
+            routes.MapRoute(
+name: "delete-patient",
+url: "delete-patient",
+defaults: new { controller = "Patient", action = "Delete", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
    name: "DeleteHospital",
    url: "delete-hospital",
    defaults: new { controller = "Hospital", action = "Delete" }
