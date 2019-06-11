@@ -17,8 +17,8 @@ namespace HMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblPatientBill()
         {
-            this.tblPatientAdmissions = new HashSet<tblPatientAdmission>();
             this.tblPatientBillDetails = new HashSet<tblPatientBillDetail>();
+            this.tblPatientAdmissions = new HashSet<tblPatientAdmission>();
         }
     
         public int ID { get; set; }
@@ -31,9 +31,9 @@ namespace HMS.Models
         public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPatientBillDetail> tblPatientBillDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPatientAdmission> tblPatientAdmissions { get; set; }
         public virtual tblPatientAppointment tblPatientAppointment { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblPatientBillDetail> tblPatientBillDetails { get; set; }
     }
 }
