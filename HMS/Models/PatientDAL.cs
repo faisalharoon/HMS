@@ -50,9 +50,9 @@ namespace HMS.Models
         {
             return db.tblPatients.FirstOrDefault(x => x.Patient_id == Patient_id);
         }
-        public tblPatientAdmission GetPatientAdmission(int Patient_id, int appoint_id)
+        public tblPatientAdmission GetPatientAdmission(int admit_id, int appoint_id)
         {
-            return db.tblPatientAdmissions.FirstOrDefault(x => x.ID == Patient_id & x.PatientAppointmentID==appoint_id);
+            return db.tblPatientAdmissions.FirstOrDefault(x => x.ID == admit_id & x.PatientAppointmentID==appoint_id);
         }
         public tblPatientAppointment GetPatientAppointment(int Patient_id, int appoint_id)
         {
@@ -105,5 +105,8 @@ namespace HMS.Models
             db.tblPatients.Remove(del);
             db.SaveChanges();
         }
+
+
+    
     }
 }

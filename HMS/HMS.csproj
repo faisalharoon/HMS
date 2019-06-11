@@ -413,6 +413,7 @@
     <Content Include="Views\Test\TestList.cshtml" />
     <Content Include="Views\Test\AddTestAttribute.cshtml" />
     <Content Include="Views\Test\TestAttributes.cshtml" />
+    <Content Include="Views\Patient\AddPatientTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

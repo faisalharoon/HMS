@@ -55,15 +55,19 @@
                                         foreach (var item in list as IEnumerable<HMS.Models.tblPatient>)
                                         {
                                             var appoint_id = item.tblPatientAppointments.Where(x=>x.PatientID==item.Patient_id).FirstOrDefault();
+
                                             string admission_style = "style='display:none;'";
                                             string appoint_url = "";
                                             string Doctor_name = "";
                                             string admission_url = "";
                                             string AppointmentDate = "";
-                                            // string admission_text = "";
+                                            string admission_text = "";
                                             string appointement_text = "";
+                                           
                                             if(appoint_id!=null)
                                             {
+                                                var admit_id = appoint_id.tblPatientAdmissions.Where(x => x.PatientAppointmentID == appoint_id.ID).FirstOrDefault();
+
                                                 var doc = doclist.Where(x => x.ID == appoint_id.DoctorID).FirstOrDefault();
                                                 Doctor_name = doc.Name;
                                                 appointement_text = "Update Appointment";
@@ -72,12 +76,20 @@
                                                 appoint_url= "/patient-appointment?patient_id="+item.Patient_id+ "&appointment_id="+ appoint_id.ID;
                                                 admission_url = "/patient-admission?appointment_id="+ appoint_id.ID+"&patient_id=" + item.Patient_id;
                                                 AppointmentDate = appoint_id.AppointmentDate.ToString();
+                                                admission_text = "Add Admission";
+                                             
+                                                if (admit_id != null)
+                                                {
+                                                    admission_url = "/patient-admission?appointment_id=" + appoint_id.ID + "&patient_id=" + item.Patient_id + "&addmission_id=" + admit_id.ID;
+                                                    admission_text = "Update Admit";
+                                                }
                                             }
                                             else
                                             {
                                                 appoint_url = "/patient-appointment?patient_id="+item.Patient_id;
                                                 appointement_text = "Add Appointment";
                                             }
+
                                             <tr>
                                                 <td>@item.Patient_id</td>
                                                 <td>@item.Patient_Name</td>
@@ -99,7 +111,8 @@
                                                         Delete
                                                     </a></li>
                                                                 <li ><a href="@appoint_url">@appointement_text</a></li>
-                                                                <li @admission_style><a href="@admission_url">Admission</a></li>
+                                                                <li @admission_style><a href="@admission_url">@admission_text</a></li>
+                                                                <li><a href="/add-patient-test?patient_id=@item.Patient_id">Add Test</a></li>
                                                             </ul>
 
 

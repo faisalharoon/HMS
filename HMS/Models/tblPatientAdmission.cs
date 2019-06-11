@@ -19,12 +19,12 @@ namespace HMS.Models
         public Nullable<int> HospitalRoomID { get; set; }
         public Nullable<int> AdmissionTypeID { get; set; }
         public Nullable<int> PatientBill_ID { get; set; }
-        public Nullable<System.DateTime> AdmissionDate { get; set; }
-        public Nullable<System.DateTime> DisChargeDate { get; set; }
         public string Description { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
+        public string DisChargeDate { get; set; }
+        public string AdmissionDate { get; set; }
     
         public virtual tblAdmissionType tblAdmissionType { get; set; }
         public virtual tblHospitalRoom tblHospitalRoom { get; set; }

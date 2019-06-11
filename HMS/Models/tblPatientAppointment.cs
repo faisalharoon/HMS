@@ -27,12 +27,12 @@ namespace HMS.Models
         public Nullable<int> PatientID { get; set; }
         public Nullable<int> DoctorID { get; set; }
         public string Description { get; set; }
-        public Nullable<System.DateTime> AppointmentDate { get; set; }
         public Nullable<bool> isActive { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public string CreatedBy { get; set; }
+        public string AppointmentDate { get; set; }
     
-        public virtual tblDoctor tblDoctor { get; set; }
+        public virtual tblEmployee tblEmployee { get; set; }
         public virtual tblPatient tblPatient { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPatientAdmission> tblPatientAdmissions { get; set; }
@@ -42,6 +42,5 @@ namespace HMS.Models
         public virtual ICollection<tblPatientMedicine> tblPatientMedicines { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPatientTest> tblPatientTests { get; set; }
-        public virtual tblEmployee tblEmployee { get; set; }
     }
 }

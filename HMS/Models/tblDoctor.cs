@@ -14,12 +14,6 @@ namespace HMS.Models
     
     public partial class tblDoctor
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblDoctor()
-        {
-            this.tblPatientAppointments = new HashSet<tblPatientAppointment>();
-        }
-    
         public int ID { get; set; }
         public string DoctorName { get; set; }
         public string Speciality { get; set; }
@@ -30,7 +24,5 @@ namespace HMS.Models
         public Nullable<bool> IsActive { get; set; }
     
         public virtual tblHospital tblHospital { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblPatientAppointment> tblPatientAppointments { get; set; }
     }
 }
