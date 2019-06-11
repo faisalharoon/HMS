@@ -140,6 +140,7 @@
     <Compile Include="Controllers\HospitalController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
+    <Compile Include="Controllers\PatientBillsController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
@@ -167,6 +168,7 @@
     </Compile>
     <Compile Include="Models\HospitalDAL.cs" />
     <Compile Include="Models\MedicineDAL.cs" />
+    <Compile Include="Models\PatientBillDAL.cs" />
     <Compile Include="Models\PatientDAL.cs" />
     <Compile Include="Models\tblAdmissionType.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
@@ -414,6 +416,11 @@
     <Content Include="Views\Test\AddTestAttribute.cshtml" />
     <Content Include="Views\Test\TestAttributes.cshtml" />
     <Content Include="Views\Patient\AddPatientTest.cshtml" />
+    <Content Include="Views\PatientBills\Create.cshtml" />
+    <Content Include="Views\PatientBills\Delete.cshtml" />
+    <Content Include="Views\PatientBills\Details.cshtml" />
+    <Content Include="Views\PatientBills\Edit.cshtml" />
+    <Content Include="Views\PatientBills\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
