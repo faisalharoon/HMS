@@ -37,6 +37,8 @@ namespace HMS.Models
         public virtual DbSet<tblMedicineOccurance> tblMedicineOccurances { get; set; }
         public virtual DbSet<tblMedicineTiming> tblMedicineTimings { get; set; }
         public virtual DbSet<tblPatient> tblPatients { get; set; }
+        public virtual DbSet<tblPatientAdmission> tblPatientAdmissions { get; set; }
+        public virtual DbSet<tblPatientAppointment> tblPatientAppointments { get; set; }
         public virtual DbSet<tblPatientBill> tblPatientBills { get; set; }
         public virtual DbSet<tblPatientBillDetail> tblPatientBillDetails { get; set; }
         public virtual DbSet<tblPatientMedicine> tblPatientMedicines { get; set; }
@@ -56,8 +58,6 @@ namespace HMS.Models
         public virtual DbSet<tblEmpDesignation> tblEmpDesignations { get; set; }
         public virtual DbSet<tblEmployeeQualification> tblEmployeeQualifications { get; set; }
         public virtual DbSet<tblEmployee> tblEmployees { get; set; }
-        public virtual DbSet<tblPatientAdmission> tblPatientAdmissions { get; set; }
-        public virtual DbSet<tblPatientAppointment> tblPatientAppointments { get; set; }
     
         public virtual ObjectResult<GetPatientList_Result> GetPatientList()
         {

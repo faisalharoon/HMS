@@ -91,7 +91,7 @@ namespace HMS.Controllers
             if (addmission_id != null)
             {
 
-                model = new PatientDAL().GetPatientAdmission(Convert.ToInt32(addmission_id),Convert.ToInt32(appointment_id));
+                model = new PatientDAL().GetPatientAdmission(Convert.ToInt32(patient_id),Convert.ToInt32(appointment_id));
             }
             return View(model);
         }
@@ -99,19 +99,15 @@ namespace HMS.Controllers
         public ActionResult PatientAdmission(tblPatientAdmission obj, int? patient_id, int? appointment_id, int? addmission_id)
         {
             string AppointmentId = Request.Form["hdnAppointmentId"];
-            string AdmissionDate = Request.Form["A_Date"];
+            string AppointmentDate = Request.Form["A_Date"];
             string DischargeDate = Request.Form["DischargeDate"];
             string[] s = DischargeDate.Split('-');
             DischargeDate = s[0];
-            string time = Convert.ToDateTime(s[1]).ToLongTimeString();
-            s = time.Split(' ');
-            obj.DisChargeDate = DischargeDate + time;
-            s = AdmissionDate.Split('-');
+            string dischageTime = s[1];
+           s = AppointmentDate.Split('-');
 
-            AdmissionDate = s[0];
-            time = Convert.ToDateTime(s[1]).ToLongTimeString();
-            s = time.Split(' ');
-            obj.AdmissionDate = AdmissionDate + time;
+            AppointmentDate = s[0];
+            string AppointmentTime = s[1];
 
 
             try
@@ -125,23 +121,28 @@ namespace HMS.Controllers
                 }obj.CreatedBy = username;
                 obj.IsActive = true;
                 obj.PatientAppointmentID = Convert.ToInt32(AppointmentId);
-
-
+                //string time = DateTime.UtcNow.ToLongTimeString();
+                //string Date = Convert.ToDateTime(obj.AdmissionDate).ToString("dd-MMM-yyyy");
+                //string DischargeDate = Convert.ToDateTime(obj.DisChargeDate).ToString("dd-MMM-yyyy");
+                DateTime c_date = DateTime.Parse(AppointmentDate + " " + AppointmentTime);
+                DateTime d_date = DateTime.Parse(DischargeDate + " " + dischageTime);
+                obj.AdmissionDate = Convert.ToDateTime(c_date);
+                obj.DisChargeDate = Convert.ToDateTime(d_date);
+               
                 // TODO: Add insert logic here
-                if (addmission_id != null && addmission_id != 0)
+                if (obj.ID == 0)
                 {
-                    obj.ID = Convert.ToInt32(addmission_id);
-                    new PatientDAL().UpdatePatientAdmission(obj);
-                  
-                    TempData["AlertTask"] = "Patient Admit updated successfully";
-                }
-                else
-                {
+
                     new PatientDAL().SavePatientAdmission(obj);
                     addmission_id = obj.ID;
                     TempData["AlertTask"] = "Patient Admit added successfully";
+                }
+                else
+                {
 
-                    
+                    new PatientDAL().UpdatePatientAdmission(obj);
+                    addmission_id = obj.ID;
+                    TempData["AlertTask"] = "Patient Admit updated successfully";
                 }
 
                 return Redirect("patients");
@@ -164,7 +165,10 @@ namespace HMS.Controllers
             {
 
                 model = new PatientDAL().GetPatientAppointment(Convert.ToInt32(patient_id), Convert.ToInt32(appointment_id));
-                
+                string time = Convert.ToDateTime(model.AppointmentDate).ToShortTimeString();
+                string date = Convert.ToDateTime(model.AppointmentDate).ToLongDateString();
+                DateTime c_date = DateTime.Parse(date + " " + time);
+                model.AppointmentDate = Convert.ToDateTime(date + " " + time);
 
             }
             return View(model);
@@ -176,7 +180,6 @@ namespace HMS.Controllers
             string p_id = Request.Form["hdnPatientId"];
             string hdndate = Request.Form["hdndate"];
             string[] date = hdndate.Split('-');
-            hdndate = date[0];
             try
             {
                 string username = "";
@@ -190,13 +193,14 @@ namespace HMS.Controllers
                 obj.isActive = true;
                 obj.PatientID = Convert.ToInt32(p_id);
                 string time = Convert.ToDateTime(date[1]).ToLongTimeString();
-                date = time.Split(' ');
-                 obj.AppointmentDate = hdndate+ time;
+                string Date = Convert.ToDateTime(date[0]).ToLongDateString();
+                DateTime c_date = DateTime.Parse(Date + " "+ time);
+                obj.AppointmentDate = c_date;
                 // TODO: Add insert logic here
                 if (appointment_id!=null && appointment_id != 0 )
                 {
                     obj.ID = Convert.ToInt32(appointment_id);
-                   new PatientDAL().UpdatePatientAppointment(obj);
+                    new PatientDAL().UpdatePatientAppointment(obj);
                     appointment_id = obj.ID;
                     TempData["AlertTask"] = "Patient updated successfully";
                    
@@ -208,8 +212,7 @@ namespace HMS.Controllers
                     TempData["AlertTask"] = "Patient Admit added successfully";
                 }
 
-                return Redirect("/patients");
-               // return Redirect("patient-admission?appointment_id=" + appointment_id+ "&patient_id=" + p_id);
+                return Redirect("patient-admission?appointment_id=" + appointment_id+ "&patient_id=" + p_id);
             }
             catch(Exception ex)
             {
@@ -229,9 +232,6 @@ namespace HMS.Controllers
         }
 
         // POST: Patient/Delete/5
-        public ActionResult AddPatientTest(int? patient_id)
-        {
-            return View();
-        }
+    
     }
 }

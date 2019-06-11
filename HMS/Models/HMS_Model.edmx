@@ -161,12 +161,12 @@
           <Property Name="HospitalRoomID" Type="int" />
           <Property Name="AdmissionTypeID" Type="int" />
           <Property Name="PatientBill_ID" Type="int" />
+          <Property Name="AdmissionDate" Type="datetime" />
+          <Property Name="DisChargeDate" Type="datetime" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="250" />
           <Property Name="CreatedAt" Type="datetime" />
-          <Property Name="DisChargeDate" Type="varchar" MaxLength="100" />
-          <Property Name="AdmissionDate" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="tblPatientAppointment">
           <Key>
@@ -176,10 +176,10 @@
           <Property Name="PatientID" Type="int" />
           <Property Name="DoctorID" Type="int" />
           <Property Name="Description" Type="varchar(max)" />
+          <Property Name="AppointmentDate" Type="datetime" />
           <Property Name="isActive" Type="bit" />
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="150" />
-          <Property Name="AppointmentDate" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="tblPatientBill">
           <Key>
@@ -843,7 +843,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AdmissionTypeName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tblPatientAdmissions" Relationship="HMS_DBModel.FK_tblPatientAdmission_tblAdmissionType" FromRole="tblAdmissionType" ToRole="tblPatientAdmission" />
+          <NavigationProperty Name="tblPatientAdmissions" Relationship="Self.FK_tblPatientAdmission_tblAdmissionType" FromRole="tblAdmissionType" ToRole="tblPatientAdmission" />
         </EntityType>
         <EntityType Name="tblDoctor">
           <Key>
@@ -858,6 +858,7 @@
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="tblHospital" Relationship="Self.FK_tblDoctor_tblHospital" FromRole="tblDoctor" ToRole="tblHospital" />
+          <NavigationProperty Name="tblPatientAppointments" Relationship="Self.FK_tblPatientAppointment_tblDoctor" FromRole="tblDoctor" ToRole="tblPatientAppointment" />
         </EntityType>
         <EntityType Name="tblEmployeeType">
           <Key>
@@ -894,7 +895,7 @@
           <Property Name="HospitalID" Type="Int32" />
           <NavigationProperty Name="tblHospital" Relationship="Self.FK_tblHospitalRoom_tblHospital" FromRole="tblHospitalRoom" ToRole="tblHospital" />
           <NavigationProperty Name="tblRoomType" Relationship="Self.FK_tblHospitalRoom_tblRoomType" FromRole="tblHospitalRoom" ToRole="tblRoomType" />
-          <NavigationProperty Name="tblPatientAdmissions" Relationship="HMS_DBModel.FK_tblPatient_room_tblHospitalRoom" FromRole="tblHospitalRoom" ToRole="tblPatientAdmission" />
+          <NavigationProperty Name="tblPatientAdmissions" Relationship="Self.FK_tblPatient_room_tblHospitalRoom" FromRole="tblHospitalRoom" ToRole="tblPatientAdmission" />
         </EntityType>
         <EntityType Name="tblMedicine">
           <Key>
@@ -953,8 +954,48 @@
           <Property Name="Age" Type="Int32" />
           <Property Name="Gender" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblPatientAppointments" Relationship="Self.FK_tblPatientAppointment_tblPatient" FromRole="tblPatient" ToRole="tblPatientAppointment" />
           <Property Name="Date_of_Birth" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblPatientAppointments" Relationship="HMS_DBModel.FK_tblPatientAppointment_tblPatient" FromRole="tblPatient" ToRole="tblPatientAppointment" />
+        </EntityType>
+        <EntityType Name="tblPatientAdmission">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientAppointmentID" Type="Int32" />
+          <Property Name="HospitalRoomID" Type="Int32" />
+          <Property Name="AdmissionTypeID" Type="Int32" />
+          <Property Name="PatientBill_ID" Type="Int32" />
+          <Property Name="AdmissionDate" Type="DateTime" Precision="3" />
+          <Property Name="DisChargeDate" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblAdmissionType" Relationship="Self.FK_tblPatientAdmission_tblAdmissionType" FromRole="tblPatientAdmission" ToRole="tblAdmissionType" />
+          <NavigationProperty Name="tblHospitalRoom" Relationship="Self.FK_tblPatient_room_tblHospitalRoom" FromRole="tblPatientAdmission" ToRole="tblHospitalRoom" />
+          <NavigationProperty Name="tblPatientAppointment" Relationship="Self.FK_tblPatient_room_tblPatient" FromRole="tblPatientAdmission" ToRole="tblPatientAppointment" />
+          <NavigationProperty Name="tblPatientBill" Relationship="Self.FK_tblPatient_room_tblPatientBill" FromRole="tblPatientAdmission" ToRole="tblPatientBill" />
+        </EntityType>
+        <EntityType Name="tblPatientAppointment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientID" Type="Int32" />
+          <Property Name="DoctorID" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AppointmentDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblDoctor" Relationship="Self.FK_tblPatientAppointment_tblDoctor" FromRole="tblPatientAppointment" ToRole="tblDoctor" />
+          <NavigationProperty Name="tblPatient" Relationship="Self.FK_tblPatientAppointment_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatient" />
+          <NavigationProperty Name="tblPatientAdmissions" Relationship="Self.FK_tblPatient_room_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatientAdmission" />
+          <NavigationProperty Name="tblPatientBills" Relationship="Self.FK_tblPatientBill_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatientBill" />
+          <NavigationProperty Name="tblPatientMedicines" Relationship="Self.FK_tblPatientMedicine_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatientMedicine" />
+          <NavigationProperty Name="tblPatientTests" Relationship="Self.FK_tblPatientTest_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatientTest" />
+          <NavigationProperty Name="tblEmployee" Relationship="HMS_DBModel.FK_tblPatientAppointment_tblDoctor1" FromRole="tblPatientAppointment" ToRole="tblEmployee" />
         </EntityType>
         <EntityType Name="tblPatientBill">
           <Key>
@@ -968,9 +1009,9 @@
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblPatientAdmissions" Relationship="Self.FK_tblPatient_room_tblPatientBill" FromRole="tblPatientBill" ToRole="tblPatientAdmission" />
+          <NavigationProperty Name="tblPatientAppointment" Relationship="Self.FK_tblPatientBill_tblPatient" FromRole="tblPatientBill" ToRole="tblPatientAppointment" />
           <NavigationProperty Name="tblPatientBillDetails" Relationship="Self.FK_tblPatientBillDetails_tblPatientBill" FromRole="tblPatientBill" ToRole="tblPatientBillDetails" />
-          <NavigationProperty Name="tblPatientAdmissions" Relationship="HMS_DBModel.FK_tblPatient_room_tblPatientBill" FromRole="tblPatientBill" ToRole="tblPatientAdmission" />
-          <NavigationProperty Name="tblPatientAppointment" Relationship="HMS_DBModel.FK_tblPatientBill_tblPatient" FromRole="tblPatientBill" ToRole="tblPatientAppointment" />
         </EntityType>
         <EntityType Name="tblPatientBillDetail">
           <Key>
@@ -1000,7 +1041,7 @@
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="isActive" Type="Boolean" />
           <NavigationProperty Name="tblMedicine" Relationship="Self.FK_tblPatientMedicine_tblMedicine" FromRole="tblPatientMedicine" ToRole="tblMedicine" />
-          <NavigationProperty Name="tblPatientAppointment" Relationship="HMS_DBModel.FK_tblPatientMedicine_tblPatient" FromRole="tblPatientMedicine" ToRole="tblPatientAppointment" />
+          <NavigationProperty Name="tblPatientAppointment" Relationship="Self.FK_tblPatientMedicine_tblPatient" FromRole="tblPatientMedicine" ToRole="tblPatientAppointment" />
         </EntityType>
         <EntityType Name="tblPatientStatu">
           <Key>
@@ -1019,9 +1060,9 @@
           <Property Name="PathalogistRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblPatientAppointment" Relationship="Self.FK_tblPatientTest_tblPatient" FromRole="tblPatientTest" ToRole="tblPatientAppointment" />
           <NavigationProperty Name="tblTest" Relationship="Self.FK_tblPatientTest_tblTest" FromRole="tblPatientTest" ToRole="tblTest" />
           <NavigationProperty Name="tblPatientTestDetails" Relationship="Self.FK_tblPatientTestDetails_tblPatientTest" FromRole="tblPatientTest" ToRole="tblPatientTestDetails" />
-          <NavigationProperty Name="tblPatientAppointment" Relationship="HMS_DBModel.FK_tblPatientTest_tblPatient" FromRole="tblPatientTest" ToRole="tblPatientAppointment" />
         </EntityType>
         <EntityType Name="tblPatientTestDetail">
           <Key>
@@ -1151,6 +1192,18 @@
           <NavigationProperty Name="UserInRoles" Relationship="Self.FK_UserInRole_UserID" FromRole="Users" ToRole="UserInRole" />
           <NavigationProperty Name="UserLoginHistories" Relationship="Self.FK_UserLoginHistory_Users" FromRole="Users" ToRole="UserLoginHistory" />
         </EntityType>
+        <Association Name="FK_tblPatientAdmission_tblAdmissionType">
+          <End Role="tblAdmissionType" Type="Self.tblAdmissionType" Multiplicity="0..1" />
+          <End Role="tblPatientAdmission" Type="Self.tblPatientAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAdmissionType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblPatientAdmission">
+              <PropertyRef Name="AdmissionTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblDoctor_tblHospital">
           <End Role="tblHospital" Type="Self.tblHospital" Multiplicity="0..1" />
           <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="*" />
@@ -1160,6 +1213,18 @@
             </Principal>
             <Dependent Role="tblDoctor">
               <PropertyRef Name="HospitalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatientAppointment_tblDoctor">
+          <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="0..1" />
+          <End Role="tblPatientAppointment" Type="Self.tblPatientAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDoctor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblPatientAppointment">
+              <PropertyRef Name="DoctorID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1199,6 +1264,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblPatient_room_tblHospitalRoom">
+          <End Role="tblHospitalRoom" Type="Self.tblHospitalRoom" Multiplicity="0..1" />
+          <End Role="tblPatientAdmission" Type="Self.tblPatientAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblHospitalRoom">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblPatientAdmission">
+              <PropertyRef Name="HospitalRoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblMedicine_tblMedicineCategory">
           <End Role="tblMedicineCategory" Type="Self.tblMedicineCategory" Multiplicity="0..1" />
           <End Role="tblMedicine" Type="Self.tblMedicine" Multiplicity="*" />
@@ -1220,6 +1297,78 @@
             </Principal>
             <Dependent Role="tblPatientMedicine">
               <PropertyRef Name="MedicineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatientAppointment_tblPatient">
+          <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="0..1" />
+          <End Role="tblPatientAppointment" Type="Self.tblPatientAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatient">
+              <PropertyRef Name="Patient_id" />
+            </Principal>
+            <Dependent Role="tblPatientAppointment">
+              <PropertyRef Name="PatientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatient_room_tblPatient">
+          <End Role="tblPatientAppointment" Type="Self.tblPatientAppointment" Multiplicity="0..1" />
+          <End Role="tblPatientAdmission" Type="Self.tblPatientAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatientAppointment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblPatientAdmission">
+              <PropertyRef Name="PatientAppointmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatient_room_tblPatientBill">
+          <End Role="tblPatientBill" Type="Self.tblPatientBill" Multiplicity="0..1" />
+          <End Role="tblPatientAdmission" Type="Self.tblPatientAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatientBill">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblPatientAdmission">
+              <PropertyRef Name="PatientBill_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatientBill_tblPatient">
+          <End Role="tblPatientAppointment" Type="Self.tblPatientAppointment" Multiplicity="0..1" />
+          <End Role="tblPatientBill" Type="Self.tblPatientBill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatientAppointment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblPatientBill">
+              <PropertyRef Name="PatientAppointmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatientMedicine_tblPatient">
+          <End Role="tblPatientAppointment" Type="Self.tblPatientAppointment" Multiplicity="0..1" />
+          <End Role="tblPatientMedicine" Type="Self.tblPatientMedicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatientAppointment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblPatientMedicine">
+              <PropertyRef Name="PatientAppointmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatientTest_tblPatient">
+          <End Role="tblPatientAppointment" Type="Self.tblPatientAppointment" Multiplicity="0..1" />
+          <End Role="tblPatientTest" Type="Self.tblPatientTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatientAppointment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblPatientTest">
+              <PropertyRef Name="PatientAppointmentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1342,6 +1491,8 @@
           <EntitySet Name="tblMedicineOccurances" EntityType="Self.tblMedicineOccurance" />
           <EntitySet Name="tblMedicineTimings" EntityType="Self.tblMedicineTiming" />
           <EntitySet Name="tblPatients" EntityType="Self.tblPatient" />
+          <EntitySet Name="tblPatientAdmissions" EntityType="Self.tblPatientAdmission" />
+          <EntitySet Name="tblPatientAppointments" EntityType="Self.tblPatientAppointment" />
           <EntitySet Name="tblPatientBills" EntityType="Self.tblPatientBill" />
           <EntitySet Name="tblPatientBillDetails" EntityType="Self.tblPatientBillDetail" />
           <EntitySet Name="tblPatientMedicines" EntityType="Self.tblPatientMedicine" />
@@ -1357,9 +1508,17 @@
           <EntitySet Name="UserLoginHistories" EntityType="Self.UserLoginHistory" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
           <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_tblPatientAdmission_tblAdmissionType" Association="Self.FK_tblPatientAdmission_tblAdmissionType">
+            <End Role="tblAdmissionType" EntitySet="tblAdmissionTypes" />
+            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblDoctor_tblHospital" Association="Self.FK_tblDoctor_tblHospital">
             <End Role="tblHospital" EntitySet="tblHospitals" />
             <End Role="tblDoctor" EntitySet="tblDoctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatientAppointment_tblDoctor" Association="Self.FK_tblPatientAppointment_tblDoctor">
+            <End Role="tblDoctor" EntitySet="tblDoctors" />
+            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
           </AssociationSet>
           <AssociationSet Name="FK_tblHospitalRoom_tblHospital" Association="Self.FK_tblHospitalRoom_tblHospital">
             <End Role="tblHospital" EntitySet="tblHospitals" />
@@ -1373,6 +1532,10 @@
             <End Role="tblRoomType" EntitySet="tblRoomTypes" />
             <End Role="tblHospitalRoom" EntitySet="tblHospitalRooms" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblPatient_room_tblHospitalRoom" Association="Self.FK_tblPatient_room_tblHospitalRoom">
+            <End Role="tblHospitalRoom" EntitySet="tblHospitalRooms" />
+            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblMedicine_tblMedicineCategory" Association="Self.FK_tblMedicine_tblMedicineCategory">
             <End Role="tblMedicineCategory" EntitySet="tblMedicineCategories" />
             <End Role="tblMedicine" EntitySet="tblMedicines" />
@@ -1380,6 +1543,30 @@
           <AssociationSet Name="FK_tblPatientMedicine_tblMedicine" Association="Self.FK_tblPatientMedicine_tblMedicine">
             <End Role="tblMedicine" EntitySet="tblMedicines" />
             <End Role="tblPatientMedicine" EntitySet="tblPatientMedicines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatientAppointment_tblPatient" Association="Self.FK_tblPatientAppointment_tblPatient">
+            <End Role="tblPatient" EntitySet="tblPatients" />
+            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatient_room_tblPatient" Association="Self.FK_tblPatient_room_tblPatient">
+            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
+            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatient_room_tblPatientBill" Association="Self.FK_tblPatient_room_tblPatientBill">
+            <End Role="tblPatientBill" EntitySet="tblPatientBills" />
+            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatientBill_tblPatient" Association="Self.FK_tblPatientBill_tblPatient">
+            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
+            <End Role="tblPatientBill" EntitySet="tblPatientBills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatientMedicine_tblPatient" Association="Self.FK_tblPatientMedicine_tblPatient">
+            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
+            <End Role="tblPatientMedicine" EntitySet="tblPatientMedicines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatientTest_tblPatient" Association="Self.FK_tblPatientTest_tblPatient">
+            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
+            <End Role="tblPatientTest" EntitySet="tblPatientTests" />
           </AssociationSet>
           <AssociationSet Name="FK_tblPatientBillDetails_tblPatientBill" Association="Self.FK_tblPatientBillDetails_tblPatientBill">
             <End Role="tblPatientBill" EntitySet="tblPatientBills" />
@@ -1437,45 +1624,11 @@
             <End Role="tblEmployeeType" EntitySet="tblEmployeeTypes" />
             <End Role="tblEmployee" EntitySet="tblEmployees" />
           </AssociationSet>
-          <FunctionImport Name="GetPatientList" ReturnType="Collection(HMS_DBModel.GetPatientList_Result)" />
-          <EntitySet Name="tblPatientAdmissions" EntityType="HMS_DBModel.tblPatientAdmission" />
-          <EntitySet Name="tblPatientAppointments" EntityType="HMS_DBModel.tblPatientAppointment" />
-          <AssociationSet Name="FK_tblPatientAdmission_tblAdmissionType" Association="HMS_DBModel.FK_tblPatientAdmission_tblAdmissionType">
-            <End Role="tblAdmissionType" EntitySet="tblAdmissionTypes" />
-            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatientAppointment_tblDoctor" Association="HMS_DBModel.FK_tblPatientAppointment_tblDoctor">
+          <AssociationSet Name="FK_tblPatientAppointment_tblDoctor1" Association="HMS_DBModel.FK_tblPatientAppointment_tblDoctor1">
             <End Role="tblEmployee" EntitySet="tblEmployees" />
             <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblPatient_room_tblHospitalRoom" Association="HMS_DBModel.FK_tblPatient_room_tblHospitalRoom">
-            <End Role="tblHospitalRoom" EntitySet="tblHospitalRooms" />
-            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatientAppointment_tblPatient" Association="HMS_DBModel.FK_tblPatientAppointment_tblPatient">
-            <End Role="tblPatient" EntitySet="tblPatients" />
-            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatient_room_tblPatient" Association="HMS_DBModel.FK_tblPatient_room_tblPatient">
-            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
-            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatient_room_tblPatientBill" Association="HMS_DBModel.FK_tblPatient_room_tblPatientBill">
-            <End Role="tblPatientBill" EntitySet="tblPatientBills" />
-            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatientBill_tblPatient" Association="HMS_DBModel.FK_tblPatientBill_tblPatient">
-            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
-            <End Role="tblPatientBill" EntitySet="tblPatientBills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatientMedicine_tblPatient" Association="HMS_DBModel.FK_tblPatientMedicine_tblPatient">
-            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
-            <End Role="tblPatientMedicine" EntitySet="tblPatientMedicines" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatientTest_tblPatient" Association="HMS_DBModel.FK_tblPatientTest_tblPatient">
-            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
-            <End Role="tblPatientTest" EntitySet="tblPatientTests" />
-          </AssociationSet>
+          <FunctionImport Name="GetPatientList" ReturnType="Collection(HMS_DBModel.GetPatientList_Result)" />
           </EntityContainer>
         <EntityType Name="tblEmployeeSatu">
           <Key>
@@ -1524,7 +1677,7 @@
           <NavigationProperty Name="tblEmployeeQualification" Relationship="HMS_DBModel.FK_tblEmployee_tblEmployeeQualification" FromRole="tblEmployee" ToRole="tblEmployeeQualification" />
           <NavigationProperty Name="tblEmployeeSatu" Relationship="HMS_DBModel.FK_tblEmployee_tblEmployeeSatus" FromRole="tblEmployee" ToRole="tblEmployeeSatu" />
           <NavigationProperty Name="tblEmployeeType" Relationship="HMS_DBModel.FK_tblEmployee_tblEmployeeType" FromRole="tblEmployee" ToRole="tblEmployeeType" />
-          <NavigationProperty Name="tblPatientAppointments" Relationship="HMS_DBModel.FK_tblPatientAppointment_tblDoctor" FromRole="tblEmployee" ToRole="tblPatientAppointment" />
+          <NavigationProperty Name="tblPatientAppointments" Relationship="HMS_DBModel.FK_tblPatientAppointment_tblDoctor1" FromRole="tblEmployee" ToRole="tblPatientAppointment" />
         </EntityType>
         <Association Name="FK_tblEmployee_tblEmpDesignation">
           <End Type="HMS_DBModel.tblEmpDesignation" Role="tblEmpDesignation" Multiplicity="0..1" />
@@ -1574,6 +1727,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblPatientAppointment_tblDoctor1">
+          <End Type="HMS_DBModel.tblEmployee" Role="tblEmployee" Multiplicity="0..1" />
+          <End Type="HMS_DBModel.tblPatientAppointment" Role="tblPatientAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblEmployee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblPatientAppointment">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <ComplexType Name="GetPatientList_Result">
           <Property Type="Int32" Name="Patient_id" Nullable="false" />
           <Property Type="String" Name="Patient_Name" Nullable="true" MaxLength="50" />
@@ -1588,153 +1753,6 @@
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="Int32" Name="Appointment_id" Nullable="false" />
         </ComplexType>
-        <EntityType Name="tblPatientAdmission">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PatientAppointmentID" Type="Int32" />
-          <Property Name="HospitalRoomID" Type="Int32" />
-          <Property Name="AdmissionTypeID" Type="Int32" />
-          <Property Name="PatientBill_ID" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedBy" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="DisChargeDate" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="AdmissionDate" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblAdmissionType" Relationship="HMS_DBModel.FK_tblPatientAdmission_tblAdmissionType" FromRole="tblPatientAdmission" ToRole="tblAdmissionType" />
-          <NavigationProperty Name="tblHospitalRoom" Relationship="HMS_DBModel.FK_tblPatient_room_tblHospitalRoom" FromRole="tblPatientAdmission" ToRole="tblHospitalRoom" />
-          <NavigationProperty Name="tblPatientAppointment" Relationship="HMS_DBModel.FK_tblPatient_room_tblPatient" FromRole="tblPatientAdmission" ToRole="tblPatientAppointment" />
-          <NavigationProperty Name="tblPatientBill" Relationship="HMS_DBModel.FK_tblPatient_room_tblPatientBill" FromRole="tblPatientAdmission" ToRole="tblPatientBill" />
-        </EntityType>
-        <EntityType Name="tblPatientAppointment">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PatientID" Type="Int32" />
-          <Property Name="DoctorID" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="isActive" Type="Boolean" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="AppointmentDate" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblEmployee" Relationship="HMS_DBModel.FK_tblPatientAppointment_tblDoctor" FromRole="tblPatientAppointment" ToRole="tblEmployee" />
-          <NavigationProperty Name="tblPatient" Relationship="HMS_DBModel.FK_tblPatientAppointment_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatient" />
-          <NavigationProperty Name="tblPatientAdmissions" Relationship="HMS_DBModel.FK_tblPatient_room_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatientAdmission" />
-          <NavigationProperty Name="tblPatientBills" Relationship="HMS_DBModel.FK_tblPatientBill_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatientBill" />
-          <NavigationProperty Name="tblPatientMedicines" Relationship="HMS_DBModel.FK_tblPatientMedicine_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatientMedicine" />
-          <NavigationProperty Name="tblPatientTests" Relationship="HMS_DBModel.FK_tblPatientTest_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatientTest" />
-        </EntityType>
-        <Association Name="FK_tblPatientAdmission_tblAdmissionType">
-          <End Type="HMS_DBModel.tblAdmissionType" Role="tblAdmissionType" Multiplicity="0..1" />
-          <End Type="HMS_DBModel.tblPatientAdmission" Role="tblPatientAdmission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblAdmissionType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblPatientAdmission">
-              <PropertyRef Name="AdmissionTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPatientAppointment_tblDoctor">
-          <End Type="HMS_DBModel.tblEmployee" Role="tblEmployee" Multiplicity="0..1" />
-          <End Type="HMS_DBModel.tblPatientAppointment" Role="tblPatientAppointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblEmployee">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblPatientAppointment">
-              <PropertyRef Name="DoctorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPatient_room_tblHospitalRoom">
-          <End Type="HMS_DBModel.tblHospitalRoom" Role="tblHospitalRoom" Multiplicity="0..1" />
-          <End Type="HMS_DBModel.tblPatientAdmission" Role="tblPatientAdmission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblHospitalRoom">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblPatientAdmission">
-              <PropertyRef Name="HospitalRoomID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPatientAppointment_tblPatient">
-          <End Type="HMS_DBModel.tblPatient" Role="tblPatient" Multiplicity="0..1" />
-          <End Type="HMS_DBModel.tblPatientAppointment" Role="tblPatientAppointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblPatient">
-              <PropertyRef Name="Patient_id" />
-            </Principal>
-            <Dependent Role="tblPatientAppointment">
-              <PropertyRef Name="PatientID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPatient_room_tblPatient">
-          <End Type="HMS_DBModel.tblPatientAppointment" Role="tblPatientAppointment" Multiplicity="0..1" />
-          <End Type="HMS_DBModel.tblPatientAdmission" Role="tblPatientAdmission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblPatientAppointment">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblPatientAdmission">
-              <PropertyRef Name="PatientAppointmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPatient_room_tblPatientBill">
-          <End Type="HMS_DBModel.tblPatientBill" Role="tblPatientBill" Multiplicity="0..1" />
-          <End Type="HMS_DBModel.tblPatientAdmission" Role="tblPatientAdmission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblPatientBill">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblPatientAdmission">
-              <PropertyRef Name="PatientBill_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPatientBill_tblPatient">
-          <End Type="HMS_DBModel.tblPatientAppointment" Role="tblPatientAppointment" Multiplicity="0..1" />
-          <End Type="HMS_DBModel.tblPatientBill" Role="tblPatientBill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblPatientAppointment">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblPatientBill">
-              <PropertyRef Name="PatientAppointmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPatientMedicine_tblPatient">
-          <End Type="HMS_DBModel.tblPatientAppointment" Role="tblPatientAppointment" Multiplicity="0..1" />
-          <End Type="HMS_DBModel.tblPatientMedicine" Role="tblPatientMedicine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblPatientAppointment">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblPatientMedicine">
-              <PropertyRef Name="PatientAppointmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPatientTest_tblPatient">
-          <End Type="HMS_DBModel.tblPatientAppointment" Role="tblPatientAppointment" Multiplicity="0..1" />
-          <End Type="HMS_DBModel.tblPatientTest" Role="tblPatientTest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblPatientAppointment">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblPatientTest">
-              <PropertyRef Name="PatientAppointmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1854,6 +1872,37 @@
                 <ScalarProperty Name="Age" ColumnName="Age" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPatientAdmissions">
+            <EntityTypeMapping TypeName="HMS_DBModel.tblPatientAdmission">
+              <MappingFragment StoreEntitySet="tblPatientAdmission">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PatientAppointmentID" ColumnName="PatientAppointmentID" />
+                <ScalarProperty Name="HospitalRoomID" ColumnName="HospitalRoomID" />
+                <ScalarProperty Name="AdmissionTypeID" ColumnName="AdmissionTypeID" />
+                <ScalarProperty Name="PatientBill_ID" ColumnName="PatientBill_ID" />
+                <ScalarProperty Name="AdmissionDate" ColumnName="AdmissionDate" />
+                <ScalarProperty Name="DisChargeDate" ColumnName="DisChargeDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPatientAppointments">
+            <EntityTypeMapping TypeName="HMS_DBModel.tblPatientAppointment">
+              <MappingFragment StoreEntitySet="tblPatientAppointment">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2105,38 +2154,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="tblPatientAdmissions">
-            <EntityTypeMapping TypeName="HMS_DBModel.tblPatientAdmission">
-              <MappingFragment StoreEntitySet="tblPatientAdmission">
-                <ScalarProperty Name="AdmissionDate" ColumnName="AdmissionDate" />
-                <ScalarProperty Name="DisChargeDate" ColumnName="DisChargeDate" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="PatientBill_ID" ColumnName="PatientBill_ID" />
-                <ScalarProperty Name="AdmissionTypeID" ColumnName="AdmissionTypeID" />
-                <ScalarProperty Name="HospitalRoomID" ColumnName="HospitalRoomID" />
-                <ScalarProperty Name="PatientAppointmentID" ColumnName="PatientAppointmentID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblPatientAppointments">
-            <EntityTypeMapping TypeName="HMS_DBModel.tblPatientAppointment">
-              <MappingFragment StoreEntitySet="tblPatientAppointment">
-                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
-                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
