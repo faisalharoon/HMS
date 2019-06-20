@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "AddPatientTest";
 }
-@using (Html.BeginForm("AddPatientTest", "Patient", new { Patient_id = Request.QueryString["Patient_id"] }))
+@using (Html.BeginForm("AddPatientTest", "Patient", new { Patient_id = Request.QueryString["Patient_id"], PatientTestID = Request.QueryString["PatientTestID"] }))
 {
 
     @Html.ValidationSummary(true)
@@ -52,8 +52,57 @@
                             </div>
 
                             <div class="body table-responsive" id="testDetail">
-                                </div>
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Test Name</th>
+                                            <th>Attribute Name</th>
+                                            <th>Normal Range</th>
+                                            <th>Patitent Result</th>
+
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="TblTestDetailBody">
+                                        @{ 
+                                            if(Model!=null)
+                                            {
+                                                var details = ViewBag.patientTestDetails;
+                                                foreach (var d in details)
+                                                {
+                                                <tr>
+
+                                            <td><input type="hidden" id="attributeId" name="attributeId" value="@d.TestAttributeID" />  @d.TestName  </td>
+                                            <td>  @d.AttributeName </td>
+                                            
+                                            <td>  @d.NormalRange</td>
+                                            
+                                            <td>
+                                            <input type="text" id="txtResult" name="Result" required value="@d.Result" />
+                                            </td>
+                                        </tr>}
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
+                            <label id="msg"></label>
+                            <div class="col-sm-12">
+                                @{
+                                    string Text = "Add Patient Test";
+                                    if (Model!= null)
+                                    {
+                                        if (Model.ID != 0)
+                                        {
+                                            Text = "Update Patient Test";
+                                        }
+                                    }
+                                }
+                                <button type="submit"  class="btn btn-raised g-bg-cyan">@Text</button>
+                            </div>
+                        </div>
                         </div>
                 </div>
 
@@ -65,10 +114,13 @@
     </section>
     <script>
         $(document).ready(function () {
+           // $("#testDetail").hide();
             debugger;
             $('#ddltest').change(function () {
                 debugger;
+                var row = '';
                 var id = $('#ddltest').find(":selected").val();
+                var test_name = $('#ddltest').find(":selected").text();
                 if (id != 0 && id != "") {
                     debugger;
                     $.ajax({
@@ -82,14 +134,33 @@
                         success: function (data) {
                             debugger;
                             if (data.Success === "true") {
-                                var lstDesignation = data.Data.Test;
-                                if (lstDesignation.length > 0) {
-                                    for (var i = 0; i < lstDesignation.length; i++) {
-                                     
-                                    }
-                                }
+                                var Test = data.Data.test;
+                                if (Test.length > 0) {
 
-                            }
+
+                                    Test = Test[0];
+                                    row = '  <tr >' +
+                                        '<td style="display:none;" ><input type="hidden" id="attributeId" name="attributeId" value="' + Test.ID +'" /></td>' +
+
+                                        '<td>' + test_name + '</td>' +
+                                        '<td>' + Test.AttributeName + '</td>' +
+                                        '<td> ' + Test.NormalRange + '</td>' +
+                                        '<td><input type="text" id="txtResult" name="Result" required /></td>' +
+
+
+                                        '</tr>';
+                                    $('#TblTestDetailBody').html(row);
+                                    $("#testDetail").show();
+
+                                }
+                                else {
+                                    $('#TblTestDetailBody').html('');
+                                    $("#testDetail").hide();
+                                    $("#msg").text('No details Found.');
+
+
+                                }
+                        }
                         },
                         error: function () {
                         },

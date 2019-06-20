@@ -495,31 +495,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblPatientAppointment_tblDoctor">
-          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="0..1" />
-          <End Role="tblPatientAppointment" Type="Self.tblPatientAppointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblEmployee">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblPatientAppointment">
-              <PropertyRef Name="DoctorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPatientAppointment_tblPatient">
-          <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="0..1" />
-          <End Role="tblPatientAppointment" Type="Self.tblPatientAppointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblPatient">
-              <PropertyRef Name="Patient_id" />
-            </Principal>
-            <Dependent Role="tblPatientAppointment">
-              <PropertyRef Name="PatientID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPatientBill_tblPatient">
+        <Association Name="FK_tblPatientBill_tblPatientAppointment">
           <End Role="tblPatientAppointment" Type="Self.tblPatientAppointment" Multiplicity="0..1" />
           <End Role="tblPatientBill" Type="Self.tblPatientBill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -688,6 +664,7 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="GetPatientList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
+        <Function Name="GetpatientTestDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
         <EntityContainer Name="HMS_DBModelStoreContainer">
           <EntitySet Name="tblAdmissionType" EntityType="Self.tblAdmissionType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDoctor" EntityType="Self.tblDoctor" Schema="dbo" store:Type="Tables" />
@@ -768,15 +745,7 @@
             <End Role="tblAdmissionType" EntitySet="tblAdmissionType" />
             <End Role="tblPatientAdmission" EntitySet="tblPatientAdmission" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblPatientAppointment_tblDoctor" Association="Self.FK_tblPatientAppointment_tblDoctor">
-            <End Role="tblEmployee" EntitySet="tblEmployee" />
-            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatientAppointment_tblPatient" Association="Self.FK_tblPatientAppointment_tblPatient">
-            <End Role="tblPatient" EntitySet="tblPatient" />
-            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatientBill_tblPatient" Association="Self.FK_tblPatientBill_tblPatient">
+          <AssociationSet Name="FK_tblPatientBill_tblPatientAppointment" Association="Self.FK_tblPatientBill_tblPatientAppointment">
             <End Role="tblPatientAppointment" EntitySet="tblPatientAppointment" />
             <End Role="tblPatientBill" EntitySet="tblPatientBill" />
           </AssociationSet>
@@ -1476,6 +1445,7 @@
             <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
             <End Role="tblPatientTest" EntitySet="tblPatientTests" />
           </AssociationSet>
+          <FunctionImport Name="GetpatientTestDetails" ReturnType="Collection(HMS_DBModel.GetpatientTestDetails_Result)" />
           </EntityContainer>
         <EntityType Name="tblEmployeeSatu">
           <Key>
@@ -1735,6 +1705,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GetpatientTestDetails_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="PatientTestID" Nullable="true" />
+          <Property Type="Int32" Name="TestAttributeID" Nullable="true" />
+          <Property Type="String" Name="Result" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="CreatedAt" Nullable="true" Precision="23" />
+          <Property Type="String" Name="CreatedBy" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="TestName" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="AttributeName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="NormalRange" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="PatientAppointmentID" Nullable="true" />
+          <Property Type="String" Name="PathalogistRemarks" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2136,6 +2119,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetpatientTestDetails" FunctionName="HMS_DBModel.Store.GetpatientTestDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HMS_DBModel.GetpatientTestDetails_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PatientTestID" ColumnName="PatientTestID" />
+                <ScalarProperty Name="TestAttributeID" ColumnName="TestAttributeID" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="TestName" ColumnName="TestName" />
+                <ScalarProperty Name="AttributeName" ColumnName="AttributeName" />
+                <ScalarProperty Name="NormalRange" ColumnName="NormalRange" />
+                <ScalarProperty Name="PatientAppointmentID" ColumnName="PatientAppointmentID" />
+                <ScalarProperty Name="PathalogistRemarks" ColumnName="PathalogistRemarks" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
