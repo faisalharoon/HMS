@@ -231,7 +231,30 @@ namespace HMS.Controllers
         // POST: Patient/Delete/5
         public ActionResult AddPatientTest(int? patient_id)
         {
+
+            List<tblPatientAppointment> lstAppointment = new PatientDAL().getPatientAppointments(Convert.ToInt32(patient_id)).ToList();
+            ViewBag.lstAppointment = lstAppointment;
+            List<tblTest> lstTest = new TestDAL().GetAllTests();
+            ViewBag.lstTest = lstTest;
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetTestDetails(int? test_id)
+        {
+            var testDetails = new TestDAL().GetTestAttributesbyTestId(Convert.ToInt32(test_id));
+
+            var jsonResult = Json((new
+            {
+                Success = "true",
+                Data = new
+                {
+                    Test = testDetails
+
+                }
+            }), JsonRequestBehavior.AllowGet);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
     }
 }

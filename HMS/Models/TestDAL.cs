@@ -110,11 +110,19 @@ namespace HMS.Models
             return db.tblTestAttributes.ToList();
 
         }
+
         public void DeleteAttribute(int id)
         {
             var del = db.tblTestAttributes.FirstOrDefault(x => x.ID == id);
             db.tblTestAttributes.Remove(del);
             db.SaveChanges();
+        }
+
+
+
+        public tblTestAttribute GetTestAttributesbyTestId(int test_id)
+        {
+            return db.tblTestAttributes.Where(x =>x.TestID == test_id).FirstOrDefault();
         }
     }
 }

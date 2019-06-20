@@ -105,8 +105,10 @@ namespace HMS.Models
             db.tblPatients.Remove(del);
             db.SaveChanges();
         }
+        public List<tblPatientAppointment> getPatientAppointments(int patient_id)
 
-
-    
+        {
+            return db.tblPatientAppointments.Where(x => x.PatientID == patient_id && x.isActive == true).ToList();
+        }
     }
 }
