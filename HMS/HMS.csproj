@@ -140,8 +140,8 @@
     <Compile Include="Controllers\HospitalController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
-    <Compile Include="Controllers\PatientBillsController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
+    <Compile Include="Controllers\PatientsBillController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -266,6 +266,7 @@
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\bundles\chartscripts.bundle.js" />
@@ -416,11 +417,11 @@
     <Content Include="Views\Test\AddTestAttribute.cshtml" />
     <Content Include="Views\Test\TestAttributes.cshtml" />
     <Content Include="Views\Patient\AddPatientTest.cshtml" />
-    <Content Include="Views\PatientBills\Create.cshtml" />
-    <Content Include="Views\PatientBills\Delete.cshtml" />
-    <Content Include="Views\PatientBills\Details.cshtml" />
-    <Content Include="Views\PatientBills\Edit.cshtml" />
-    <Content Include="Views\PatientBills\Index.cshtml" />
+    <Content Include="Views\PatientsBill\Create.cshtml" />
+    <Content Include="Views\PatientsBill\Delete.cshtml" />
+    <Content Include="Views\PatientsBill\Details.cshtml" />
+    <Content Include="Views\PatientsBill\Edit.cshtml" />
+    <Content Include="Views\PatientsBill\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

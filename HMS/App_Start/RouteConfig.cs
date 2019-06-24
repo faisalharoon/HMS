@@ -188,8 +188,14 @@ defaults: new { controller = "Patient", action = "Delete", id = UrlParameter.Opt
             routes.MapRoute(
               name: "PatientBills",
               url: "patient-bills-listings",
-              defaults: new { controller = "PatientBills", action = "Index", id = UrlParameter.Optional }
+              defaults: new { controller = "PatientsBill", action = "Index", id = UrlParameter.Optional }
           );
+
+            routes.MapRoute(
+            name: "PatientCreateBills",
+            url: "patient-create-bill",
+            defaults: new { controller = "PatientsBill", action = "Create", id = UrlParameter.Optional }
+        );
         }
     }
 }

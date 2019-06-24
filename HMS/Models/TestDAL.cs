@@ -67,7 +67,7 @@ namespace HMS.Models
 
             update.Property(x => x.TestCategoryID).IsModified = true;
             update.Property(x => x.TestName).IsModified = true;
-             db.SaveChanges();
+            db.SaveChanges();
         }
         public List<tblTest> GetAllTests()
         {
