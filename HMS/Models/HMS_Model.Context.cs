@@ -63,5 +63,10 @@ namespace HMS.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPatientList_Result>("GetPatientList");
         }
+    
+        public virtual ObjectResult<GetpatientTestDetails_Result> GetpatientTestDetails()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetpatientTestDetails_Result>("GetpatientTestDetails");
+        }
     }
 }

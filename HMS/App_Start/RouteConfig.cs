@@ -22,6 +22,11 @@ url: "tests",
 defaults: new { controller = "Test", action = "TestList" }
 );
             routes.MapRoute(
+name: "GetTestDetails",
+url: "GetTestDetails",
+defaults: new { controller = "Patient", action = "GetTestDetails", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
 name: "add-test",
 url: "add-test",
 defaults: new { controller = "Test", action = "AddTest" }
@@ -137,6 +142,9 @@ name: "addDoctor",
 url: "add-doctor",
 defaults: new { controller = "Doctor", action = "addDoctor", id = UrlParameter.Optional }
 );
+
+
+
             routes.MapRoute(
 name: "PatientAppointment",
 url: "patient-appointment",

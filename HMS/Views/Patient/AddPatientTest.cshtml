@@ -1,3 +1,179 @@
 ﻿@model HMS.Models.tblPatientTest
 
+@{
+    ViewBag.Title = "AddPatientTest";
+}
+@using (Html.BeginForm("AddPatientTest", "Patient", new { Patient_id = Request.QueryString["Patient_id"], PatientTestID = Request.QueryString["PatientTestID"] }))
+{
 
+    @Html.ValidationSummary(true)
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h2>Add Patient Test</h2>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Basic Information</h2>
+
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <div class="form-group drop-custum">
+                                            @Html.DropDownListFor(model => model.PatientAppointmentID, new SelectList(ViewBag.lstAppointment, "ID", "AppointmentDate"), "---Select Appointment---", new { @class = "form-control show-tick", @id = "ddlAppointmentDate" })
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <div class="form-group drop-custum">
+                                            @Html.DropDownListFor(model => model.TestID, new SelectList(ViewBag.lstTest, "ID", "TestName"), "---Select Test---", new { @class = "form-control show-tick", @id = "ddltest" })
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            @Html.TextAreaFor(x => x.PathalogistRemarks, new { @type = "Text", @class = "form-control no-resize", @id = "txtremars", @placeholder = "Pathalogist Remarks", @required = "required" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="body table-responsive" id="testDetail">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Test Name</th>
+                                            <th>Attribute Name</th>
+                                            <th>Normal Range</th>
+                                            <th>Patitent Result</th>
+
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="TblTestDetailBody">
+                                        @{ 
+                                            if(Model!=null)
+                                            {
+                                                var details = ViewBag.patientTestDetails;
+                                                foreach (var d in details)
+                                                {
+                                                <tr>
+
+                                            <td><input type="hidden" id="attributeId" name="attributeId" value="@d.TestAttributeID" />  @d.TestName  </td>
+                                            <td>  @d.AttributeName </td>
+                                            
+                                            <td>  @d.NormalRange</td>
+                                            
+                                            <td>
+                                            <input type="text" id="txtResult" name="Result" required value="@d.Result" />
+                                            </td>
+                                        </tr>}
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <label id="msg"></label>
+                            <div class="col-sm-12">
+                                @{
+                                    string Text = "Add Patient Test";
+                                    if (Model!= null)
+                                    {
+                                        if (Model.ID != 0)
+                                        {
+                                            Text = "Update Patient Test";
+                                        }
+                                    }
+                                }
+                                <button type="submit"  class="btn btn-raised g-bg-cyan">@Text</button>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+
+            </div>
+            <div class="overlay">
+                <div id="loading-img"></div>
+                Loading...
+            </div>
+    </section>
+    <script>
+        $(document).ready(function () {
+           // $("#testDetail").hide();
+            debugger;
+            $('#ddltest').change(function () {
+                debugger;
+                var row = '';
+                var id = $('#ddltest').find(":selected").val();
+                var test_name = $('#ddltest').find(":selected").text();
+                if (id != 0 && id != "") {
+                    debugger;
+                    $.ajax({
+                        url: "/GetTestDetails",
+                        type: 'post',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        data: '{"test_id":"' + id + '"}',
+
+                  
+                        success: function (data) {
+                            debugger;
+                            if (data.Success === "true") {
+                                var Test = data.Data.test;
+                                if (Test.length > 0) {
+
+
+                                    Test = Test[0];
+                                    row = '  <tr >' +
+                                        '<td style="display:none;" ><input type="hidden" id="attributeId" name="attributeId" value="' + Test.ID +'" /></td>' +
+
+                                        '<td>' + test_name + '</td>' +
+                                        '<td>' + Test.AttributeName + '</td>' +
+                                        '<td> ' + Test.NormalRange + '</td>' +
+                                        '<td><input type="text" id="txtResult" name="Result" required /></td>' +
+
+
+                                        '</tr>';
+                                    $('#TblTestDetailBody').html(row);
+                                    $("#testDetail").show();
+
+                                }
+                                else {
+                                    $('#TblTestDetailBody').html('');
+                                    $("#testDetail").hide();
+                                    $("#msg").text('No details Found.');
+
+
+                                }
+                        }
+                        },
+                        error: function () {
+                        },
+                       
+                    });
+                }
+            });
+        });
+        function showLoader() {
+            $(".overlay").show();
+        }
+        function hideLoader() {
+            $(".overlay").hide();
+        }
+    </script>
+}

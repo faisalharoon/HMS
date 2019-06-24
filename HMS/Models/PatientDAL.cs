@@ -105,8 +105,49 @@ namespace HMS.Models
             db.tblPatients.Remove(del);
             db.SaveChanges();
         }
+        public List<tblPatientAppointment> getPatientAppointments(int patient_id)
+
+        {
+            return db.tblPatientAppointments.Where(x => x.PatientID == patient_id && x.isActive == true).ToList();
+        }
 
 
-    
+
+        //PAtientTest
+        public void SavePatientTest(tblPatientTest obj)
+        {
+            //obj.ID = 18;
+
+            db.tblPatientTests.Add(obj);
+            db.SaveChanges();
+        }
+        public void SavePatientTestDetails(tblPatientTestDetail obj)
+        {
+            //obj.ID = 18;
+
+            db.tblPatientTestDetails.Add(obj);
+            db.SaveChanges();
+        }
+        public void UpdatePatientTest(tblPatientTest obj)
+        {
+
+            db.tblPatientTests.Attach(obj);
+            var update = db.Entry(obj);
+            update.Property(x => x.PathalogistRemarks).IsModified = true;
+            update.Property(x => x.PatientAppointmentID).IsModified = true;
+            update.Property(x => x.TestID).IsModified = true;
+                db.SaveChanges();
+        }
+        public tblPatientTest getPatientTests(int PatientTestID)
+
+        {
+            return db.tblPatientTests.Where(x => x.ID == PatientTestID).FirstOrDefault();
+        }
+        public List<GetpatientTestDetails_Result> GetPatientTestDetail(int PatientTestID)
+        {
+            return db.GetpatientTestDetails().Where(x => x.PatientTestID == PatientTestID).ToList();
+
+        }
+        
     }
 }

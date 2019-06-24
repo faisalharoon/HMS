@@ -5,9 +5,7 @@
 
 @using (Html.BeginForm("AddDoctor", "Doctor", new { Doctor_id = Request.QueryString["Doctor_id"] }))
 {
-@*}
-    @using (Html.BeginForm("AddDoctor", "Doctor", FormMethod.Post, new { enctype = "multipart/form-data" }, new { Doctor_id = Request.QueryString["Doctor_id"] }))
-    {*@
+
         @Html.ValidationSummary(true)
         <section class="content">
             <div class="container-fluid">

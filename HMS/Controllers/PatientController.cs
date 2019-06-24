@@ -229,9 +229,100 @@ namespace HMS.Controllers
         }
 
         // POST: Patient/Delete/5
-        public ActionResult AddPatientTest(int? patient_id)
+        public ActionResult AddPatientTest(int? patient_id, int? PatientTestID)
         {
-            return View();
+
+            List<tblPatientAppointment> lstAppointment = new PatientDAL().getPatientAppointments(Convert.ToInt32(patient_id)).ToList();
+            ViewBag.lstAppointment = lstAppointment;
+            List<tblTest> lstTest = new TestDAL().GetAllTests();
+            ViewBag.lstTest = lstTest;
+            var model = new tblPatientTest();
+       
+            if (patient_id != null && PatientTestID != null)
+            {
+
+                model = new PatientDAL().getPatientTests(Convert.ToInt32(PatientTestID));
+                var patientTestDetails = new PatientDAL().GetPatientTestDetail(Convert.ToInt32(PatientTestID));
+                if (patientTestDetails != null)
+                {
+                    ViewBag.patientTestDetails = patientTestDetails;
+                }
+
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult AddPatientTest(tblPatientTest obj, int? patient_id, int? PatientTestID)
+        {
+            try
+            {
+                string username = "";
+                HttpCookie cookie = HttpContext.Request.Cookies["AdminCookies"];
+                if (cookie != null)
+                {
+                    username = Convert.ToString(cookie.Values["UserName"]);
+                }
+                obj.CreatedAt = DateTime.UtcNow;
+                obj.CreatedBy = username;
+             
+                // TODO: Add insert logic here
+                if (PatientTestID != null && PatientTestID != 0)
+                {
+                    obj.ID = Convert.ToInt32(PatientTestID);
+                    new PatientDAL().UpdatePatientTest(obj);
+                    PatientTestID = obj.ID;
+                    TempData["AlertTask"] = "Patient Test updated successfully";
+
+                }
+                else
+                {
+                    new PatientDAL().SavePatientTest(obj);
+                    PatientTestID = obj.ID;
+                    TempData["AlertTask"] = "Patient Test added successfully";
+                }
+                string result = Request.Form["Result"];
+                string attributeId = Request.Form["attributeId"];
+
+                tblPatientTestDetail test_details = new tblPatientTestDetail();
+                test_details.Result = result;
+                test_details.PatientTestID = PatientTestID;
+                test_details.TestAttributeID = Convert.ToInt32(attributeId);
+                test_details.CreatedAt = DateTime.UtcNow;
+                test_details.CreatedBy = username;
+               new PatientDAL().SavePatientTestDetails(test_details);
+
+                return Redirect("/patient-tests");
+                      }
+            catch (Exception ex)
+            {
+                string error = ex.ToString();
+                return View();
+            }
+
+        }
+
+
+        public ActionResult GetTestDetails(string test_id)
+        {
+            var testDetails = new TestDAL().GetAllTestAttribute().Where(x=>x.TestID==(Convert.ToInt32(test_id))).ToList();
+
+            var test = testDetails.Select(S => new {
+                TestID = S.TestID,
+                NormalRange = S.NormalRange,
+                ID = S.ID,
+                AttributeName = S.AttributeName
+            });
+              var jsonResult = Json((new
+            {
+                Success = "true",
+                Data = new
+                {
+                    test = test
+
+                }
+            }), JsonRequestBehavior.AllowGet);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
     }
 }
