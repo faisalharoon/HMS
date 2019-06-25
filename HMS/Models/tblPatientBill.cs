@@ -35,11 +35,5 @@ namespace HMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPatientAdmission> tblPatientAdmissions { get; set; }
         public virtual tblPatientAppointment tblPatientAppointment { get; set; }
-
-        public List<tblPatientBill> objList { get; set; }
-
-
-
-
     }
 }

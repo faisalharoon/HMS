@@ -138,14 +138,14 @@ namespace HMS.Models
             update.Property(x => x.TestID).IsModified = true;
                 db.SaveChanges();
         }
-        public tblPatientTest getPatientTests(int PatientTestID)
+        public tblPatientTest getPatientTestsbypatient_id(int patient_id)
 
         {
-            return db.tblPatientTests.Where(x => x.ID == PatientTestID).FirstOrDefault();
+            return db.tblPatientTests.Where(x => x.patient_id == patient_id).FirstOrDefault();
         }
-        public List<GetpatientTestDetails_Result> GetPatientTestDetail(int PatientTestID)
+        public List<GetpatientTestDetails_Result> GetPatientTestDetail(int patient_id)
         {
-            return db.GetpatientTestDetails().Where(x => x.PatientTestID == PatientTestID).ToList();
+            return db.GetpatientTestDetails().Where(x=>x.patient_id==patient_id).ToList();
 
         }
         

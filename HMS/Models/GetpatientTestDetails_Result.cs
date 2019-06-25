@@ -24,5 +24,6 @@ namespace HMS.Models
         public string NormalRange { get; set; }
         public Nullable<int> PatientAppointmentID { get; set; }
         public string PathalogistRemarks { get; set; }
+        public Nullable<int> patient_id { get; set; }
     }
 }
