@@ -21,37 +21,35 @@
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <div class="form-group drop-custum">
-                                            @Html.DropDownListFor(model => model.PatientAppointmentID, new SelectList(ViewBag.lstAppointment, "ID", "AppointmentDate"), "---Select Appointment---", new { @class = "form-control show-tick", @id = "ddlAppointmentDate" })
+                                @if (ViewBag.lstAppointment != null)
+                                {
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <div class="form-group drop-custum">
+
+                                                @Html.DropDownListFor(model => model.PatientAppointmentID, new SelectList(ViewBag.lstAppointment, "ID", "AppointmentDate"), "---Select Appointment---", new { @class = "form-control show-tick", @id = "ddlAppointmentDate" })
+                                                
 
 
-
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <div class="form-group drop-custum">
-                                            @Html.DropDownListFor(model => model.TestID, new SelectList(ViewBag.lstTest, "ID", "TestName"), "---Select Test---", new { @class = "form-control show-tick", @id = "ddltest" })
+                                }
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <div class="form-group drop-custum">
+                                                @Html.DropDownListFor(x => x.TestID, new SelectList(ViewBag.lstTest, "ID", "TestName"), "---Select Test---", new { @class = "form-control show-tick", @id = "ddltest" })
 
 
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            @Html.TextAreaFor(x => x.PathalogistRemarks, new { @type = "Text", @class = "form-control no-resize", @id = "txtremars", @placeholder = "Pathalogist Remarks", @required = "required" })
 
-                                        </div>
-                                    </div>
                                 </div>
-                            </div>
 
                             <div class="body table-responsive" id="testDetail">
+                                <h2>Patients's Test</h2>
                                 <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
 
                                     <thead>
@@ -67,20 +65,20 @@
 
                                     <tbody id="TblTestDetailBody">
                                         @{ 
-                                            if(Model!=null)
+                                            if(Model!=null && Model.ID!=0)
                                             {
                                                 var details = ViewBag.patientTestDetails;
                                                 foreach (var d in details)
                                                 {
                                                 <tr>
 
-                                            <td><input type="hidden" id="attributeId" name="attributeId" value="@d.TestAttributeID" />  @d.TestName  </td>
+                                            <td><input type="hidden" id="" name="" value="@d.TestAttributeID" />  @d.TestName  </td>
                                             <td>  @d.AttributeName </td>
                                             
                                             <td>  @d.NormalRange</td>
                                             
                                             <td>
-                                            <input type="text" id="txtResult" name="Result" required value="@d.Result" />
+                                            @d.Result
                                             </td>
                                         </tr>}
                                             }
@@ -89,6 +87,16 @@
                                 </table>
                             </div>
                             <label id="msg"></label>
+                            <div class="row clearfix">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            @Html.TextAreaFor(x => x.PathalogistRemarks, new { @type = "Text", @class = "form-control no-resize", @id = "txtremars", @placeholder = "Pathalogist Remarks", @required = "required" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-sm-12">
                                 @{
                                     string Text = "Add Patient Test";
@@ -100,12 +108,12 @@
                                         }
                                     }
                                 }
-                                <button type="submit"  class="btn btn-raised g-bg-cyan">@Text</button>
+                                <button type="submit" class="btn btn-raised g-bg-cyan">@Text</button>
                             </div>
                         </div>
                         </div>
                 </div>
-
+                <input type="hidden" id="testcount" name="testcount" value="0" />
             </div>
             <div class="overlay">
                 <div id="loading-img"></div>
@@ -114,11 +122,13 @@
     </section>
     <script>
         $(document).ready(function () {
+            var count = 0;
            // $("#testDetail").hide();
             debugger;
             $('#ddltest').change(function () {
                 debugger;
                 var row = '';
+             
                 var id = $('#ddltest').find(":selected").val();
                 var test_name = $('#ddltest').find(":selected").text();
                 if (id != 0 && id != "") {
@@ -140,22 +150,24 @@
 
                                     Test = Test[0];
                                     row = '  <tr >' +
-                                        '<td style="display:none;" ><input type="hidden" id="attributeId" name="attributeId" value="' + Test.ID +'" /></td>' +
+                                        '<td style="display:none;" ><input type="hidden" id="attributeId" name="attributeId_' + count+'" value = "' + Test.ID +'" /></td > ' +
 
                                         '<td>' + test_name + '</td>' +
                                         '<td>' + Test.AttributeName + '</td>' +
                                         '<td> ' + Test.NormalRange + '</td>' +
-                                        '<td><input type="text" id="txtResult" name="Result" required /></td>' +
+                                        '<td><input type="text" id="txtResult" name="Result_' + count +'" required /></td>' +
 
 
                                         '</tr>';
-                                    $('#TblTestDetailBody').html(row);
+                                    $('#TblTestDetailBody').append(row);
+                                    $("#msg").text('');
                                     $("#testDetail").show();
-
+                                    count = count + 1;
+                                    $("#testcount").val(count);
                                 }
                                 else {
-                                    $('#TblTestDetailBody').html('');
-                                    $("#testDetail").hide();
+                                   
+                                 
                                     $("#msg").text('No details Found.');
 
 
