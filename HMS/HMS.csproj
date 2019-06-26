@@ -280,6 +280,7 @@
     <Content Include="assets\bundles\mainscripts.bundle.js" />
     <Content Include="assets\bundles\sparklinescripts.bundle.js" />
     <Content Include="assets\bundles\vendorscripts.bundle.js" />
+    <Content Include="assets\css\jquery.datetimepicker.css" />
     <Content Include="assets\css\login.html" />
     <Content Include="assets\css\main.css" />
     <Content Include="assets\images\ajax-loader.gif" />
@@ -299,6 +300,8 @@
     <Content Include="assets\images\xs\avatar3.jpg" />
     <Content Include="assets\images\xs\avatar4.jpg" />
     <Content Include="assets\images\xs\avatar5.jpg" />
+    <Content Include="assets\js\datetimepickerPlugin.js" />
+    <Content Include="assets\js\jquery.datetimepicker.js" />
     <Content Include="assets\js\morphing.js" />
     <Content Include="assets\js\pages\calendar\calendar.js" />
     <Content Include="assets\js\pages\cards\basic.js" />
@@ -425,6 +428,7 @@
     <Content Include="Views\PatientsBill\Details.cshtml" />
     <Content Include="Views\PatientsBill\Edit.cshtml" />
     <Content Include="Views\PatientsBill\Index.cshtml" />
+    <Content Include="Views\PatientsBill\BillListings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

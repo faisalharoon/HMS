@@ -7,6 +7,7 @@
 
 <section class="content">
 
+
     @using (Html.BeginForm("Create", "PatientsBill", new { PatientAppointmentID = Request.QueryString["Appointment_id"] }))
     {
         @Html.AntiForgeryToken()
@@ -14,7 +15,6 @@
         <div class="container-fluid">
             <div class="block-header">
                 <h2>Generate Bill</h2>
-                <label>Patient Appointment ID:</label>  @ViewBag.result
             </div>
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
@@ -23,9 +23,9 @@
                             <div class="row clearfix">
                                 <div class="col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        @*<div class="form-group drop-custum">
-                                                <input type="text" value="@PatientAppointmentID" id="myHiddenVar" />
-                                            </div>*@
+
+                                        @Html.TextBoxFor(m => m.PatientAppointmentID, new { @style = "display: none;", @type = "Text", @Value = Session["QueryVal"], @class = "form-control", @id = "PatientAptID", @required = "required" })
+
                                     </div>
                                 </div>
                             </div>
@@ -33,7 +33,7 @@
                                 <div class="col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <div class="form-line">
-                                            @Html.TextBoxFor(m => m.BillNo, new { @type = "Text", @class = "form-control", @id = "BillNo", @placeholder = "Bill No", @required = "required" })
+                                            @Html.TextBoxFor(m => m.BillNo, new { @type = "Text", @class = "form-control", @id = "BillNo", @value = Model.BillNo, @placeholder = "Bill No", @required = "required" })
                                             @Html.ValidationMessageFor(m => m.BillNo, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -58,15 +58,9 @@
                                     </div>
                                 </div>
                             </div>
-                            @Html.HiddenFor(m => m.CreatedAt, new { @Value = System.DateTime.Now })
-                            @Html.HiddenFor(m => m.CreatedBy, new { @Value = "abc" })
-                            @*<input type="hidden" name="HiddenText" id="HiddenText" />*@
                             <div class="row clearfix">
                                 <div class="col-sm-6 col-md-6 col-lg-6">
-                                    @*<a href='patient-create-bill' class="btn btn-raised g-bg-cyan waves-effect">Save</a>*@
                                     <input type="submit" id="btnInsert" class="btn btn-raised g-bg-cyan waves-effect" value="Insert" name="nameValueInsert" />
-
-
                                 </div>
                             </div>
                         </div>
@@ -74,74 +68,111 @@
                 </div>
             </div>
         </div>
+        <div id="test-Div">
+            <div class="row clearfix">
+                <div class="container-fluid">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="block-header">
+                            <h2>Bill Enteries</h2>
+                        </div>
+                        <div class="card">
+                            <div class="body table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
 
-        <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="card">
-                    <div class="header">
-                        <h2>Patients</h2>
-                    </div>
-                    <div class="body table-responsive">
-                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Patient Appointmnet ID</th>
+                                            <th>Bill No</th>
+                                            <th>Amount</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            double? AmountTotal = 0;
+                                            if (Model.PatientsBill != null && Model.PatientsBill.Count > 0)
+                                            {
 
-                            <thead>
-                                <tr>
-                                    <th>Patient Appointmnet ID</th>
-                                    <th>Bill No</th>
-                                    <th>Amount</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    if (Model.PatientsBill != null && Model.PatientsBill.Count > 0)
-                                    {
-                                        foreach (var item in Model.PatientsBill)
-                                        {
-                                <tr>
-                                    @*<td>@item.PatientAppointmentID</td>*@
-                                    <td>abc</td>
-                                    <td>@item.BillNo</td>
-                                    <td>@item.Amount</td>
-                                    <td>@item.Description</td>
-                                </tr>
+                                                foreach (var item in Model.PatientsBill)
+                                                {
+                                                    <tr>
+                                                        @*<td>@item.PatientAppointmentID</td>*@
+                                                        <td>abc</td>
+                                                        <td>@item.BillNo</td>
+                                                        <td>@item.Amount</td>
+                                                        <td>@item.Description</td>
+                                                    </tr>
+                                                    AmountTotal += @item.Amount;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="4">No records</td>
+                                                </tr>
+                                            }
 
                                         }
-                                    }
-                                    else
-                                    {
-                                        <tr>
-                                            <td colspan="4">No records</td>
-                                        </tr>
-                                    }
 
-                                }
-
-                            </tbody>
-                        </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+    
+            <div class="container-fluid">
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    @*@Html.LabelFor(m => m.Note, "General Note")*@
+                                    @{ Html.EnableClientValidation(false); }
+                                    @Html.TextBoxFor(m => m.Note, new { @type = "Text", @class = "form-control", @id = "Note", @placeholder = "General Note" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    @{ Html.EnableClientValidation(false); }
+                                    @Html.TextBoxFor(m => m.Discount, new { @type = "Text", @class = "form-control", @id = "Discount", @placeholder = "Discount(if any)" })
+                                </div>
+                            </div>
+                        </div>
 
-        <div class="row clearfix">
-            <div class="col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    <div class="form-line">
-                        @Html.LabelFor(m => m.Discount, "Discount")
-                        @Html.TextBoxFor(m => m.Discount, new { @type = "Text", @class = "form-control", @id = "Discount", @placeholder = "Discount", @required = "true", @Value = "0" })
+                        @Html.TextBoxFor(m => m.AmountTotal, new { @style = "display: none;", @type = "Text", @Value = @AmountTotal, @class = "form-control", @id = "AmountTotal", @required = "required" })
+                        <div class="row clearfix">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <input type="submit" id="buttonSubmit" class="btn btn-raised g-bg-cyan waves-effect" value="Submit" name="nameValueSubmit" />
+                            </div>
+                        </div>
+                    </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row clearfix">
-            <div class="col-sm-6 col-md-6 col-lg-6">
-                <input type="submit" id="buttonSubmit" class="btn btn-raised g-bg-cyan waves-effect" value="Submit" name="nameValueSubmit"/>
-            </div>
-        </div>
 
-                                    }
+
+
+
+
+
+            </div>
+      
+
+    }
 </section>
+
+
+@*<script>
+    $("#btnInsert").on("click", function () {
+        $("#test-Div").css("display", "block")
+    });
+
+</script>*@
 
 
 

@@ -13,15 +13,17 @@ namespace HMS.ViewModels
         {
             PatientsBill = new List<PatientViewModel>();
         }
-        public int PatientAppointmentID { set; get; }
+        public int? PatientAppointmentID { set; get; }
         public string BillNo { set; get; }
         public Nullable<double> Amount { get; set; }
         public string Description { get; set; }
 
         public Nullable<double> Discount { get; set; }
 
-        public DateTime? CreatedAt { get; internal set; }
-        public string CreatedBy { get; internal set; }
+        public DateTime CreatedAt { get;  set; }
+        public string CreatedBy { get;  set; }
+        public Nullable<double> AmountTotal { get; set; }
+        public string Note { set; get; }
 
         public List<PatientViewModel> PatientsBill { set; get; }
     }
@@ -29,12 +31,14 @@ namespace HMS.ViewModels
     public class PatientViewModel
     {
         
-        public int PatientAppointmentID { set; get; }
+        public int? PatientAppointmentID { set; get; }
         public string BillNo { set; get; }
         public Nullable<double> Amount { get; set; }
         public string Description { set; get; }
         public Nullable<double> Discount { get; set; }
-        public DateTime? CreatedAt { get; internal set; }
-        public string CreatedBy { get; internal set; }
+        public DateTime CreatedAt { get;  set; }
+        public string CreatedBy { get;  set; }
+        public Nullable<double> AmountTotal { get; set; }
+        public string Note { set; get; }
     }
 }

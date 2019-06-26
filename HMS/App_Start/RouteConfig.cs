@@ -199,11 +199,27 @@ defaults: new { controller = "Patient", action = "Delete", id = UrlParameter.Opt
               defaults: new { controller = "PatientsBill", action = "Index", id = UrlParameter.Optional }
           );
 
+        //    routes.MapRoute(
+        //    name: "PatientCreateBills",
+        //    url: "patient-create-bill",
+        //    defaults: new { controller = "PatientsBill", action = "Create", id = UrlParameter.Optional }
+        //);
+
             routes.MapRoute(
-            name: "PatientCreateBills",
-            url: "patient-create-bill",
-            defaults: new { controller = "PatientsBill", action = "Create", id = UrlParameter.Optional }
-        );
+        name: "BillListings",
+        url: "Bill_Listing",
+        defaults: new { controller = "PatientsBill", action = "BillListings", id = UrlParameter.Optional }
+    );
+            routes.MapRoute(
+  name: "DeleteBill",
+  url: "DeleteBill",
+  defaults: new { controller = "PatientsBill", action = "Delete", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
+name: "EditBill",
+url: "EditBill",
+defaults: new { controller = "PatientsBill", action = "Edit", id = UrlParameter.Optional }
+);
         }
     }
 }
