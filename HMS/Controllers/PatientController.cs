@@ -238,11 +238,11 @@ namespace HMS.Controllers
             ViewBag.lstTest = lstTest;
             var model = new tblPatientTest();
        
-            if (patient_id != null && PatientTestID != null)
+            if (patient_id != null)
             {
 
-                model = new PatientDAL().getPatientTests(Convert.ToInt32(PatientTestID));
-                var patientTestDetails = new PatientDAL().GetPatientTestDetail(Convert.ToInt32(PatientTestID));
+                model = new PatientDAL().getPatientTestsbypatient_id(Convert.ToInt32(patient_id));
+                var patientTestDetails = new PatientDAL().GetPatientTestDetail(Convert.ToInt32(patient_id)).ToList();
                 if (patientTestDetails != null)
                 {
                     ViewBag.patientTestDetails = patientTestDetails;
@@ -264,7 +264,8 @@ namespace HMS.Controllers
                 }
                 obj.CreatedAt = DateTime.UtcNow;
                 obj.CreatedBy = username;
-             
+                obj.patient_id = Convert.ToInt32(patient_id);
+               
                 // TODO: Add insert logic here
                 if (PatientTestID != null && PatientTestID != 0)
                 {
@@ -280,16 +281,23 @@ namespace HMS.Controllers
                     PatientTestID = obj.ID;
                     TempData["AlertTask"] = "Patient Test added successfully";
                 }
-                string result = Request.Form["Result"];
-                string attributeId = Request.Form["attributeId"];
 
+                string testcount = Request.Form["testcount"];
+                int count = Convert.ToInt32(testcount);
+                for (int i = 0; i < count; i++)
+                {
+
+                
                 tblPatientTestDetail test_details = new tblPatientTestDetail();
+                string result = Request.Form["Result_"+i];
+                string attributeId = Request.Form["attributeId_"+i];
                 test_details.Result = result;
                 test_details.PatientTestID = PatientTestID;
                 test_details.TestAttributeID = Convert.ToInt32(attributeId);
                 test_details.CreatedAt = DateTime.UtcNow;
                 test_details.CreatedBy = username;
-               new PatientDAL().SavePatientTestDetails(test_details);
+                new PatientDAL().SavePatientTestDetails(test_details);
+            }
 
                 return Redirect("/patient-tests");
                       }
