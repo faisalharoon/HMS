@@ -13,19 +13,15 @@ namespace HMS.Models
             return db.tblPatients.ToList();
 
         }
-        //public List<tblPatientAppointment> ListOfRecords()
-        //{
-        //    return db.tblPatientAppointments.ToList();
-        //}
 
-        public int AddPatientBill(tblPatientBill obj)
+        public List<tblPatientBill> GetPatientBills()
         {
-            //obj.ID = 18;
+            return db.tblPatientBills.ToList();
 
-            db.tblPatientBills.Add(obj);
-            db.SaveChanges();
-            return obj.ID;
         }
+
+
+
 
 
 
