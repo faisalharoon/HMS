@@ -83,5 +83,15 @@ namespace HMS.Models
             db.tblMedicines.Remove(del);
             db.SaveChanges();
         }
+        public List<tblMedicineTiming> GetMedicineTiming()
+        {
+            return db.tblMedicineTimings.Where(x => x.isActive == true).ToList();
+
+        }
+        public List<tblMedicineOccurance> GetMedicineOccurance()
+        {
+            return db.tblMedicineOccurances.Where(x => x.isActive == true).ToList();
+
+        }
     }
 }

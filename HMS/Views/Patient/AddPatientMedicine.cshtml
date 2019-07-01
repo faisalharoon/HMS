@@ -1,0 +1,188 @@
+﻿@model HMS.Models.tblPatientMedicine
+
+@{
+                /**/
+
+                ViewBag.Title = "AddPatientMedicine";
+}
+
+@using (Html.BeginForm("AddPatientMedicine", "Patient", new { Patient_id = Request.QueryString["Patient_id"], PatientMedID = Request.QueryString["PatientMedID"] }))
+{
+
+    @Html.ValidationSummary(true)
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h2>Add Patient Medicine</h2>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Basic Information</h2>
+
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                @if (ViewBag.lstAppointment != null)
+                                {
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <div class="form-group drop-custum">
+
+                                                @Html.DropDownListFor(model => model.PatientAppointmentID, new SelectList(ViewBag.lstAppointment, "ID", "AppointmentDate"), "---Select Appointment---", new { @class = "form-control show-tick", @id = "ddlAppointmentDate" })
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <div class="form-group drop-custum">
+                                            @Html.DropDownListFor(x => x.MedicineID, new SelectList(ViewBag.lstMed, "ID", "MedicineName"), "---Select Medicine---", new { @class = "form-control show-tick", @id = "ddlMedicine" })
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <div class="form-group drop-custum">
+                                            @Html.DropDownListFor(x => x.Timing, new SelectList(ViewBag.lstTiming, "ID", "TimingName"), "---Select Timing---", new { @class = "form-control show-tick", @id = "ddltiming" })
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <div class="form-group drop-custum">
+                                                @Html.DropDownListFor(x => x.Occurance, new SelectList(ViewBag.lstOccurance, "ID", "OccuranceName"), "---Select Occurance---", new { @class = "form-control show-tick", @id = "ddlOccurance" })
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                @Html.TextBoxFor(x => x.NoofDays, new { @type = "Text", @class = "form-control", @id = "txtDays", @placeholder = "No of Days", @required = "required" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                @Html.TextBoxFor(x => x.Quantity, new { @type = "Text", @class = "form-control", @id = "txtQuantity", @placeholder = "Quantity", @required = "required" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <input type="submit" id="buttonadd" class="btn btn-raised g-bg-cyan" value="Add" name="add" />
+
+
+                                </div>
+                            </div>
+
+
+                            <label id="msg"></label>
+
+                        </div>
+             
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Patients</h2>
+                        </div>
+                        <div class="body table-responsive">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+
+                                <thead>
+                                    <tr>
+                                        <th>Patient Appointmnet</th>
+                                        <th>MedicineID</th>
+                                        <th>Timing</th>
+                                        <th>Occurance</th>
+                                        <th>NoofDays</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (ViewBag.med != null )
+                                        {
+                                            foreach (var item in ViewBag.med)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                    @if (@item.tblPatientAppointment != null)
+                                                    {@item.tblPatientAppointment.AppointmentDate}</td>
+                                                   
+                                                    <td>@item.tblMedicine.MedicineName</td>
+                                                    <td>@item.Timing</td>
+                                                    <td>@item.Occurance</td>
+                                                    <td>@item.NoofDays</td>
+                                                    <td>@item.Quantity</td>
+                                                </tr>
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="4">No records</td>
+                                            </tr>
+                                        }
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+              
+                    <div class="col-sm-12">
+                        @{
+                            string Text = "Save Patient Medicine";
+                            if (Model != null)
+                            {
+                                if (Model.ID != 0)
+                                {
+                                    Text = "Update Patient Medicine";
+                                }
+                            }
+                        }
+  
+                   
+                    <input type="submit" id="buttonSubmit" class="btn btn-raised g-bg-cyan" value="@Text" name="Save" />
+                </div>
+            </div>
+            <input type="hidden" id="testcount" name="testcount" value="0" />
+        </div>
+            <div class="overlay">
+                <div id="loading-img"></div>
+                Loading...
+            </div>
+    </section>
+
+}
+
+

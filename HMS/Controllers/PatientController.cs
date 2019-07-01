@@ -233,7 +233,10 @@ namespace HMS.Controllers
         {
 
             List<tblPatientAppointment> lstAppointment = new PatientDAL().getPatientAppointments(Convert.ToInt32(patient_id)).ToList();
-            ViewBag.lstAppointment = lstAppointment;
+            if (lstAppointment.Count > 0)
+            {
+                ViewBag.lstAppointment = lstAppointment;
+            }
             List<tblTest> lstTest = new TestDAL().GetAllTests();
             ViewBag.lstTest = lstTest;
             var model = new tblPatientTest();
@@ -332,5 +335,120 @@ namespace HMS.Controllers
             jsonResult.MaxJsonLength = int.MaxValue;
             return jsonResult;
         }
-    }
+
+
+
+
+        public ActionResult AddPatientMedicine(int? patient_id, int? PatientMedID)
+        {
+            List<tblPatientAppointment> lstAppointment = new PatientDAL().getPatientAppointments(Convert.ToInt32(patient_id)).ToList();
+            if (lstAppointment.Count > 0)
+            {
+                ViewBag.lstAppointment = lstAppointment;
+            }
+            Session["lstAppointment"] = lstAppointment;
+            List<tblMedicine> lstMed = new MedicineDAL().GetAllMedicine().ToList();
+            ViewBag.lstMed = lstMed;
+            Session["lstMed"] = lstMed;
+            List<tblMedicineTiming> lstTiming = new MedicineDAL().GetMedicineTiming().ToList();
+            Session["lstTiming"] = lstTiming;
+            ViewBag.lstTiming = lstTiming;
+
+            List<tblMedicineOccurance> lstOccurance = new MedicineDAL().GetMedicineOccurance().ToList();
+            Session["lstOccurance"] = lstOccurance;
+            ViewBag.lstOccurance = lstOccurance;
+            if (Session["Medicine"] != null)
+            {
+                ViewBag.med = Session["Medicine"];
+
+            }
+            return View();
+        }
+       [HttpPost]
+        public ActionResult AddPatientMedicine(string add, string Save, int? patient_id, int? PatientMedID, tblPatientMedicine obj)
+
+        {
+            string redirect_url = "";
+            List<tblPatientMedicine> lst= new List<tblPatientMedicine> ();
+          var button = add ?? Save;
+            if (button == "Add")
+            {
+                string username = "";
+                HttpCookie cookie = HttpContext.Request.Cookies["AdminCookies"];
+                if (cookie != null)
+                {
+                    username = Convert.ToString(cookie.Values["UserName"]);
+                }
+                obj.CreatedAt = DateTime.UtcNow;
+                obj.patient_id = Convert.ToInt32(patient_id);
+                obj.CreatedBy = username;
+        
+                obj.tblMedicine = new MedicineDAL().GetMedicine(Convert.ToInt32(obj.MedicineID));
+                obj.tblPatientAppointment = new PatientDAL().GetPatientAppointment(Convert.ToInt32(patient_id), Convert.ToInt32(obj.PatientAppointmentID));
+                tblMedicineTiming time = new MedicineDAL().GetMedicineTiming().Where(x => x.ID == Convert.ToInt32(obj.Timing)).FirstOrDefault();
+                obj.Timing = time.TimingName;
+
+                tblMedicineOccurance occurance = new MedicineDAL().GetMedicineOccurance().Where(x => x.ID == Convert.ToInt32(obj.Occurance)).FirstOrDefault();
+                obj.Occurance = occurance.OccuranceName;
+                obj.isActive = true;
+
+                if (Session["Medicine"] != null)
+                {
+                lst  = Session["Medicine"] as List<tblPatientMedicine>;
+                }
+                lst.Add(obj);
+
+                Session["Medicine"] = lst;
+                redirect_url = "/add-patient-medicine?Patient_id=" + patient_id;
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    lst = Session["Medicine"] as List<tblPatientMedicine>;
+                    foreach (var med in lst)
+                    {
+                        tblPatientMedicine newobj = new tblPatientMedicine();
+                        newobj.CreatedAt = med.CreatedAt;
+                        newobj.CreatedBy = med.CreatedBy;
+                        newobj.isActive = med.isActive;
+                        newobj.MedicineID = med.MedicineID;
+                        newobj.NoofDays = med.NoofDays;
+                        newobj.Occurance = med.Occurance;
+                        newobj.PatientAppointmentID = med.PatientAppointmentID;
+                        newobj.patient_id = med.patient_id;
+                        newobj.Quantity = med.Quantity;
+                        newobj.Timing = med.Timing;
+                          new PatientDAL().SavePatientMed(newobj); 
+
+                    }
+
+                    Session["Medicine"] = null;
+                    redirect_url = "/Patient-medicine?Patient_id=" + patient_id;
+
+
+
+                }
+             
+            }
+
+
+            ViewBag.med = Session["Medicine"];
+            
+          return  Redirect(redirect_url);
+        }
+
+        public ActionResult PatientMedList(int patient_id)
+        {
+            var lstPatientMedicine = new PatientDAL().GetPatientMedicineList(patient_id).ToList();
+            if(lstPatientMedicine.Count>0)
+            ViewBag.lstPatientMedicine = lstPatientMedicine;
+
+            var lstPatientMed = new PatientDAL().GetPatientMedList(patient_id).ToList();
+            if(lstPatientMed.Count>0)
+            ViewBag.lstPatientMed = lstPatientMed;
+            return View();
+
+        }
+        }
 }

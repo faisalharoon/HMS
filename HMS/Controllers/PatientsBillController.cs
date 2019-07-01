@@ -69,6 +69,7 @@ namespace HMS.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                   
                     //foreach (var b in model.PatientsBill)
                     //{
                         db.tblPatientBills.Add(new tblPatientBill

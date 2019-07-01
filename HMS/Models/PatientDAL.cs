@@ -148,6 +148,26 @@ namespace HMS.Models
             return db.GetpatientTestDetails().Where(x=>x.patient_id==patient_id).ToList();
 
         }
-        
+
+
+        public void SavePatientMed(tblPatientMedicine obj)
+        {
+            //obj.ID = 18;
+
+            db.tblPatientMedicines.Add(obj);
+            
+            db.SaveChanges();
+        }
+
+
+       public List<GetPatientMedicineList_Result>GetPatientMedicineList(int patient_id)
+        {
+            return db.GetPatientMedicineList().Where(x => x.patient_id == patient_id).ToList();
+        }
+        public List<GetPatientMedList_Result> GetPatientMedList(int patient_id)
+        {
+            return db.GetPatientMedList().Where(x => x.patient_id == patient_id).ToList();
+        }
+
     }
 }
