@@ -151,6 +151,12 @@
     <Compile Include="Models\GetPatientList_Result.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetPatientMedicineList_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetPatientMedList_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetpatientTestDetails_Result.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
@@ -429,6 +435,7 @@
     <Content Include="Views\PatientsBill\Edit.cshtml" />
     <Content Include="Views\PatientsBill\Index.cshtml" />
     <Content Include="Views\PatientsBill\BillListings.cshtml" />
+    <Content Include="Views\Patient\PatientTestList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

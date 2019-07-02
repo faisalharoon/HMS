@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "AddPatientTest";
 }
-@using (Html.BeginForm("AddPatientTest", "Patient", new { Patient_id = Request.QueryString["Patient_id"], PatientTestID = Request.QueryString["PatientTestID"] }))
+@using (Html.BeginForm("AddPatientTest", "Patient", new { Patient_id = Request.QueryString["Patient_id"], Test_id = Request.QueryString["Test_id"] }))
 {
 
     @Html.ValidationSummary(true)

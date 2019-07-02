@@ -229,7 +229,7 @@ namespace HMS.Controllers
         }
 
         // POST: Patient/Delete/5
-        public ActionResult AddPatientTest(int? patient_id, int? PatientTestID)
+        public ActionResult AddPatientTest(int? patient_id, int? Test_id)
         {
 
             List<tblPatientAppointment> lstAppointment = new PatientDAL().getPatientAppointments(Convert.ToInt32(patient_id)).ToList();
@@ -449,6 +449,17 @@ namespace HMS.Controllers
             ViewBag.lstPatientMed = lstPatientMed;
             return View();
 
+        }
+
+
+        public ActionResult PatientTestList(int patient_id )
+        {
+            var patientTestDetails = new PatientDAL().GetPatientTestDetail(Convert.ToInt32(patient_id)).ToList();
+            if (patientTestDetails != null)
+            {
+                ViewBag.patientTestDetails = patientTestDetails;
+            }
+            return View();
         }
         }
 }
