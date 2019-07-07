@@ -51,28 +51,33 @@ namespace HMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(string nameValueInsert, string nameValueSubmit, CreateBillViewModel model)
         {
-           // ViewBag.result = Appointment_id;
-
             var button = nameValueInsert ?? nameValueSubmit;
             if (button == "Insert")
             {
-                if (Session["Key"] != null)
+                if (Session["templist"] == null)
                 {
-                    model.PatientsBill = Session["Key"] as List<PatientViewModel>;
+                    List<PatientViewModel> lst = new List<PatientViewModel>();
+                    lst.Add(new PatientViewModel()
+                    {
+                        BillNo = Request.Form["BillNo"],
+                        Amount = double.Parse(Request.Form["Amount"]),
+                        Description = Request.Form["Description"]
+                    });
+                    Session["templist"] = lst;
                 }
-                model.PatientsBill.Add(new PatientViewModel()
+                else
                 {
-                    //PatientAppointmentID = model.PatientAppointmentID,
-                    BillNo = model.BillNo,
-                    Amount = model.Amount,
-                    Description = model.Description
-                    //Discount = model.Discount
-                    //CreatedAt = model.CreatedAt,
-                    //CreatedBy = model.CreatedBy
-                });
+                    List<PatientViewModel> lst = (List<PatientViewModel>)Session["templist"];
 
-                Session["Key"] = model.PatientsBill;
-           
+                    lst.Add(new PatientViewModel()
+                    {
+                        BillNo = Request.Form["BillNo"],
+                        Amount = double.Parse(Request.Form["Amount"]),
+                        Description = Request.Form["Description"]
+                    });
+
+                    Session["templist"] = lst;
+                }
             }
             else
             {
@@ -84,26 +89,36 @@ namespace HMS.Controllers
                     {
                         username = Convert.ToString(cookie.Values["UserName"]);
                     }
+                    tblPatientBill patientbill = new tblPatientBill();
+                    patientbill.PatientAppointmentID = model.PatientAppointmentID;
+                    patientbill.BillNo = model.BillNo;
+                    patientbill.Amount = model.AmountTotal;
+                    patientbill.Description = model.Note;
+                    patientbill.Discount = model.Discount;
+                    patientbill.CreatedAt = model.CreatedAt;
+                    patientbill.CreatedBy = username;
+                    db.tblPatientBills.Add(patientbill);
+                    db.SaveChanges();
 
+                    List<PatientViewModel> lst = (List<PatientViewModel>)Session["templist"];
+                    foreach (var o in lst)
+                    {
+                        int PatientBill_ID = Convert.ToInt32(patientbill.ID);
+                        tblPatientBillDetail billdetail = new tblPatientBillDetail();
+                        billdetail.PatientBillID = PatientBill_ID;
+                        billdetail.Amount = model.Amount;
+                        billdetail.CreatedAt = model.CreatedAt;
+                        billdetail.CreatedBy = username;
+                        billdetail.Description = model.Description;
 
-                    db.tblPatientBills.Add(new tblPatientBill
-                        {
-                           // PatientAppointmentID = @Appointment_id,
-                        PatientAppointmentID =    model.PatientAppointmentID,
-                            BillNo = model.BillNo,
-                            Amount = model.AmountTotal,
-                            Description = model.Note,
-                            Discount = model.Discount,
-                            CreatedAt = DateTime.UtcNow,
-                            CreatedBy = username
-
-                    });
+                        db.tblPatientBillDetails.Add(billdetail);
                         db.SaveChanges();
-                    Session.Abandon();
+                        Session.Clear();
+                    }
+
                     return RedirectToAction("Index");
                 }
             }
-           
             return View(model);
         }
 

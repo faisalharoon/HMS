@@ -7,7 +7,6 @@
 
 <section class="content">
 
-
     @using (Html.BeginForm("Create", "PatientsBill", new { PatientAppointmentID = Request.QueryString["Appointment_id"] }))
     {
         @Html.AntiForgeryToken()
@@ -88,32 +87,33 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+
                                         @{
                                             double? AmountTotal = 0;
-                                            if (Model.PatientsBill != null && Model.PatientsBill.Count > 0)
+                                            if (Session["templist"] != null)
                                             {
+                                                List<PatientViewModel> lst = (List<PatientViewModel>)Session["templist"];
 
-                                                foreach (var item in Model.PatientsBill)
+
+                                                foreach (var o in lst)
                                                 {
                                                     <tr>
-                                                        @*<td>@item.PatientAppointmentID</td>*@
-                                                        <td>abc</td>
-                                                        <td>@item.BillNo</td>
-                                                        <td>@item.Amount</td>
-                                                        <td>@item.Description</td>
+                                                        <td>@Session["QueryVal"]</td>
+                                                        <td>@o.BillNo</td>
+                                                        <td>@o.Amount</td>
+                                                        <td>@o.Description</td>
                                                     </tr>
-                                                    AmountTotal += @item.Amount;
+                                                    AmountTotal += @o.Amount;
                                                 }
+
                                             }
                                             else
                                             {
                                                 <tr>
-                                                    <td colspan="4">No records</td>
+                                                    <td>No Data Found</td>
                                                 </tr>
                                             }
-
                                         }
-
                                     </tbody>
                                 </table>
                             </div>
@@ -121,58 +121,58 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="container-fluid">
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
-                        <div class="col-sm-6 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    @*@Html.LabelFor(m => m.Note, "General Note")*@
-                                    @{ Html.EnableClientValidation(false); }
-                                    @Html.TextBoxFor(m => m.Note, new { @type = "Text", @class = "form-control", @id = "Note", @placeholder = "General Note" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    @{ Html.EnableClientValidation(false); }
-                                    @Html.TextBoxFor(m => m.Discount, new { @type = "Text", @class = "form-control", @id = "Discount", @placeholder = "Discount(if any)" })
-                                </div>
-                            </div>
-                        </div>
-
-                        @Html.TextBoxFor(m => m.AmountTotal, new { @style = "display: none;", @type = "Text", @Value = @AmountTotal, @class = "form-control", @id = "AmountTotal", @required = "required" })
-                        <div class="row clearfix">
                             <div class="col-sm-6 col-md-6 col-lg-6">
-                                <input type="submit" id="buttonSubmit" class="btn btn-raised g-bg-cyan waves-effect" value="Submit" name="nameValueSubmit" />
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        @*@Html.LabelFor(m => m.Note, "General Note")*@
+                                        @{ Html.EnableClientValidation(false); }
+                                        @Html.TextBoxFor(m => m.Note, new { @type = "Text", @class = "form-control", @id = "Note", @placeholder = "General Note" })
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        @{ Html.EnableClientValidation(false); }
+                                        @Html.TextBoxFor(m => m.Discount, new { @type = "Text", @class = "form-control", @id = "Discount", @placeholder = "Discount(if any)" })
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.TextBoxFor(m => m.CreatedAt, new { @style = "display: none;", @type = "Text", @Value = DateTime.UtcNow, @class = "form-control", @id = "CreatedAt", @required = "required" })
+                            @Html.TextBoxFor(m => m.AmountTotal, new { @style = "display: none;", @type = "Text", @Value = @AmountTotal, @class = "form-control", @id = "AmountTotal", @required = "required" })
+                            <div class="row clearfix">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <input type="submit" id="buttonSubmit" class="btn btn-raised g-bg-cyan waves-effect" value="Submit" name="nameValueSubmit" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
             </div>
-      
+
+
+
+
+
+
+        </div>
+
 
     }
 </section>
 
 
 @*<script>
-    $("#btnInsert").on("click", function () {
-        $("#test-Div").css("display", "block")
-    });
+        $("#btnInsert").on("click", function () {
+            $("#test-Div").css("display", "block")
+        });
 
-</script>*@
+    </script>*@
 
 
 
