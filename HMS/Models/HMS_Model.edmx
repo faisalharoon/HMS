@@ -220,6 +220,7 @@
           <Property Name="CreatedBy" Type="varchar" MaxLength="150" />
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="isActive" Type="bit" />
+          <Property Name="patient_id" Type="int" />
         </EntityType>
         <EntityType Name="tblPatientStatus">
           <Key>
@@ -665,6 +666,8 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="GetPatientList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
+        <Function Name="GetPatientMedicineList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
+        <Function Name="GetPatientMedList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
         <Function Name="GetpatientTestDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
         <EntityContainer Name="HMS_DBModelStoreContainer">
           <EntitySet Name="tblAdmissionType" EntityType="Self.tblAdmissionType" Schema="dbo" store:Type="Tables" />
@@ -971,6 +974,7 @@
           <Property Name="isActive" Type="Boolean" />
           <NavigationProperty Name="tblMedicine" Relationship="Self.FK_tblPatientMedicine_tblMedicine" FromRole="tblPatientMedicine" ToRole="tblMedicine" />
           <NavigationProperty Name="tblPatientAppointment" Relationship="HMS_DBModel.FK_tblPatientMedicine_tblPatient" FromRole="tblPatientMedicine" ToRole="tblPatientAppointment" />
+          <Property Name="patient_id" Type="Int32" />
         </EntityType>
         <EntityType Name="tblPatientStatu">
           <Key>
@@ -1448,6 +1452,8 @@
             <End Role="tblPatientTest" EntitySet="tblPatientTests" />
           </AssociationSet>
           <FunctionImport Name="GetpatientTestDetails" ReturnType="Collection(HMS_DBModel.GetpatientTestDetails_Result)" />
+          <FunctionImport Name="GetPatientMedicineList" ReturnType="Collection(HMS_DBModel.GetPatientMedicineList_Result)" />
+          <FunctionImport Name="GetPatientMedList" ReturnType="Collection(HMS_DBModel.GetPatientMedList_Result)" />
           </EntityContainer>
         <EntityType Name="tblEmployeeSatu">
           <Key>
@@ -1721,6 +1727,37 @@
           <Property Type="String" Name="PathalogistRemarks" Nullable="true" />
           <Property Type="Int32" Name="patient_id" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="GetPatientMedicineList_Result">
+          <Property Type="String" Name="AppointmentDate" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="PatientAppointmentID" Nullable="true" />
+          <Property Type="Int32" Name="MedicineID" Nullable="true" />
+          <Property Type="String" Name="Timing" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="NoofDays" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Occurance" Nullable="true" MaxLength="150" />
+          <Property Type="Double" Name="Quantity" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="CreatedBy" Nullable="true" MaxLength="150" />
+          <Property Type="DateTime" Name="CreatedAt" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="isActive" Nullable="true" />
+          <Property Type="Int32" Name="patient_id" Nullable="true" />
+          <Property Type="String" Name="MedicineName" Nullable="true" MaxLength="350" />
+        </ComplexType>
+        <ComplexType Name="GetPatientMedList_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="PatientAppointmentID" Nullable="true" />
+          <Property Type="Int32" Name="MedicineID" Nullable="true" />
+          <Property Type="String" Name="Timing" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="NoofDays" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Occurance" Nullable="true" MaxLength="150" />
+          <Property Type="Double" Name="Quantity" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="CreatedBy" Nullable="true" MaxLength="150" />
+          <Property Type="DateTime" Name="CreatedAt" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="isActive" Nullable="true" />
+          <Property Type="Int32" Name="patient_id" Nullable="true" />
+          <Property Type="String" Name="MedicineName" Nullable="true" MaxLength="350" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1872,6 +1909,7 @@
           <EntitySetMapping Name="tblPatientMedicines">
             <EntityTypeMapping TypeName="HMS_DBModel.tblPatientMedicine">
               <MappingFragment StoreEntitySet="tblPatientMedicine">
+                <ScalarProperty Name="patient_id" ColumnName="patient_id" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="PatientAppointmentID" ColumnName="PatientAppointmentID" />
                 <ScalarProperty Name="MedicineID" ColumnName="MedicineID" />
@@ -2138,6 +2176,45 @@
                 <ScalarProperty Name="PatientAppointmentID" ColumnName="PatientAppointmentID" />
                 <ScalarProperty Name="PathalogistRemarks" ColumnName="PathalogistRemarks" />
                 <ScalarProperty Name="patient_id" ColumnName="patient_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetPatientMedicineList" FunctionName="HMS_DBModel.Store.GetPatientMedicineList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HMS_DBModel.GetPatientMedicineList_Result">
+                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PatientAppointmentID" ColumnName="PatientAppointmentID" />
+                <ScalarProperty Name="MedicineID" ColumnName="MedicineID" />
+                <ScalarProperty Name="Timing" ColumnName="Timing" />
+                <ScalarProperty Name="NoofDays" ColumnName="NoofDays" />
+                <ScalarProperty Name="Occurance" ColumnName="Occurance" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="patient_id" ColumnName="patient_id" />
+                <ScalarProperty Name="MedicineName" ColumnName="MedicineName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetPatientMedList" FunctionName="HMS_DBModel.Store.GetPatientMedList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HMS_DBModel.GetPatientMedList_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PatientAppointmentID" ColumnName="PatientAppointmentID" />
+                <ScalarProperty Name="MedicineID" ColumnName="MedicineID" />
+                <ScalarProperty Name="Timing" ColumnName="Timing" />
+                <ScalarProperty Name="NoofDays" ColumnName="NoofDays" />
+                <ScalarProperty Name="Occurance" ColumnName="Occurance" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="patient_id" ColumnName="patient_id" />
+                <ScalarProperty Name="MedicineName" ColumnName="MedicineName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
