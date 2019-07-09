@@ -134,6 +134,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\MyController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Controllers\MedicineController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PatientsBillController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -173,6 +175,7 @@
     <Compile Include="Models\MedicineDAL.cs" />
     <Compile Include="Models\PatientBillDAL.cs" />
     <Compile Include="Models\PatientDAL.cs" />
+    <Compile Include="Models\SearchDAL.cs" />
     <Compile Include="Models\tblAdmissionType.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
@@ -429,6 +432,11 @@
     <Content Include="Views\PatientsBill\Edit.cshtml" />
     <Content Include="Views\PatientsBill\Index.cshtml" />
     <Content Include="Views\PatientsBill\BillListings.cshtml" />
+    <Content Include="Views\Search\Create.cshtml" />
+    <Content Include="Views\Search\Delete.cshtml" />
+    <Content Include="Views\Search\Details.cshtml" />
+    <Content Include="Views\Search\Edit.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
