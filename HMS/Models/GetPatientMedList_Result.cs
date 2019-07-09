@@ -10,9 +10,8 @@
 namespace HMS.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblPatientMedicine
+    public partial class GetPatientMedList_Result
     {
         public int ID { get; set; }
         public Nullable<int> PatientAppointmentID { get; set; }
@@ -26,8 +25,6 @@ namespace HMS.Models
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<bool> isActive { get; set; }
         public Nullable<int> patient_id { get; set; }
-    
-        public virtual tblMedicine tblMedicine { get; set; }
-        public virtual tblPatientAppointment tblPatientAppointment { get; set; }
+        public string MedicineName { get; set; }
     }
 }

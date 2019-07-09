@@ -153,6 +153,12 @@
     <Compile Include="Models\GetPatientList_Result.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetPatientMedicineList_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetPatientMedList_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetpatientTestDetails_Result.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
