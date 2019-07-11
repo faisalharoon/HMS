@@ -16,7 +16,7 @@
         <EntityTypeShape EntityType="HMS_DBModel.tblMedicineTiming" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HMS_DBModel.tblPatient" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HMS_DBModel.tblPatientBill" Width="1.5" PointX="7.5" PointY="19.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="HMS_DBModel.tblPatientBillDetail" Width="1.5" PointX="9.75" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblPatientBillDetail" Width="1.5" PointX="10.625" PointY="18.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HMS_DBModel.tblPatientMedicine" Width="1.5" PointX="7.5" PointY="10.375" IsExpanded="true" />
         <EntityTypeShape EntityType="HMS_DBModel.tblPatientStatu" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HMS_DBModel.tblPatientTest" Width="1.5" PointX="10.5" PointY="10.75" IsExpanded="true" />

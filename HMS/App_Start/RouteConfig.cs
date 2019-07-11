@@ -236,6 +236,18 @@ name: "EditBill",
 url: "EditBill",
 defaults: new { controller = "PatientsBill", action = "Edit", id = UrlParameter.Optional }
 );
+            routes.MapRoute(
+name: "Search",
+url: "Search",
+defaults: new { controller = "Search", action = "Index", id = UrlParameter.Optional }
+);
+
+
+
+
+
+
+
         }
     }
 }

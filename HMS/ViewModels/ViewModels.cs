@@ -30,7 +30,6 @@ namespace HMS.ViewModels
 
     public class PatientViewModel
     {
-        
         public int? PatientAppointmentID { set; get; }
         public string BillNo { set; get; }
         public Nullable<double> Amount { get; set; }
@@ -40,5 +39,25 @@ namespace HMS.ViewModels
         public string CreatedBy { get;  set; }
         public Nullable<double> AmountTotal { get; set; }
         public string Note { set; get; }
+    }
+
+    //public class Product
+    //{
+    //    public int? Patient_ID { set; get; }
+    //    public string Patient_Name { set; get; }
+    //    public string Patient_Address { set; get; }
+    //    public string Contact_Number { set; get; }
+    //    public int Age { set; get; }
+    //    public string Gender { set; get; }
+
+
+
+    //}
+    public class ProductSearchModel
+    {
+        public int? Patient_ID { set; get; }
+        public string Patient_Name { set; get; }
+        public string Patient_Address { set; get; }
+        public string Contact_Number { set; get; }
     }
 }

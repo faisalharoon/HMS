@@ -1,4 +1,5 @@
-﻿using HMS.Models;
+﻿using HMS.App_Start;
+using HMS.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,8 @@ using System.Web.Mvc;
 
 namespace HMS.Controllers
 {
-    public class DoctorController : Controller
+    public class DoctorController : MyController
     {
-        HMS_DBEntity db = new HMS_DBEntity();
         // GET: Doctor
         public ActionResult Index()
         {
