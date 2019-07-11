@@ -151,6 +151,7 @@
           <Property Name="Gender" Type="varchar" MaxLength="150" />
           <Property Name="Note" Type="varchar" MaxLength="500" />
           <Property Name="Date_of_Birth" Type="datetime" />
+          <Property Name="is_active" Type="bit" />
         </EntityType>
         <EntityType Name="tblPatientAdmission">
           <Key>
@@ -352,6 +353,25 @@
           <Property Name="IsLockedOut" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="Hospital_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblPages">
+          <Key>
+            <PropertyRef Name="page_id" />
+          </Key>
+          <Property Name="page_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="page_name" Type="varchar" MaxLength="50" />
+          <Property Name="page_url" Type="varchar" MaxLength="50" />
+          <Property Name="is_active" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblUserPages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="page_id" Type="int" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="Role_id" Type="int" />
+          <Property Name="show_in_menu" Type="bit" />
         </EntityType>
         <Association Name="FK_tblDoctor_tblHospital">
           <End Role="tblHospital" Type="Self.tblHospital" Multiplicity="0..1" />
@@ -669,6 +689,9 @@
         <Function Name="GetPatientMedicineList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
         <Function Name="GetPatientMedList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
         <Function Name="GetpatientTestDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
+        <Function Name="sp_DeletePatientBill" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="HMS_DBModelStoreContainer">
           <EntitySet Name="tblAdmissionType" EntityType="Self.tblAdmissionType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDoctor" EntityType="Self.tblDoctor" Schema="dbo" store:Type="Tables" />
@@ -701,6 +724,8 @@
           <EntitySet Name="UserLoginHistory" EntityType="Self.UserLoginHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPages" EntityType="Self.tblPages" Schema="saa" store:Type="Tables" />
+          <EntitySet Name="tblUserPages" EntityType="Self.tblUserPages" Schema="saa" store:Type="Tables" />
           <AssociationSet Name="FK_tblDoctor_tblHospital" Association="Self.FK_tblDoctor_tblHospital">
             <End Role="tblHospital" EntitySet="tblHospital" />
             <End Role="tblDoctor" EntitySet="tblDoctor" />
@@ -928,6 +953,7 @@
           <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Date_of_Birth" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblPatientAppointments" Relationship="HMS_DBModel.FK_tblPatientAppointment_tblPatient" FromRole="tblPatient" ToRole="tblPatientAppointment" />
+          <Property Name="is_active" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblPatientBill">
           <Key>
@@ -1454,6 +1480,11 @@
           <FunctionImport Name="GetpatientTestDetails" ReturnType="Collection(HMS_DBModel.GetpatientTestDetails_Result)" />
           <FunctionImport Name="GetPatientMedicineList" ReturnType="Collection(HMS_DBModel.GetPatientMedicineList_Result)" />
           <FunctionImport Name="GetPatientMedList" ReturnType="Collection(HMS_DBModel.GetPatientMedList_Result)" />
+          <EntitySet Name="tblPages" EntityType="HMS_DBModel.tblPage" />
+          <EntitySet Name="tblUserPages" EntityType="HMS_DBModel.tblUserPage" />
+          <FunctionImport Name="sp_DeletePatientBill">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="tblEmployeeSatu">
           <Key>
@@ -1758,6 +1789,25 @@
           <Property Type="Int32" Name="patient_id" Nullable="true" />
           <Property Type="String" Name="MedicineName" Nullable="true" MaxLength="350" />
         </ComplexType>
+        <EntityType Name="tblPage">
+          <Key>
+            <PropertyRef Name="page_id" />
+          </Key>
+          <Property Name="page_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="page_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="page_url" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblUserPage">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="page_id" Type="Int32" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="Role_id" Type="Int32" />
+          <Property Name="show_in_menu" Type="Boolean" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1869,6 +1919,7 @@
           <EntitySetMapping Name="tblPatients">
             <EntityTypeMapping TypeName="HMS_DBModel.tblPatient">
               <MappingFragment StoreEntitySet="tblPatient">
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
                 <ScalarProperty Name="Date_of_Birth" ColumnName="Date_of_Birth" />
                 <ScalarProperty Name="Patient_id" ColumnName="Patient_id" />
                 <ScalarProperty Name="Patient_Name" ColumnName="Patient_Name" />
@@ -2218,6 +2269,28 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblPages">
+            <EntityTypeMapping TypeName="HMS_DBModel.tblPage">
+              <MappingFragment StoreEntitySet="tblPages">
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="page_url" ColumnName="page_url" />
+                <ScalarProperty Name="page_name" ColumnName="page_name" />
+                <ScalarProperty Name="page_id" ColumnName="page_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUserPages">
+            <EntityTypeMapping TypeName="HMS_DBModel.tblUserPage">
+              <MappingFragment StoreEntitySet="tblUserPages">
+                <ScalarProperty Name="show_in_menu" ColumnName="show_in_menu" />
+                <ScalarProperty Name="Role_id" ColumnName="Role_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="page_id" ColumnName="page_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_DeletePatientBill" FunctionName="HMS_DBModel.Store.sp_DeletePatientBill" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

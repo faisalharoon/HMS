@@ -218,6 +218,9 @@
     <Compile Include="Models\tblMedicineTiming.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblPage.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblPatient.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
@@ -258,6 +261,9 @@
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblTestCategory.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblUserPage.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestDAL.cs" />

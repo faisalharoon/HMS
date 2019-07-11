@@ -145,7 +145,7 @@ namespace HMS.Controllers
             {
                 string err = ex.ToString();
                 TempData["AlertTask"] = "Error Occured.";
-                return View();
+                return  Redirect("/");
             }
         }
         public ActionResult DoctorList()

@@ -223,8 +223,10 @@ namespace HMS.Controllers
         // GET: Patient/Delete/5
         public ActionResult Delete(int id)
         {
-            new PatientDAL().Delete(id);
-            TempData["AlertTask"] = "Patientdeleted successfully";
+            tblPatient patient = new PatientDAL().ListOfRecords().Where(x => x.Patient_id == id).FirstOrDefault();
+            patient.is_active = false;
+            new PatientDAL().UpdateRecord(patient);
+            TempData["AlertTask"] = "Patient deleted successfully";
             return Redirect("/patients");
         }
 

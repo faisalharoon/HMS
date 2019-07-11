@@ -28,6 +28,7 @@ namespace HMS.Models
         public string Gender { get; set; }
         public string Note { get; set; }
         public Nullable<System.DateTime> Date_of_Birth { get; set; }
+        public Nullable<bool> is_active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPatientAppointment> tblPatientAppointments { get; set; }
