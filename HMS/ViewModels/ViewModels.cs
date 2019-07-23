@@ -60,4 +60,73 @@ namespace HMS.ViewModels
         public string Patient_Address { set; get; }
         public string Contact_Number { set; get; }
     }
+
+    public class DashboardViewModel
+    {
+        public List<DashboardModel> DashboardsModel { set; get; }
+        public List<ActivePatientList> ActivePatientsList { set; get; }
+        public List<AdmissionMonthly> AdmissionsMonthly { set; get; }
+        public List<PatientCount> PatientsCount { set; get; }
+        public List<RoomOccupied> RoomsOccupied { set; get; }
+        public List<StaffSpeciality> StaffsSpeciality { set; get; }
+    }
+
+    public class StaffSpeciality
+    {
+        public string Speciality { get; set; }
+        public int? TotalCount { get; set; }
+    }
+
+    public class RoomOccupied
+    {
+        public int? TotalRooms { get; set; }
+        public int? BookedRooms { get; set; }
+        public int? RoomsAvailable { get; set; }
+        public int? PrivateRoom { get; set; }
+        public int? SemiPrivateRoom { get; set; }
+        public int? VIPSuite { get; set; }
+        public int? SingleDeluxeRoom { get; set; }
+        public int? TwoBeddedRoom { get; set; }
+        public int? FourBeddedRoom { get; set; }
+        public int? IntensiveCareUnit { get; set; }
+        public int? IsolationRoom { get; set; }
+        public int? LabourDeliverySuite { get; set; }
+        public int? Nursery { get; set; }
+        public string TestCategories { get; set; }
+    }
+
+    public class PatientCount
+    {
+        public int ID { get; set; }
+        public int? OverallPatientsAdmitted { get; set; }
+        public int? PatientsAdmittedCurrentMonth { get; set; }
+        public int? PatientsAdmittedToday { get; set; }
+    }
+
+    public class AdmissionMonthly
+    {
+        public int Total_Patients { get; set; }
+        public DateTime Admission_Date { get; set; }
+    }
+
+    public class ActivePatientList
+    {
+        public int Patient_id { get; set; }
+        public string Patient_Name { get; set; }
+        public string Patient_address { get; set; }
+        public string Contact_no { get; set; }
+        public Nullable<int> Age { get; set; }
+        public string Gender { get; set; }
+        public string Note { get; set; }
+    }
+
+    public class DashboardModel
+    {
+        public Nullable<double> HospitalEarnings { set; get; }
+        public int? ActivePatients { set; get; }
+        public int TemporrayPatients { set; get; }
+        public int PermanentPatients { set; get; }
+        public int TodaysOperations { set; get; }
+        public int IsActive { set; get; }
+    }
 }

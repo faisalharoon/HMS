@@ -27,6 +27,7 @@ namespace HMS.Models
         public Nullable<int> Age { get; set; }
         public string Gender { get; set; }
         public string Note { get; set; }
+        public bool? is_active { get; set; }
         public Nullable<System.DateTime> Date_of_Birth { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
