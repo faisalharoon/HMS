@@ -58,6 +58,8 @@ namespace HMS.Models
         public virtual DbSet<tblEmployee> tblEmployees { get; set; }
         public virtual DbSet<tblPatientAdmission> tblPatientAdmissions { get; set; }
         public virtual DbSet<tblPatientAppointment> tblPatientAppointments { get; set; }
+        public virtual DbSet<tblPage> tblPages { get; set; }
+        public virtual DbSet<tblUserPage> tblUserPages { get; set; }
     
         public virtual ObjectResult<GetPatientList_Result> GetPatientList()
         {
@@ -77,6 +79,15 @@ namespace HMS.Models
         public virtual ObjectResult<GetPatientMedList_Result> GetPatientMedList()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPatientMedList_Result>("GetPatientMedList");
+        }
+    
+        public virtual int sp_DeletePatientBill(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DeletePatientBill", iDParameter);
         }
     }
 }

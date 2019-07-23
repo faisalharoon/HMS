@@ -64,6 +64,8 @@
         <AssociationConnector Association="HMS_DBModel.FK_tblPatientBill_tblPatient" />
         <AssociationConnector Association="HMS_DBModel.FK_tblPatientMedicine_tblPatient" />
         <AssociationConnector Association="HMS_DBModel.FK_tblPatientTest_tblPatient" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblPage" Width="1.5" PointX="15.375" PointY="3.75" />
+        <EntityTypeShape EntityType="HMS_DBModel.tblUserPage" Width="1.5" PointX="8.375" PointY="15.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
