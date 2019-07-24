@@ -1,0 +1,106 @@
+﻿
+@model IEnumerable<HMS.Models.GetPatientAppointements_Result>
+
+@{
+    ViewBag.Title = "PatientappointmentList";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>Patients</h2>
+
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>Patient's Appointments</h2>
+
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+
+                            <thead>
+                                <tr>
+
+                                    <th>Patient Name</th>
+                                    <th>Doctor Name</th>
+                                    <th>AppointmentDate</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+
+                                    <th>Actions</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @{
+                                    if (Model != null )
+                                    {
+
+                                        var listApp = Model as IEnumerable<HMS.Models.GetPatientAppointements_Result>;
+                                      
+                                        foreach (var app in listApp )
+                                        {
+                                            <tr>
+                                                <td>@app.Patient_Name</td>
+                                                <td>@app.DoctorName</td>
+                                                <td>@app.AppointmentDate</td>
+                                                <td>@app.Description</td>
+                                                <td>@app.Appstatus</td>
+
+
+                                                <td>
+
+
+
+
+
+                                                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        Actions
+                                                    </a>
+                                                    @*<ul class="dropdown-menu pull-right">
+                                                            <li> <a href='/add-patient?Patient_id=@item.Patient_id'>Update</a></li>
+                                                            <li>
+                                                                <a href='#' onclick="Delete(@item.Patient_id);">
+                                                                    Delete
+                                                                </a>
+                                                            </li>
+                                                            <li><a href="@appoint_url">@appointement_text</a></li>
+                                                            <li @admission_style><a href="@admission_url">@admission_text</a></li>
+                                                            <li><a href="/patient-tests?patient_id=@item.Patient_id">Patient's Test</a></li>
+                                                            <li><a href="/patient-medicine?Patient_id=@item.Patient_id">Patient's Medicine</a></li>
+                                                        </ul>*@
+
+
+
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td>
+                                                <label>Record Not Exist</label>
+                                            </td>
+                                        </tr>
+                                    }
+
+
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

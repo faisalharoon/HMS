@@ -59,7 +59,15 @@ namespace HMS.Models
             return db.tblPatientAppointments.FirstOrDefault(x => x.PatientID == Patient_id & x.ID == appoint_id);
         }
 
-       
+        public List<GetPatientAppointements_Result> GetPatientAllAppointments(int Patient_id)
+        {
+            return db.GetPatientAppointements().Where(x => x.PatientID == Patient_id).ToList();
+        }
+        public List<GetPatientAdmits_Result> GetPatientAdmits(int Patient_id)
+        {
+            return db.GetPatientAdmits().Where(x => x.patient_id == Patient_id).ToList();
+        }
+
         public void UpdateRecord(tblPatient obj)
         {
 

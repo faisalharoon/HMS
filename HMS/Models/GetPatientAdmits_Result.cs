@@ -10,9 +10,8 @@
 namespace HMS.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblPatientAdmission
+    public partial class GetPatientAdmits_Result
     {
         public int ID { get; set; }
         public Nullable<int> PatientAppointmentID { get; set; }
@@ -26,11 +25,9 @@ namespace HMS.Models
         public string DisChargeDate { get; set; }
         public string AdmissionDate { get; set; }
         public Nullable<int> patient_id { get; set; }
-    
-        public virtual tblAdmissionType tblAdmissionType { get; set; }
-        public virtual tblHospitalRoom tblHospitalRoom { get; set; }
-        public virtual tblPatientAppointment tblPatientAppointment { get; set; }
-        public virtual tblPatientBill tblPatientBill { get; set; }
-        public virtual tblPatient tblPatient { get; set; }
+        public string Patient_Name { get; set; }
+        public string RoomTypeName { get; set; }
+        public string AdmissionTypeName { get; set; }
+        public string RoomName { get; set; }
     }
 }

@@ -89,5 +89,15 @@ namespace HMS.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DeletePatientBill", iDParameter);
         }
+    
+        public virtual ObjectResult<GetPatientAdmits_Result> GetPatientAdmits()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPatientAdmits_Result>("GetPatientAdmits");
+        }
+    
+        public virtual ObjectResult<GetPatientAppointements_Result> GetPatientAppointements()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPatientAppointements_Result>("GetPatientAppointements");
+        }
     }
 }
