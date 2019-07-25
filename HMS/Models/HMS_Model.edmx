@@ -470,66 +470,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblPatient_room_tblHospitalRoom">
-          <End Role="tblHospitalRoom" Type="Self.tblHospitalRoom" Multiplicity="0..1" />
-          <End Role="tblPatientAdmission" Type="Self.tblPatientAdmission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblHospitalRoom">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblPatientAdmission">
-              <PropertyRef Name="HospitalRoomID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPatient_room_tblPatient">
-          <End Role="tblPatientAppointment" Type="Self.tblPatientAppointment" Multiplicity="0..1" />
-          <End Role="tblPatientAdmission" Type="Self.tblPatientAdmission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblPatientAppointment">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblPatientAdmission">
-              <PropertyRef Name="PatientAppointmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPatient_room_tblPatientBill">
-          <End Role="tblPatientBill" Type="Self.tblPatientBill" Multiplicity="0..1" />
-          <End Role="tblPatientAdmission" Type="Self.tblPatientAdmission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblPatientBill">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblPatientAdmission">
-              <PropertyRef Name="PatientBill_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPatientAdmission_tblAdmissionType">
-          <End Role="tblAdmissionType" Type="Self.tblAdmissionType" Multiplicity="0..1" />
-          <End Role="tblPatientAdmission" Type="Self.tblPatientAdmission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblAdmissionType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblPatientAdmission">
-              <PropertyRef Name="AdmissionTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPatientAdmission_tblPatient">
-          <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="0..1" />
-          <End Role="tblPatientAdmission" Type="Self.tblPatientAdmission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblPatient">
-              <PropertyRef Name="Patient_id" />
-            </Principal>
-            <Dependent Role="tblPatientAdmission">
-              <PropertyRef Name="patient_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblPatientBill_tblPatientAppointment">
           <End Role="tblPatientAppointment" Type="Self.tblPatientAppointment" Multiplicity="0..1" />
           <End Role="tblPatientBill" Type="Self.tblPatientBill" Multiplicity="*" />
@@ -704,9 +644,19 @@
         <Function Name="GetPatientMedicineList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
         <Function Name="GetPatientMedList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
         <Function Name="GetpatientTestDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
+        <Function Name="Patient_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
+        <Function Name="Sp_ActivePatientsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
+        <Function Name="Sp_Dashboard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
+        <Function Name="sp_DeletePatient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa">
+          <Parameter Name="PatientID" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_DeletePatientBill" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa">
           <Parameter Name="ID" Type="int" Mode="In" />
         </Function>
+        <Function Name="Sp_PatientAdmissions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
+        <Function Name="Sp_RoomsOccupied" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
+        <Function Name="Sp_StaffSpeciality" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
+        <Function Name="Sp_TestsCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
         <EntityContainer Name="HMS_DBModelStoreContainer">
           <EntitySet Name="tblAdmissionType" EntityType="Self.tblAdmissionType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDoctor" EntityType="Self.tblDoctor" Schema="dbo" store:Type="Tables" />
@@ -772,26 +722,6 @@
           <AssociationSet Name="FK_tblMedicine_tblMedicineCategory" Association="Self.FK_tblMedicine_tblMedicineCategory">
             <End Role="tblMedicineCategory" EntitySet="tblMedicineCategory" />
             <End Role="tblMedicine" EntitySet="tblMedicine" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatient_room_tblHospitalRoom" Association="Self.FK_tblPatient_room_tblHospitalRoom">
-            <End Role="tblHospitalRoom" EntitySet="tblHospitalRoom" />
-            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmission" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatient_room_tblPatient" Association="Self.FK_tblPatient_room_tblPatient">
-            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointment" />
-            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmission" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatient_room_tblPatientBill" Association="Self.FK_tblPatient_room_tblPatientBill">
-            <End Role="tblPatientBill" EntitySet="tblPatientBill" />
-            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmission" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatientAdmission_tblAdmissionType" Association="Self.FK_tblPatientAdmission_tblAdmissionType">
-            <End Role="tblAdmissionType" EntitySet="tblAdmissionType" />
-            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmission" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatientAdmission_tblPatient" Association="Self.FK_tblPatientAdmission_tblPatient">
-            <End Role="tblPatient" EntitySet="tblPatient" />
-            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmission" />
           </AssociationSet>
           <AssociationSet Name="FK_tblPatientBill_tblPatientAppointment" Association="Self.FK_tblPatientBill_tblPatientAppointment">
             <End Role="tblPatientAppointment" EntitySet="tblPatientAppointment" />
@@ -1511,6 +1441,16 @@
           </AssociationSet>
           <FunctionImport Name="GetPatientAdmits" ReturnType="Collection(HMS_DBModel.GetPatientAdmits_Result)" />
           <FunctionImport Name="GetPatientAppointements" ReturnType="Collection(HMS_DBModel.GetPatientAppointements_Result)" />
+          <FunctionImport Name="Patient_Count" ReturnType="Collection(HMS_DBModel.Patient_Count_Result)" />
+          <FunctionImport Name="Sp_ActivePatientsList" ReturnType="Collection(HMS_DBModel.Sp_ActivePatientsList_Result)" />
+          <FunctionImport Name="Sp_Dashboard" ReturnType="Collection(HMS_DBModel.Sp_Dashboard_Result)" />
+          <FunctionImport Name="sp_DeletePatient">
+            <Parameter Name="PatientID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_PatientAdmissions" ReturnType="Collection(HMS_DBModel.Sp_PatientAdmissions_Result)" />
+          <FunctionImport Name="Sp_RoomsOccupied" ReturnType="Collection(HMS_DBModel.Sp_RoomsOccupied_Result)" />
+          <FunctionImport Name="Sp_StaffSpeciality" ReturnType="Collection(HMS_DBModel.Sp_StaffSpeciality_Result)" />
+          <FunctionImport Name="Sp_TestsCategories" ReturnType="Collection(String)" />
           </EntityContainer>
         <EntityType Name="tblEmployeeSatu">
           <Key>
@@ -1881,6 +1821,52 @@
           <Property Type="String" Name="Patient_address" Nullable="true" MaxLength="200" />
           <Property Type="Boolean" Name="PatientStatus" Nullable="true" />
           <Property Type="Boolean" Name="Appstatus" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Patient_Count_Result">
+          <Property Type="Int32" Name="OverallPatientsAdmitted" Nullable="false" />
+          <Property Type="Int32" Name="PatientsAdmittedCurrentMonth" Nullable="false" />
+          <Property Type="Int32" Name="PatientsAdmittedToday" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="Sp_ActivePatientsList_Result">
+          <Property Type="Int32" Name="Patient_id" Nullable="false" />
+          <Property Type="String" Name="Patient_Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Patient_address" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Contact_no" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Age" Nullable="true" />
+          <Property Type="String" Name="Gender" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Note" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="Date_of_Birth" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="is_active" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Sp_Dashboard_Result">
+          <Property Type="Double" Name="HospitalEarnings" Nullable="true" />
+          <Property Type="Int32" Name="ActivePatients" Nullable="true" />
+          <Property Type="Int32" Name="TemporrayPatients" Nullable="true" />
+          <Property Type="Int32" Name="PermanentPatients" Nullable="true" />
+          <Property Type="Int32" Name="TodaysOperations" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Sp_PatientAdmissions_Result">
+          <Property Type="DateTime" Name="Admission_Date" Nullable="true" />
+          <Property Type="Int32" Name="Total_Patients" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Sp_RoomsOccupied_Result">
+          <Property Type="Int32" Name="TotalRooms" Nullable="true" />
+          <Property Type="Int32" Name="BookedRooms" Nullable="true" />
+          <Property Type="Int32" Name="RoomsAvailable" Nullable="true" />
+          <Property Type="Int32" Name="PrivateRoom" Nullable="true" />
+          <Property Type="Int32" Name="SemiPrivateRoom" Nullable="true" />
+          <Property Type="Int32" Name="VIPSuite" Nullable="true" />
+          <Property Type="Int32" Name="SingleDeluxeRoom" Nullable="true" />
+          <Property Type="Int32" Name="TwoBeddedRoom" Nullable="true" />
+          <Property Type="Int32" Name="FourBeddedRoom" Nullable="true" />
+          <Property Type="Int32" Name="IntensiveCareUnit" Nullable="true" />
+          <Property Type="Int32" Name="IsolationRoom" Nullable="true" />
+          <Property Type="Int32" Name="LabourDeliverySuite" Nullable="true" />
+          <Property Type="Int32" Name="Nursery" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Sp_StaffSpeciality_Result">
+          <Property Type="Int32" Name="TotalCount" Nullable="true" />
+          <Property Type="String" Name="Speciality" Nullable="true" MaxLength="450" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2408,6 +2394,78 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Patient_Count" FunctionName="HMS_DBModel.Store.Patient_Count">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HMS_DBModel.Patient_Count_Result">
+                <ScalarProperty Name="OverallPatientsAdmitted" ColumnName="OverallPatientsAdmitted" />
+                <ScalarProperty Name="PatientsAdmittedCurrentMonth" ColumnName="PatientsAdmittedCurrentMonth" />
+                <ScalarProperty Name="PatientsAdmittedToday" ColumnName="PatientsAdmittedToday" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Sp_ActivePatientsList" FunctionName="HMS_DBModel.Store.Sp_ActivePatientsList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HMS_DBModel.Sp_ActivePatientsList_Result">
+                <ScalarProperty Name="Patient_id" ColumnName="Patient_id" />
+                <ScalarProperty Name="Patient_Name" ColumnName="Patient_Name" />
+                <ScalarProperty Name="Patient_address" ColumnName="Patient_address" />
+                <ScalarProperty Name="Contact_no" ColumnName="Contact_no" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Date_of_Birth" ColumnName="Date_of_Birth" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Sp_Dashboard" FunctionName="HMS_DBModel.Store.Sp_Dashboard">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HMS_DBModel.Sp_Dashboard_Result">
+                <ScalarProperty Name="HospitalEarnings" ColumnName="HospitalEarnings" />
+                <ScalarProperty Name="ActivePatients" ColumnName="ActivePatients" />
+                <ScalarProperty Name="TemporrayPatients" ColumnName="TemporrayPatients" />
+                <ScalarProperty Name="PermanentPatients" ColumnName="PermanentPatients" />
+                <ScalarProperty Name="TodaysOperations" ColumnName="TodaysOperations" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DeletePatient" FunctionName="HMS_DBModel.Store.sp_DeletePatient" />
+          <FunctionImportMapping FunctionImportName="Sp_PatientAdmissions" FunctionName="HMS_DBModel.Store.Sp_PatientAdmissions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HMS_DBModel.Sp_PatientAdmissions_Result">
+                <ScalarProperty Name="Admission_Date" ColumnName="Admission_Date" />
+                <ScalarProperty Name="Total_Patients" ColumnName="Total_Patients" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Sp_RoomsOccupied" FunctionName="HMS_DBModel.Store.Sp_RoomsOccupied">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HMS_DBModel.Sp_RoomsOccupied_Result">
+                <ScalarProperty Name="TotalRooms" ColumnName="TotalRooms" />
+                <ScalarProperty Name="BookedRooms" ColumnName="BookedRooms" />
+                <ScalarProperty Name="RoomsAvailable" ColumnName="RoomsAvailable" />
+                <ScalarProperty Name="PrivateRoom" ColumnName="PrivateRoom" />
+                <ScalarProperty Name="SemiPrivateRoom" ColumnName="SemiPrivateRoom" />
+                <ScalarProperty Name="VIPSuite" ColumnName="VIPSuite" />
+                <ScalarProperty Name="SingleDeluxeRoom" ColumnName="SingleDeluxeRoom" />
+                <ScalarProperty Name="TwoBeddedRoom" ColumnName="TwoBeddedRoom" />
+                <ScalarProperty Name="FourBeddedRoom" ColumnName="FourBeddedRoom" />
+                <ScalarProperty Name="IntensiveCareUnit" ColumnName="IntensiveCareUnit" />
+                <ScalarProperty Name="IsolationRoom" ColumnName="IsolationRoom" />
+                <ScalarProperty Name="LabourDeliverySuite" ColumnName="LabourDeliverySuite" />
+                <ScalarProperty Name="Nursery" ColumnName="Nursery" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Sp_StaffSpeciality" FunctionName="HMS_DBModel.Store.Sp_StaffSpeciality">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HMS_DBModel.Sp_StaffSpeciality_Result">
+                <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
+                <ScalarProperty Name="Speciality" ColumnName="Speciality" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Sp_TestsCategories" FunctionName="HMS_DBModel.Store.Sp_TestsCategories" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

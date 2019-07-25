@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "PatientAdmission";
 }
-@using (Html.BeginForm("PatientAdmission", "Patient", new { addmission_id = Request.QueryString["addmission_id"] }))
+@using (Html.BeginForm("PatientAdmission", "Patient", new { Patient_id = Request.QueryString["Patient_id"], addmission_id = Request.QueryString["addmission_id"] }))
 {
     @Html.ValidationSummary(true)
     <section class="content">

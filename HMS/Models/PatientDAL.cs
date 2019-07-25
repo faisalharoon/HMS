@@ -107,11 +107,12 @@ namespace HMS.Models
 
             db.SaveChanges();
         }
-        public void Delete(int id)
+        public void DeletePatient(int? patient_id)
         {
-            var del = db.tblPatients.FirstOrDefault(x => x.Patient_id == id);
-            db.tblPatients.Remove(del);
-            db.SaveChanges();
+            db.sp_DeletePatient(patient_id);
+            //var del = db.tblPatients.FirstOrDefault(x => x.Patient_id == id);
+            //db.tblPatients.Remove(del);
+            //db.SaveChanges();
         }
         public List<tblPatientAppointment> getPatientAppointments(int patient_id)
 

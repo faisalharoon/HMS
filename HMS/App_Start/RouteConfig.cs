@@ -42,6 +42,11 @@ url: "patient-appointments",
 defaults: new { controller = "Patient", action = "PatientappointmentList", id = UrlParameter.Optional }
 );
             routes.MapRoute(
+name: "PatientAdmissionList",
+url: "patient-admissions",
+defaults: new { controller = "Patient", action = "PatientAdmissionList", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
 name: "add-test",
 url: "add-test",
 defaults: new { controller = "Test", action = "AddTest" }

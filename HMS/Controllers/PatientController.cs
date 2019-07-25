@@ -35,9 +35,9 @@ namespace HMS.Controllers
 
         // POST: Patient/Create
         [HttpPost]
-        public ActionResult AddPatient(tblPatient obj)
+        public ActionResult AddPatient(tblPatient obj, int? patient_id)
         {
-            int patient_id = 0;
+            obj.is_active = true;
             if (obj.Gender == "1")
             {
                 //obj.Gender = "Male";
@@ -49,7 +49,7 @@ namespace HMS.Controllers
             try
             {
                 // TODO: Add insert logic here
-                if (obj.Patient_id == 0)
+                if (patient_id == 0)
                 {
 
                     patient_id = new PatientDAL().InsertRecord(obj);
@@ -74,13 +74,13 @@ namespace HMS.Controllers
 
         public ActionResult PatientList()
         {
-            var model = new PatientDAL().ListOfRecords().ToList();
+            var model = new PatientDAL().ListOfRecords().Where(x=>x.is_active==true).ToList();
             var lstDoctors = new DoctorsDAL().ListOfRecords().Where(x => x.EmployeeTypeID == 1).ToList();
             ViewBag.doctors = lstDoctors;
             ViewData["GetPatientList"] = model;
             return View();
         }
-        public ActionResult PatientAdmission(int? patient_id, int? appointment_id, int? addmission_id)
+        public ActionResult PatientAdmission(int? Patient_id, int? appointment_id, int? addmission_id)
         {
             List<tblHospitalRoom> lstRoom = db.tblHospitalRooms.Where(x => x.isActive == true).ToList();
             ViewBag.ListRoom = lstRoom;
@@ -96,9 +96,17 @@ namespace HMS.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult PatientAdmission(tblPatientAdmission obj, int? patient_id, int? appointment_id, int? addmission_id)
+        public ActionResult PatientAdmission(tblPatientAdmission obj, int? Patient_id, int? appointment_id, int? addmission_id)
         {
+
+           
             string AppointmentId = Request.Form["hdnAppointmentId"];
+            if (AppointmentId == "") {
+                tblPatientAppointment app = new PatientDAL().getPatientAppointments(Convert.ToInt32(Patient_id)).Where(x => x.isActive == true).FirstOrDefault();
+                if (app != null && app.ID > 0)
+                {
+                    AppointmentId = app.ID.ToString();
+                } }
             string AdmissionDate = Request.Form["A_Date"];
             string DischargeDate = Request.Form["DischargeDate"];
             string[] s = DischargeDate.Split('-');
@@ -144,7 +152,7 @@ namespace HMS.Controllers
 
                 }
 
-                return Redirect("patients");
+                return Redirect("/patient-admissions?patient_id="+obj.patient_id);
             }
             catch (Exception ex)
             {
@@ -208,7 +216,7 @@ namespace HMS.Controllers
                     TempData["AlertTask"] = "Patient Admit added successfully";
                 }
 
-                return Redirect("/patients");
+                return Redirect("/patient-appointments?patient_id="+obj.PatientID);
                 // return Redirect("patient-admission?appointment_id=" + appointment_id+ "&patient_id=" + p_id);
             }
             catch (Exception ex)
@@ -223,9 +231,7 @@ namespace HMS.Controllers
         // GET: Patient/Delete/5
         public ActionResult Delete(int id)
         {
-            tblPatient patient = new PatientDAL().ListOfRecords().Where(x => x.Patient_id == id).FirstOrDefault();
-            patient.is_active = false;
-            new PatientDAL().UpdateRecord(patient);
+               new PatientDAL().DeletePatient(Convert.ToInt32(id));
             TempData["AlertTask"] = "Patient deleted successfully";
             return Redirect("/patients");
         }
@@ -473,6 +479,16 @@ namespace HMS.Controllers
                 return View(model);
             
            
+        }
+
+        public ActionResult PatientAdmissionList(int patient_id)
+        {
+            var model = new PatientDAL().GetPatientAdmits(Convert.ToInt32(patient_id));
+
+
+            return View(model);
+
+
         }
     } 
     

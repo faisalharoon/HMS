@@ -99,5 +99,49 @@ namespace HMS.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPatientAppointements_Result>("GetPatientAppointements");
         }
+    
+        public virtual ObjectResult<Patient_Count_Result> Patient_Count()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Patient_Count_Result>("Patient_Count");
+        }
+    
+        public virtual ObjectResult<Sp_ActivePatientsList_Result> Sp_ActivePatientsList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_ActivePatientsList_Result>("Sp_ActivePatientsList");
+        }
+    
+        public virtual ObjectResult<Sp_Dashboard_Result> Sp_Dashboard()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_Dashboard_Result>("Sp_Dashboard");
+        }
+    
+        public virtual int sp_DeletePatient(Nullable<int> patientID)
+        {
+            var patientIDParameter = patientID.HasValue ?
+                new ObjectParameter("PatientID", patientID) :
+                new ObjectParameter("PatientID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DeletePatient", patientIDParameter);
+        }
+    
+        public virtual ObjectResult<Sp_PatientAdmissions_Result> Sp_PatientAdmissions()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_PatientAdmissions_Result>("Sp_PatientAdmissions");
+        }
+    
+        public virtual ObjectResult<Sp_RoomsOccupied_Result> Sp_RoomsOccupied()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_RoomsOccupied_Result>("Sp_RoomsOccupied");
+        }
+    
+        public virtual ObjectResult<Sp_StaffSpeciality_Result> Sp_StaffSpeciality()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_StaffSpeciality_Result>("Sp_StaffSpeciality");
+        }
+    
+        public virtual ObjectResult<string> Sp_TestsCategories()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Sp_TestsCategories");
+        }
     }
 }

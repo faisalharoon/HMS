@@ -2,7 +2,9 @@
 @{
     ViewBag.Title = "AddPatient";
 }
-@using (Html.BeginForm("AddPatient", "Patient"))
+
+@using (Html.BeginForm("AddPatient", "Patient", new { patient_id = Request.QueryString["patient_id"] }))
+
 {
     @Html.ValidationSummary(true)
     <section class="content">
@@ -23,9 +25,9 @@
                                 <div class="col-lg-4 col-sm-12">
                                     <div class="form-group">
                                         <div class="form-line">
-                                          
-                                            @Html.TextBoxFor(x=>x.Patient_Name, new { @type = "text", @class = "form-control", @id = "txtName", @placeholder = "Patient Name", @required = "required" })
-                             
+
+                                            @Html.TextBoxFor(x => x.Patient_Name, new { @type = "text", @class = "form-control", @id = "txtName", @placeholder = "Patient Name", @required = "required" })
+
                                         </div>
                                     </div>
                                 </div>
@@ -51,13 +53,13 @@
                                         <div class="form-line">
                                             @Html.TextBoxFor(x => x.Date_of_Birth, new { @type = "text", @class = "datepicker form-control", @id = "txtDOB", @placeholder = "Date of Birth", @required = "required" })
 
-                                              </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <div class="form-line">
-                                            @Html.TextBoxFor(x => x.Age, new { @type = "text",@maxlength="2", @class = "form-control", @id = "txtAge", @placeholder = "Age", @required = "required" })
+                                            @Html.TextBoxFor(x => x.Age, new { @type = "text", @maxlength = "2", @class = "form-control", @id = "txtAge", @placeholder = "Age", @required = "required" })
 
                                         </div>
                                     </div>
@@ -81,16 +83,16 @@ new { @id = "ddlGender", @class = "form-control show-tick", @required="required"
 
                                     </div>
                                 </div>
-                          
+
                             </div>
-                            
+
                             <div class="row clearfix">
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <div class="form-line">
-                                            @Html.TextAreaFor(x => x.Note, new { @type = "text",@rows="4", @class = "form-control no-resize", @id = "txtnote", @placeholder = "Description" })
+                                            @Html.TextAreaFor(x => x.Note, new { @type = "text", @rows = "4", @class = "form-control no-resize", @id = "txtnote", @placeholder = "Description" })
 
-                                                  </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="">
@@ -103,13 +105,13 @@ new { @id = "ddlGender", @class = "form-control show-tick", @required="required"
                                     }
                                     <input type="submit" id="btnSave" class="btn btn-raised g-bg-cyan" value="@Text" name="Save" />
 
-                                                          </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </section>
 

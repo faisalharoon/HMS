@@ -187,7 +187,25 @@
     <Compile Include="Models\MedicineDAL.cs" />
     <Compile Include="Models\PatientBillDAL.cs" />
     <Compile Include="Models\PatientDAL.cs" />
+    <Compile Include="Models\Patient_Count_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SearchDAL.cs" />
+    <Compile Include="Models\Sp_ActivePatientsList_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sp_Dashboard_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sp_PatientAdmissions_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sp_RoomsOccupied_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sp_StaffSpeciality_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblAdmissionType.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
@@ -456,6 +474,7 @@
     <Content Include="Views\Search\Edit.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Patient\PatientappointmentList.cshtml" />
+    <Content Include="Views\Patient\PatientAdmissionList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
