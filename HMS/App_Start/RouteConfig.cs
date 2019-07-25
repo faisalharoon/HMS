@@ -218,6 +218,11 @@ defaults: new { controller = "Patient", action = "Delete", id = UrlParameter.Opt
                 url: "",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+             name: "Dashboard",
+             url: "dashboard",
+             defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+         );
 
             routes.MapRoute(
               name: "PatientBills",

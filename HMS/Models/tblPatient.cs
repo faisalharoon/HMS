@@ -28,6 +28,7 @@ namespace HMS.Models
         public Nullable<int> Age { get; set; }
         public string Gender { get; set; }
         public string Note { get; set; }
+        public bool? is_active { get; set; }
         public Nullable<System.DateTime> Date_of_Birth { get; set; }
         public Nullable<bool> is_active { get; set; }
     
