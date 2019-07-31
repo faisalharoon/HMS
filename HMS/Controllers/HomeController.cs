@@ -16,6 +16,7 @@ namespace HMS.Controllers
             DashboardViewModel model = new DashboardViewModel();
             model.DashboardsModel = db.Database.SqlQuery<DashboardModel>("[Sp_Dashboard]").ToList();
             model.ActivePatientsList = db.Database.SqlQuery<ActivePatientList>("[Sp_ActivePatientsList]").ToList();
+            db.Database.ExecuteSqlCommand("PatientAdmission");//Trigger it
             model.PatientsCount = db.Database.SqlQuery<PatientCount>("[Patient_Count]").ToList();
             model.RoomsOccupied = db.Database.SqlQuery<RoomOccupied>("[Sp_RoomsOccupied]").ToList();
             return View(model);

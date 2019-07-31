@@ -161,6 +161,12 @@
     </Compile>
     <Compile Include="Models\DoctorsDAL.cs" />
     <Compile Include="Models\GernalFunction.cs" />
+    <Compile Include="Models\GetPatientAdmits_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetPatientAppointements_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetPatientList_Result.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
@@ -192,7 +198,22 @@
     <Compile Include="Models\MedicineDAL.cs" />
     <Compile Include="Models\PatientBillDAL.cs" />
     <Compile Include="Models\PatientDAL.cs" />
+    <Compile Include="Models\Patient_Count_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SearchDAL.cs" />
+    <Compile Include="Models\Sp_ActivePatientsList_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sp_Dashboard_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sp_PatientAdmissions_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sp_RoomsOccupied_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblAdmissionType.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
