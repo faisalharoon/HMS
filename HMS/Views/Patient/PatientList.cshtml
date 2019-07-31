@@ -36,8 +36,8 @@
                                     <th>Patient ID</th>
                                     <th>Patient Name</th>
                                     <th>Contact_no</th>
-                                    <th>Doctor Name</th>
-                                    <th>AppointmentDate</th>
+                                    @*<th>Doctor Name</th>
+                                    <th>AppointmentDate</th>*@
 
                                     <th>Actions</th>
 
@@ -58,44 +58,43 @@
 
                                             string admission_style = "style='display:none;'";
                                             string appoint_url = "";
-                                            string Doctor_name = "";
+                                            // string Doctor_name = "";
                                             string admission_url = "";
-                                            string AppointmentDate = "";
+                                            //string AppointmentDate = "";
                                             string admission_text = "";
                                             string appointement_text = "";
-                                           
-                                            if(appoint_id!=null)
-                                            {
-                                                var admit_id = appoint_id.tblPatientAdmissions.Where(x => x.PatientAppointmentID == appoint_id.ID).FirstOrDefault();
 
-                                                var doc = doclist.Where(x => x.ID == appoint_id.DoctorID).FirstOrDefault();
-                                                Doctor_name = doc.Name;
-                                                appointement_text = "Update Appointment";
+                                            //if(appoint_id!=null)
+                                            // {
+                                            //var admit_id = appoint_id.tblPatientAdmissions.Where(x => x.PatientAppointmentID == appoint_id.ID).FirstOrDefault();
 
-                                                admission_style = "style='display:block;'";
-                                                appoint_url= "/patient-appointment?patient_id="+item.Patient_id+ "&appointment_id="+ appoint_id.ID;
-                                                admission_url = "/patient-admission?appointment_id="+ appoint_id.ID+"&patient_id=" + item.Patient_id;
-                                                AppointmentDate = appoint_id.AppointmentDate.ToString();
-                                                admission_text = "Add Admission";
-                                             
-                                                if (admit_id != null)
-                                                {
-                                                    admission_url = "/patient-admission?appointment_id=" + appoint_id.ID + "&patient_id=" + item.Patient_id + "&addmission_id=" + admit_id.ID;
-                                                    admission_text = "Update Admit";
-                                                }
-                                            }
-                                            else
-                                            {
-                                                appoint_url = "/patient-appointment?patient_id="+item.Patient_id;
-                                                appointement_text = "Add Appointment";
-                                            }
+                                            //  var doc = doclist.Where(x => x.ID == appoint_id.DoctorID).FirstOrDefault();
+                                            //Doctor_name = doc.Name;
+                                            // appointement_text = "Update Appointment";
+
+                                            admission_style = "style='display:block;'";
+                                            admission_url = "/patient-admissions?Patient_id=" + item.Patient_id; ;
+                                            //AppointmentDate = appoint_id.AppointmentDate.ToString();
+                                            admission_text = "Patient's Admission";
+
+                                            appoint_url = "/patient-appointments?patient_id=" + item.Patient_id;
+                                            appointement_text = "Patient's Appointment";
+                                            //    if (admit_id != null)
+                                            //    {
+                                            //        admission_url = "/patient-admission?appointment_id=" + appoint_id.ID + "&patient_id=" + item.Patient_id + "&addmission_id=" + admit_id.ID;
+                                            //        admission_text = "Update Admit";
+                                            //    }
+                                            // }
+                                            //else
+                                            //{
+                                            // }
 
                                             <tr>
                                                 <td>@item.Patient_id</td>
                                                 <td>@item.Patient_Name</td>
                                                 <td>@item.Contact_no</td>
-                                                <td>@Doctor_name</td>
-                                                <td>@AppointmentDate</td>
+                                                @*<td>@Doctor_name</td>
+                                                <td>@AppointmentDate</td>*@
 
                                                 <td>
 
@@ -112,8 +111,8 @@
                                                     </a></li>
                                                                 <li ><a href="@appoint_url">@appointement_text</a></li>
                                                                 <li @admission_style><a href="@admission_url">@admission_text</a></li>
-                                                                <li><a href="/Patient-tests?patient_id=@item.Patient_id">Add Test</a></li>
-                                                                <li><a href="/Patient-medicine?Patient_id=@item.Patient_id">Patient's Medicine</a></li>
+                                                                <li><a href="/patient-tests?patient_id=@item.Patient_id">Patient's Test</a></li>
+                                                                <li><a href="/patient-medicine?Patient_id=@item.Patient_id">Patient's Medicine</a></li>
                                                             </ul>
 
 

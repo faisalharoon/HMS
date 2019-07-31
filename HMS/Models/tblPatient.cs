@@ -18,6 +18,7 @@ namespace HMS.Models
         public tblPatient()
         {
             this.tblPatientAppointments = new HashSet<tblPatientAppointment>();
+            this.tblPatientAdmissions = new HashSet<tblPatientAdmission>();
         }
     
         public int Patient_id { get; set; }
@@ -32,5 +33,7 @@ namespace HMS.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPatientAppointment> tblPatientAppointments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPatientAdmission> tblPatientAdmissions { get; set; }
     }
 }

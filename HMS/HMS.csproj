@@ -214,6 +214,9 @@
     <Compile Include="Models\Sp_RoomsOccupied_Result.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Sp_StaffSpeciality_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblAdmissionType.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>
@@ -482,6 +485,8 @@
     <Content Include="Views\Search\Details.cshtml" />
     <Content Include="Views\Search\Edit.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Patient\PatientappointmentList.cshtml" />
+    <Content Include="Views\Patient\PatientAdmissionList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

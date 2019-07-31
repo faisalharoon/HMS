@@ -28,13 +28,23 @@ defaults: new { controller = "Patient", action = "GetTestDetails", id = UrlParam
 );
             routes.MapRoute(
 name: "PatientMedList",
-url: "Patient-medicine",
+url: "patient-medicine",
 defaults: new { controller = "Patient", action = "PatientMedList", id = UrlParameter.Optional }
 );
             routes.MapRoute(
 name: "PatientTestList",
-url: "Patient-tests",
+url: "patient-tests",
 defaults: new { controller = "Patient", action = "PatientTestList", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
+name: "PatientappointmentList",
+url: "patient-appointments",
+defaults: new { controller = "Patient", action = "PatientappointmentList", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
+name: "PatientAdmissionList",
+url: "patient-admissions",
+defaults: new { controller = "Patient", action = "PatientAdmissionList", id = UrlParameter.Optional }
 );
             routes.MapRoute(
 name: "add-test",

@@ -903,6 +903,7 @@
           <Property Name="Date_of_Birth" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblPatientAppointments" Relationship="HMS_DBModel.FK_tblPatientAppointment_tblPatient" FromRole="tblPatient" ToRole="tblPatientAppointment" />
           <Property Name="is_active" Type="Boolean" />
+          <NavigationProperty Name="tblPatientAdmissions" Relationship="HMS_DBModel.FK_tblPatientAdmission_tblPatient" FromRole="tblPatient" ToRole="tblPatientAdmission" />
         </EntityType>
         <EntityType Name="tblPatientBill">
           <Key>
@@ -1434,17 +1435,32 @@
           <FunctionImport Name="sp_DeletePatientBill">
           <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
+<<<<<<< HEAD
+=======
+          <AssociationSet Name="FK_tblPatientAdmission_tblPatient" Association="HMS_DBModel.FK_tblPatientAdmission_tblPatient">
+            <End Role="tblPatient" EntitySet="tblPatients" />
+            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
+          </AssociationSet>
+>>>>>>> c09d53e40b9562cc4ea9eb33cc4dd10097e86159
           <FunctionImport Name="GetPatientAdmits" ReturnType="Collection(HMS_DBModel.GetPatientAdmits_Result)" />
           <FunctionImport Name="GetPatientAppointements" ReturnType="Collection(HMS_DBModel.GetPatientAppointements_Result)" />
           <FunctionImport Name="Patient_Count" ReturnType="Collection(HMS_DBModel.Patient_Count_Result)" />
           <FunctionImport Name="Sp_ActivePatientsList" ReturnType="Collection(HMS_DBModel.Sp_ActivePatientsList_Result)" />
           <FunctionImport Name="Sp_Dashboard" ReturnType="Collection(HMS_DBModel.Sp_Dashboard_Result)" />
           <FunctionImport Name="sp_DeletePatient">
+<<<<<<< HEAD
           <Parameter Name="PatientID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Sp_PatientAdmissions" ReturnType="Collection(HMS_DBModel.Sp_PatientAdmissions_Result)" />
           <FunctionImport Name="Sp_RoomsOccupied" ReturnType="Collection(HMS_DBModel.Sp_RoomsOccupied_Result)" />
           <FunctionImport Name="Sp_StaffSpeciality" />
+=======
+            <Parameter Name="PatientID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_PatientAdmissions" ReturnType="Collection(HMS_DBModel.Sp_PatientAdmissions_Result)" />
+          <FunctionImport Name="Sp_RoomsOccupied" ReturnType="Collection(HMS_DBModel.Sp_RoomsOccupied_Result)" />
+          <FunctionImport Name="Sp_StaffSpeciality" ReturnType="Collection(HMS_DBModel.Sp_StaffSpeciality_Result)" />
+>>>>>>> c09d53e40b9562cc4ea9eb33cc4dd10097e86159
           <FunctionImport Name="Sp_TestsCategories" ReturnType="Collection(String)" />
           </EntityContainer>
         <EntityType Name="tblEmployeeSatu">
@@ -1578,6 +1594,10 @@
           <NavigationProperty Name="tblPatientAppointment" Relationship="HMS_DBModel.FK_tblPatient_room_tblPatient" FromRole="tblPatientAdmission" ToRole="tblPatientAppointment" />
           <NavigationProperty Name="tblPatientBill" Relationship="HMS_DBModel.FK_tblPatient_room_tblPatientBill" FromRole="tblPatientAdmission" ToRole="tblPatientBill" />
           <Property Name="patient_id" Type="Int32" />
+<<<<<<< HEAD
+=======
+          <NavigationProperty Name="tblPatient" Relationship="HMS_DBModel.FK_tblPatientAdmission_tblPatient" FromRole="tblPatientAdmission" ToRole="tblPatient" />
+>>>>>>> c09d53e40b9562cc4ea9eb33cc4dd10097e86159
         </EntityType>
         <EntityType Name="tblPatientAppointment">
           <Key>
@@ -1770,6 +1790,21 @@
           <Property Name="Role_id" Type="Int32" />
           <Property Name="show_in_menu" Type="Boolean" />
         </EntityType>
+<<<<<<< HEAD
+=======
+        <Association Name="FK_tblPatientAdmission_tblPatient">
+          <End Type="HMS_DBModel.tblPatient" Role="tblPatient" Multiplicity="0..1" />
+          <End Type="HMS_DBModel.tblPatientAdmission" Role="tblPatientAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatient">
+              <PropertyRef Name="Patient_id" />
+            </Principal>
+            <Dependent Role="tblPatientAdmission">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+>>>>>>> c09d53e40b9562cc4ea9eb33cc4dd10097e86159
         <ComplexType Name="GetPatientAdmits_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="Int32" Name="PatientAppointmentID" Nullable="true" />
@@ -1846,6 +1881,13 @@
           <Property Type="Int32" Name="LabourDeliverySuite" Nullable="true" />
           <Property Type="Int32" Name="Nursery" Nullable="true" />
         </ComplexType>
+<<<<<<< HEAD
+=======
+        <ComplexType Name="Sp_StaffSpeciality_Result">
+          <Property Type="Int32" Name="TotalCount" Nullable="true" />
+          <Property Type="String" Name="Speciality" Nullable="true" MaxLength="450" />
+        </ComplexType>
+>>>>>>> c09d53e40b9562cc4ea9eb33cc4dd10097e86159
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2435,7 +2477,18 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+<<<<<<< HEAD
           <FunctionImportMapping FunctionImportName="Sp_StaffSpeciality" FunctionName="HMS_DBModel.Store.Sp_StaffSpeciality" />
+=======
+          <FunctionImportMapping FunctionImportName="Sp_StaffSpeciality" FunctionName="HMS_DBModel.Store.Sp_StaffSpeciality">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HMS_DBModel.Sp_StaffSpeciality_Result">
+                <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
+                <ScalarProperty Name="Speciality" ColumnName="Speciality" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+>>>>>>> c09d53e40b9562cc4ea9eb33cc4dd10097e86159
           <FunctionImportMapping FunctionImportName="Sp_TestsCategories" FunctionName="HMS_DBModel.Store.Sp_TestsCategories" />
           </EntityContainerMapping>
       </Mapping>

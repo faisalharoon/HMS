@@ -31,5 +31,6 @@ namespace HMS.Models
         public virtual tblHospitalRoom tblHospitalRoom { get; set; }
         public virtual tblPatientAppointment tblPatientAppointment { get; set; }
         public virtual tblPatientBill tblPatientBill { get; set; }
+        public virtual tblPatient tblPatient { get; set; }
     }
 }

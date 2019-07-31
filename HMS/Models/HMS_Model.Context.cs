@@ -134,9 +134,9 @@ namespace HMS.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_RoomsOccupied_Result>("Sp_RoomsOccupied");
         }
     
-        public virtual int Sp_StaffSpeciality()
+        public virtual ObjectResult<Sp_StaffSpeciality_Result> Sp_StaffSpeciality()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Sp_StaffSpeciality");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_StaffSpeciality_Result>("Sp_StaffSpeciality");
         }
     
         public virtual ObjectResult<string> Sp_TestsCategories()
