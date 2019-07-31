@@ -161,6 +161,9 @@
     </Compile>
     <Compile Include="Models\DoctorsDAL.cs" />
     <Compile Include="Models\GernalFunction.cs" />
+    <Compile Include="Models\GetMenu_Result.cs">
+      <DependentUpon>HMS_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetPatientAdmits_Result.cs">
       <DependentUpon>HMS_Model.tt</DependentUpon>
     </Compile>

@@ -26,11 +26,5 @@ namespace HMS.Models
         public string DisChargeDate { get; set; }
         public string AdmissionDate { get; set; }
         public Nullable<int> patient_id { get; set; }
-    
-        public virtual tblAdmissionType tblAdmissionType { get; set; }
-        public virtual tblHospitalRoom tblHospitalRoom { get; set; }
-        public virtual tblPatientAppointment tblPatientAppointment { get; set; }
-        public virtual tblPatientBill tblPatientBill { get; set; }
-        public virtual tblPatient tblPatient { get; set; }
     }
 }

@@ -10,15 +10,22 @@
 namespace HMS.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblPage
+    public partial class GetMenu_Result
     {
-        public int page_id { get; set; }
         public string page_name { get; set; }
+        public int page_id { get; set; }
+        public Nullable<int> parent_id { get; set; }
         public string page_url { get; set; }
         public Nullable<bool> is_active { get; set; }
         public Nullable<bool> is_parent { get; set; }
-        public Nullable<int> parent_id { get; set; }
+        public Nullable<bool> show_in_menu { get; set; }
+        public string RoleName { get; set; }
+        public string UserName { get; set; }
+        public long ID { get; set; }
+        public bool IsActive { get; set; }
+        public bool Active_role { get; set; }
+        public Nullable<System.DateTime> EffectiveFromDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
     }
 }

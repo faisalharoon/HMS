@@ -21,9 +21,10 @@ namespace HMS.Models
         public string Gender { get; set; }
         public string Note { get; set; }
         public Nullable<System.DateTime> Date_of_Birth { get; set; }
-        public Nullable<System.DateTime> AppointmentDate { get; set; }
+        public Nullable<bool> is_active { get; set; }
+        public string AppointmentDate { get; set; }
+        public int Appointment_id { get; set; }
         public string Name { get; set; }
         public int ID { get; set; }
-        public int Appointment_id { get; set; }
     }
 }

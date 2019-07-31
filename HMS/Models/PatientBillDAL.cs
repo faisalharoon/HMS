@@ -7,7 +7,7 @@ namespace HMS.Models
 {
     public class PatientBillDAL
     {
-        HMS_DBEntity db = new HMS_DBEntity();
+        HMS_DBEntities db = new HMS_DBEntities();
         public List<tblPatient> GetAllRecords()
         {
             return db.tblPatients.ToList();

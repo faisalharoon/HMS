@@ -19,11 +19,11 @@ namespace HMS.Models
         public string Result { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public string CreatedBy { get; set; }
+        public Nullable<int> patient_id { get; set; }
         public string TestName { get; set; }
         public string AttributeName { get; set; }
         public string NormalRange { get; set; }
         public Nullable<int> PatientAppointmentID { get; set; }
         public string PathalogistRemarks { get; set; }
-        public Nullable<int> patient_id { get; set; }
     }
 }

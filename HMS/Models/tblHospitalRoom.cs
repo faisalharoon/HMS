@@ -14,12 +14,6 @@ namespace HMS.Models
     
     public partial class tblHospitalRoom
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblHospitalRoom()
-        {
-            this.tblPatientAdmissions = new HashSet<tblPatientAdmission>();
-        }
-    
         public int ID { get; set; }
         public Nullable<int> RoomTypeID { get; set; }
         public string RoomName { get; set; }
@@ -31,7 +25,5 @@ namespace HMS.Models
     
         public virtual tblHospital tblHospital { get; set; }
         public virtual tblRoomType tblRoomType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblPatientAdmission> tblPatientAdmissions { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace HMS.App_Start
 {
     public class MyController : Controller
     {
-        protected HMS_DBEntity db = new HMS_DBEntity();
+        protected HMS_DBEntities db = new HMS_DBEntities();
     }
 }

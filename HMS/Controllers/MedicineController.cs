@@ -9,7 +9,7 @@ namespace HMS.Controllers
 {
     public class MedicineController : Controller
     {
-        HMS_DBEntity db = new HMS_DBEntity();
+        HMS_DBEntities db = new HMS_DBEntities();
 
         public ActionResult MedicineCategory()
         {

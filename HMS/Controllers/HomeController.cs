@@ -10,7 +10,7 @@ namespace HMS.Controllers
 {
     public class HomeController : Controller
     {
-        private HMS_DBEntity db = new HMS_DBEntity();
+        private HMS_DBEntities db = new HMS_DBEntities();
         public ActionResult Index()
         {
             DashboardViewModel model = new DashboardViewModel();

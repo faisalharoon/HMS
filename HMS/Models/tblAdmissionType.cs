@@ -14,16 +14,7 @@ namespace HMS.Models
     
     public partial class tblAdmissionType
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblAdmissionType()
-        {
-            this.tblPatientAdmissions = new HashSet<tblPatientAdmission>();
-        }
-    
         public int ID { get; set; }
         public string AdmissionTypeName { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblPatientAdmission> tblPatientAdmissions { get; set; }
     }
 }

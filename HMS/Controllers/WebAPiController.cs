@@ -11,7 +11,7 @@ namespace HMS.Controllers
 {
     public class WebAPiController : ApiController
     {
-        private HMS_DBEntity db = new HMS_DBEntity();
+        private HMS_DBEntities db = new HMS_DBEntities();
         [HttpGet]
         [Route("WebApi/AdmissionsProgress")]
         public IEnumerable<AdmissionMonthly> AdmissionsMonthly()

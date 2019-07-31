@@ -15,10 +15,10 @@ namespace HMS.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class HMS_DBEntity : DbContext
+    public partial class HMS_DBEntities : DbContext
     {
-        public HMS_DBEntity()
-            : base("name=HMS_DBEntity")
+        public HMS_DBEntities()
+            : base("name=HMS_DBEntities")
         {
         }
     
@@ -29,6 +29,10 @@ namespace HMS.Models
     
         public virtual DbSet<tblAdmissionType> tblAdmissionTypes { get; set; }
         public virtual DbSet<tblDoctor> tblDoctors { get; set; }
+        public virtual DbSet<tblEmpDesignation> tblEmpDesignations { get; set; }
+        public virtual DbSet<tblEmployee> tblEmployees { get; set; }
+        public virtual DbSet<tblEmployeeQualification> tblEmployeeQualifications { get; set; }
+        public virtual DbSet<tblEmployeeSatu> tblEmployeeSatus { get; set; }
         public virtual DbSet<tblEmployeeType> tblEmployeeTypes { get; set; }
         public virtual DbSet<tblHospital> tblHospitals { get; set; }
         public virtual DbSet<tblHospitalRoom> tblHospitalRooms { get; set; }
@@ -37,6 +41,8 @@ namespace HMS.Models
         public virtual DbSet<tblMedicineOccurance> tblMedicineOccurances { get; set; }
         public virtual DbSet<tblMedicineTiming> tblMedicineTimings { get; set; }
         public virtual DbSet<tblPatient> tblPatients { get; set; }
+        public virtual DbSet<tblPatientAdmission> tblPatientAdmissions { get; set; }
+        public virtual DbSet<tblPatientAppointment> tblPatientAppointments { get; set; }
         public virtual DbSet<tblPatientBill> tblPatientBills { get; set; }
         public virtual DbSet<tblPatientBillDetail> tblPatientBillDetails { get; set; }
         public virtual DbSet<tblPatientMedicine> tblPatientMedicines { get; set; }
@@ -52,42 +58,12 @@ namespace HMS.Models
         public virtual DbSet<UserLoginHistory> UserLoginHistories { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<tblEmployeeSatu> tblEmployeeSatus { get; set; }
-        public virtual DbSet<tblEmpDesignation> tblEmpDesignations { get; set; }
-        public virtual DbSet<tblEmployeeQualification> tblEmployeeQualifications { get; set; }
-        public virtual DbSet<tblEmployee> tblEmployees { get; set; }
-        public virtual DbSet<tblPatientAdmission> tblPatientAdmissions { get; set; }
-        public virtual DbSet<tblPatientAppointment> tblPatientAppointments { get; set; }
         public virtual DbSet<tblPage> tblPages { get; set; }
         public virtual DbSet<tblUserPage> tblUserPages { get; set; }
     
-        public virtual ObjectResult<GetPatientList_Result> GetPatientList()
+        public virtual ObjectResult<GetMenu_Result> GetMenu()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPatientList_Result>("GetPatientList");
-        }
-    
-        public virtual ObjectResult<GetpatientTestDetails_Result> GetpatientTestDetails()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetpatientTestDetails_Result>("GetpatientTestDetails");
-        }
-    
-        public virtual ObjectResult<GetPatientMedicineList_Result> GetPatientMedicineList()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPatientMedicineList_Result>("GetPatientMedicineList");
-        }
-    
-        public virtual ObjectResult<GetPatientMedList_Result> GetPatientMedList()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPatientMedList_Result>("GetPatientMedList");
-        }
-    
-        public virtual int sp_DeletePatientBill(Nullable<int> iD)
-        {
-            var iDParameter = iD.HasValue ?
-                new ObjectParameter("ID", iD) :
-                new ObjectParameter("ID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DeletePatientBill", iDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMenu_Result>("GetMenu");
         }
     
         public virtual ObjectResult<GetPatientAdmits_Result> GetPatientAdmits()
@@ -100,9 +76,34 @@ namespace HMS.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPatientAppointements_Result>("GetPatientAppointements");
         }
     
+        public virtual ObjectResult<GetPatientList_Result> GetPatientList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPatientList_Result>("GetPatientList");
+        }
+    
+        public virtual ObjectResult<GetPatientMedicineList_Result> GetPatientMedicineList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPatientMedicineList_Result>("GetPatientMedicineList");
+        }
+    
+        public virtual ObjectResult<GetPatientMedList_Result> GetPatientMedList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPatientMedList_Result>("GetPatientMedList");
+        }
+    
+        public virtual ObjectResult<GetpatientTestDetails_Result> GetpatientTestDetails()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetpatientTestDetails_Result>("GetpatientTestDetails");
+        }
+    
         public virtual ObjectResult<Patient_Count_Result> Patient_Count()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Patient_Count_Result>("Patient_Count");
+        }
+    
+        public virtual int PatientAdmission()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PatientAdmission");
         }
     
         public virtual ObjectResult<Sp_ActivePatientsList_Result> Sp_ActivePatientsList()
@@ -122,6 +123,15 @@ namespace HMS.Models
                 new ObjectParameter("PatientID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DeletePatient", patientIDParameter);
+        }
+    
+        public virtual int sp_DeletePatientBill(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DeletePatientBill", iDParameter);
         }
     
         public virtual ObjectResult<Sp_PatientAdmissions_Result> Sp_PatientAdmissions()

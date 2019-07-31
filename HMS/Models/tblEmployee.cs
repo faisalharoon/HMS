@@ -14,12 +14,6 @@ namespace HMS.Models
     
     public partial class tblEmployee
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblEmployee()
-        {
-            this.tblPatientAppointments = new HashSet<tblPatientAppointment>();
-        }
-    
         public int ID { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
@@ -38,7 +32,5 @@ namespace HMS.Models
         public virtual tblEmployeeQualification tblEmployeeQualification { get; set; }
         public virtual tblEmployeeSatu tblEmployeeSatu { get; set; }
         public virtual tblEmployeeType tblEmployeeType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblPatientAppointment> tblPatientAppointments { get; set; }
     }
 }
