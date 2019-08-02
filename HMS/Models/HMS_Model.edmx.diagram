@@ -60,6 +60,9 @@
         <AssociationConnector Association="teamfotech_hmsModel.FK_UserInRole_RoleID" ManuallyRouted="false" />
         <AssociationConnector Association="teamfotech_hmsModel.FK_UserInRole_UserID" ManuallyRouted="false" />
         <AssociationConnector Association="teamfotech_hmsModel.FK_UserLoginHistory_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatient" />
+        <AssociationConnector Association="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatientAppointment" />
+        <AssociationConnector Association="teamfotech_hmsModel.FK_tblPatientAppointment_tblPatient" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
