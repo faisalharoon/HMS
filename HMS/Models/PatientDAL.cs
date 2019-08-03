@@ -56,7 +56,7 @@ namespace HMS.Models
         }
         public tblPatientAppointment GetPatientAppointment(int Patient_id, int appoint_id)
         {
-            return db.tblPatientAppointments.FirstOrDefault(x => x.PatientID == Patient_id & x.ID == appoint_id);
+            return db.tblPatientAppointments.FirstOrDefault(x => x.patient_id == Patient_id & x.ID == appoint_id);
         }
 
         public List<GetPatientAppointements_Result> GetPatientAllAppointments(int Patient_id)
@@ -117,7 +117,7 @@ namespace HMS.Models
         public List<tblPatientAppointment> getPatientAppointments(int patient_id)
 
         {
-            return db.tblPatientAppointments.Where(x => x.PatientID == patient_id && x.isActive == true).ToList();
+            return db.tblPatientAppointments.Where(x => x.patient_id == patient_id && x.isActive == true).ToList();
         }
 
 

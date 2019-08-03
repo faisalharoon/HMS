@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="teamfotech_hmsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="teamfotech_hmsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tblAdmissionType">
           <Key>
             <PropertyRef Name="ID" />
@@ -175,13 +175,13 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PatientID" Type="int" />
           <Property Name="DoctorID" Type="int" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="isActive" Type="bit" />
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="150" />
           <Property Name="AppointmentDate" Type="varchar" MaxLength="100" />
+          <Property Name="patient_id" Type="int" />
         </EntityType>
         <EntityType Name="tblPatientBill">
           <Key>
@@ -355,13 +355,6 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="Hospital_ID" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="PatientAdmissions">
-          <Property Name="ID" Type="int" />
-          <Property Name="AdmissionDate" Type="datetime" />
-          <Property Name="DischargeDate" Type="datetime" />
-        </EntityType>-->
         <EntityType Name="tblPages">
           <Key>
             <PropertyRef Name="page_id" />
@@ -476,6 +469,42 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
             </Principal>
             <Dependent Role="tblMedicine">
               <PropertyRef Name="MedicineCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatientAdmission_tblPatient">
+          <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="0..1" />
+          <End Role="tblPatientAdmission" Type="Self.tblPatientAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatient">
+              <PropertyRef Name="Patient_id" />
+            </Principal>
+            <Dependent Role="tblPatientAdmission">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatientAdmission_tblPatientAppointment">
+          <End Role="tblPatientAppointment" Type="Self.tblPatientAppointment" Multiplicity="0..1" />
+          <End Role="tblPatientAdmission" Type="Self.tblPatientAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatientAppointment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblPatientAdmission">
+              <PropertyRef Name="PatientAppointmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatientAppointment_tblPatient">
+          <End Role="tblPatient" Type="Self.tblPatient" Multiplicity="0..1" />
+          <End Role="tblPatientAppointment" Type="Self.tblPatientAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatient">
+              <PropertyRef Name="Patient_id" />
+            </Principal>
+            <Dependent Role="tblPatientAppointment">
+              <PropertyRef Name="patient_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -734,6 +763,18 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
             <End Role="tblMedicineCategory" EntitySet="tblMedicineCategory" />
             <End Role="tblMedicine" EntitySet="tblMedicine" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblPatientAdmission_tblPatient" Association="Self.FK_tblPatientAdmission_tblPatient">
+            <End Role="tblPatient" EntitySet="tblPatient" />
+            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatientAdmission_tblPatientAppointment" Association="Self.FK_tblPatientAdmission_tblPatientAppointment">
+            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointment" />
+            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatientAppointment_tblPatient" Association="Self.FK_tblPatientAppointment_tblPatient">
+            <End Role="tblPatient" EntitySet="tblPatient" />
+            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointment" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblPatientBill_tblPatientAppointment" Association="Self.FK_tblPatientBill_tblPatientAppointment">
             <End Role="tblPatientAppointment" EntitySet="tblPatientAppointment" />
             <End Role="tblPatientBill" EntitySet="tblPatientBill" />
@@ -791,8 +832,7 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="teamfotech_hmsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -960,6 +1000,8 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Date_of_Birth" Type="DateTime" Precision="3" />
           <Property Name="is_active" Type="Boolean" />
+          <NavigationProperty Name="tblPatientAdmissions" Relationship="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatient" FromRole="tblPatient" ToRole="tblPatientAdmission" />
+          <NavigationProperty Name="tblPatientAppointments" Relationship="teamfotech_hmsModel.FK_tblPatientAppointment_tblPatient" FromRole="tblPatient" ToRole="tblPatientAppointment" />
         </EntityType>
         <EntityType Name="tblPatientAdmission">
           <Key>
@@ -977,13 +1019,14 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <Property Name="DisChargeDate" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="AdmissionDate" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="patient_id" Type="Int32" />
+          <NavigationProperty Name="tblPatient" Relationship="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatient" FromRole="tblPatientAdmission" ToRole="tblPatient" />
+          <NavigationProperty Name="tblPatientAppointment" Relationship="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatientAppointment" FromRole="tblPatientAdmission" ToRole="tblPatientAppointment" />
         </EntityType>
         <EntityType Name="tblPatientAppointment">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PatientID" Type="Int32" />
           <Property Name="DoctorID" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="isActive" Type="Boolean" />
@@ -993,6 +1036,9 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <NavigationProperty Name="tblPatientBills" Relationship="Self.FK_tblPatientBill_tblPatientAppointment" FromRole="tblPatientAppointment" ToRole="tblPatientBill" />
           <NavigationProperty Name="tblPatientMedicines" Relationship="Self.FK_tblPatientMedicine_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatientMedicine" />
           <NavigationProperty Name="tblPatientTests" Relationship="Self.FK_tblPatientTest_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatientTest" />
+          <NavigationProperty Name="tblPatientAdmissions" Relationship="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatientAppointment" FromRole="tblPatientAppointment" ToRole="tblPatientAdmission" />
+          <Property Name="patient_id" Type="Int32" />
+          <NavigationProperty Name="tblPatient" Relationship="teamfotech_hmsModel.FK_tblPatientAppointment_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatient" />
         </EntityType>
         <EntityType Name="tblPatientBill">
           <Key>
@@ -1609,15 +1655,27 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <FunctionImport Name="Sp_ActivePatientsList" ReturnType="Collection(teamfotech_hmsModel.Sp_ActivePatientsList_Result)" />
           <FunctionImport Name="Sp_Dashboard" ReturnType="Collection(teamfotech_hmsModel.Sp_Dashboard_Result)" />
           <FunctionImport Name="sp_DeletePatient">
-            <Parameter Name="PatientID" Mode="In" Type="Int32" />
+          <Parameter Name="PatientID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_DeletePatientBill">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Sp_PatientAdmissions" ReturnType="Collection(teamfotech_hmsModel.Sp_PatientAdmissions_Result)" />
           <FunctionImport Name="Sp_RoomsOccupied" ReturnType="Collection(teamfotech_hmsModel.Sp_RoomsOccupied_Result)" />
           <FunctionImport Name="Sp_StaffSpeciality" ReturnType="Collection(teamfotech_hmsModel.Sp_StaffSpeciality_Result)" />
           <FunctionImport Name="Sp_TestsCategories" ReturnType="Collection(String)" />
+          <AssociationSet Name="FK_tblPatientAdmission_tblPatient" Association="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatient">
+            <End Role="tblPatient" EntitySet="tblPatients" />
+            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatientAdmission_tblPatientAppointment" Association="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatientAppointment">
+            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
+            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatientAppointment_tblPatient" Association="teamfotech_hmsModel.FK_tblPatientAppointment_tblPatient">
+            <End Role="tblPatient" EntitySet="tblPatients" />
+            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetMenu_Result">
           <Property Type="String" Name="page_name" Nullable="true" MaxLength="50" />
@@ -1775,6 +1833,42 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <Property Type="Int32" Name="TotalCount" Nullable="true" />
           <Property Type="String" Name="Speciality" Nullable="true" MaxLength="450" />
         </ComplexType>
+        <Association Name="FK_tblPatientAdmission_tblPatient">
+          <End Type="teamfotech_hmsModel.tblPatient" Role="tblPatient" Multiplicity="0..1" />
+          <End Type="teamfotech_hmsModel.tblPatientAdmission" Role="tblPatientAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatient">
+              <PropertyRef Name="Patient_id" />
+            </Principal>
+            <Dependent Role="tblPatientAdmission">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatientAdmission_tblPatientAppointment">
+          <End Type="teamfotech_hmsModel.tblPatientAppointment" Role="tblPatientAppointment" Multiplicity="0..1" />
+          <End Type="teamfotech_hmsModel.tblPatientAdmission" Role="tblPatientAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatientAppointment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblPatientAdmission">
+              <PropertyRef Name="PatientAppointmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatientAppointment_tblPatient">
+          <End Type="teamfotech_hmsModel.tblPatient" Role="tblPatient" Multiplicity="0..1" />
+          <End Type="teamfotech_hmsModel.tblPatientAppointment" Role="tblPatientAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatient">
+              <PropertyRef Name="Patient_id" />
+            </Principal>
+            <Dependent Role="tblPatientAppointment">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1964,8 +2058,8 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <EntitySetMapping Name="tblPatientAppointments">
             <EntityTypeMapping TypeName="teamfotech_hmsModel.tblPatientAppointment">
               <MappingFragment StoreEntitySet="tblPatientAppointment">
+                <ScalarProperty Name="patient_id" ColumnName="patient_id" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
                 <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />

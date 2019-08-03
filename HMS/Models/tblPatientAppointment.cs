@@ -20,16 +20,17 @@ namespace HMS.Models
             this.tblPatientBills = new HashSet<tblPatientBill>();
             this.tblPatientMedicines = new HashSet<tblPatientMedicine>();
             this.tblPatientTests = new HashSet<tblPatientTest>();
+            this.tblPatientAdmissions = new HashSet<tblPatientAdmission>();
         }
     
         public int ID { get; set; }
-        public Nullable<int> PatientID { get; set; }
         public Nullable<int> DoctorID { get; set; }
         public string Description { get; set; }
         public Nullable<bool> isActive { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public string CreatedBy { get; set; }
         public string AppointmentDate { get; set; }
+        public Nullable<int> patient_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPatientBill> tblPatientBills { get; set; }
@@ -37,5 +38,8 @@ namespace HMS.Models
         public virtual ICollection<tblPatientMedicine> tblPatientMedicines { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPatientTest> tblPatientTests { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPatientAdmission> tblPatientAdmissions { get; set; }
+        public virtual tblPatient tblPatient { get; set; }
     }
 }

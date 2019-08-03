@@ -14,12 +14,13 @@ namespace HMS.Models
     
     public partial class tblPatient
     {
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblPatient()
         {
+            this.tblPatientAdmissions = new HashSet<tblPatientAdmission>();
             this.tblPatientAppointments = new HashSet<tblPatientAppointment>();
         }
+    
         public int Patient_id { get; set; }
         public string Patient_Name { get; set; }
         public string Patient_address { get; set; }
@@ -29,7 +30,9 @@ namespace HMS.Models
         public string Note { get; set; }
         public Nullable<System.DateTime> Date_of_Birth { get; set; }
         public Nullable<bool> is_active { get; set; }
-
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPatientAdmission> tblPatientAdmissions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPatientAppointment> tblPatientAppointments { get; set; }
     }

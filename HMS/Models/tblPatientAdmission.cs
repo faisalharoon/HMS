@@ -26,5 +26,8 @@ namespace HMS.Models
         public string DisChargeDate { get; set; }
         public string AdmissionDate { get; set; }
         public Nullable<int> patient_id { get; set; }
+    
+        public virtual tblPatient tblPatient { get; set; }
+        public virtual tblPatientAppointment tblPatientAppointment { get; set; }
     }
 }

@@ -167,7 +167,7 @@ namespace HMS.Controllers
         {
             ViewBag.ListDoctor = new DoctorsDAL().ListOfRecords().Where(x => x.EmployeeTypeID == 1).ToList();
             var model = new tblPatientAppointment();
-            model.PatientID = Convert.ToInt32(patient_id);
+            model.patient_id = Convert.ToInt32(patient_id);
             if (patient_id != null && appointment_id != null)
             {
 
@@ -196,7 +196,7 @@ namespace HMS.Controllers
                 obj.CreatedAt = DateTime.UtcNow;
                 obj.CreatedBy = username;
                 obj.isActive = true;
-                obj.PatientID = Convert.ToInt32(p_id);
+                obj.patient_id = Convert.ToInt32(p_id);
                 string time = Convert.ToDateTime(date[1]).ToLongTimeString();
                 date = time.Split(' ');
                 obj.AppointmentDate = hdndate + time;
@@ -216,7 +216,7 @@ namespace HMS.Controllers
                     TempData["AlertTask"] = "Patient Admit added successfully";
                 }
 
-                return Redirect("/patient-appointments?patient_id="+obj.PatientID);
+                return Redirect("/patient-appointments?patient_id="+obj.patient_id);
                 // return Redirect("patient-admission?appointment_id=" + appointment_id+ "&patient_id=" + p_id);
             }
             catch (Exception ex)
