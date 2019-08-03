@@ -33,47 +33,47 @@
                             </thead>
                             <tbody>
 
-                               @{ var list = ViewData["GetPatients"];
-                                   //List <HMS.Models.tblPatientAppointment> patientbillList = ViewBag.appointment;
+                                @{ var list = ViewData["GetPatients"];
+                                    //List <HMS.Models.tblPatientAppointment> patientbillList = ViewBag.appointment;
 
-                                   foreach (var item in list as IEnumerable<HMS.Models.tblPatient>)
-                                   {
-                                       var appoint_id = item.tblPatientAppointments.Where(x => x.PatientID == item.Patient_id).FirstOrDefault();
+                                    foreach (var item in list as IEnumerable<HMS.Models.tblPatient>)
+                                    {
+                                        var appoint_id = item.tblPatientAppointments.Where(x => x.PatientID == item.Patient_id).FirstOrDefault();
+                                      
 
+                                        int PatientAppointID = 0;
 
-                                       int PatientAppointID = 0;
+                                        if (appoint_id != null)
+                                        {
+                                            // var apointmnt = patientbillList.Where(x => x.ID == item.Patient_id).FirstOrDefault();
+                                            PatientAppointID = appoint_id.ID;
 
-                                       if (appoint_id != null)
-                                       {
-                                           // var apointmnt = patientbillList.Where(x => x.ID == item.Patient_id).FirstOrDefault();
-                                           PatientAppointID = appoint_id.ID;
+                                        }
 
-                                       }
-
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Patient_id)
-                                    </td>
-                                    <td> @PatientAppointID </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Patient_Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Contact_no)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Age)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Gender)
-                                    </td>
-                                    <td>
-                                        <a href='/patient-create-bill?Appointment_id=@PatientAppointID'>Generate Bill</a>|
-                                        @*<a href='#' onclick="Delete(@item.Patient_id);"> Edit </a> |
-                                        <a href="#">Detail</a> |
-                                        <a href="#">Delete</a>*@
-                                    </td>
-                                </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Patient_id)
+                                            </td>
+                                            <td> @PatientAppointID </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Patient_Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Contact_no)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Age)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Gender)
+                                            </td>
+                                            <td>
+                                                <a href='/patient-create-bill?Appointment_id=@PatientAppointID'>Generate Bill</a>|
+                                                @*<a href='#' onclick="Delete(@item.Patient_id);"> Edit </a> |
+                        <a href="#">Detail</a> |
+                        <a href="#">Delete</a>*@
+                                            </td>
+                                        </tr>
                                     }}
                             </tbody>
 

@@ -10,7 +10,13 @@ namespace HMS.Models
         HMS_DBEntities db = new HMS_DBEntities();
         public List<tblPatient> GetAllRecords()
         {
-            return db.tblPatients.ToList();
+            return db.tblPatients.Where(x => x.is_active == true).ToList();
+
+        }
+
+        public List<tblPatientAppointment> GetAllAppointments()
+        {
+            return db.tblPatientAppointments.Where(x => x.isActive == true).ToList();
 
         }
 
