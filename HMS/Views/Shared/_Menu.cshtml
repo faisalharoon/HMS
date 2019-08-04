@@ -1,0 +1,78 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_Menu</title>
+</head>
+<body>
+    <div>
+        <li>
+            <a href="javascript:void(0);" class="menu-toggle">
+                <i class="zmdi zmdi-calendar-check"></i><span>Hospitals</span>
+            </a>
+            <ul class="ml-menu">
+                <li><a href="/add-hospital">Add Hospital</a></li>
+                <li><a href="/hospitals">All Hospitals</a></li>
+            </ul>
+        </li>
+
+
+        <li>
+            <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-account-add"></i><span>Doctors</span> </a>
+            <ul class="ml-menu">
+                <li><a href="/doctors">All Doctors</a></li>
+                <li><a href="/add-doctor">Add Doctor</a></li>
+                @*<li><a href="profile.html">Doctor Profile</a></li>*@
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-account-o"></i><span>Patients</span> </a>
+            <ul class="ml-menu">
+                <li><a href="/patients">All Patients</a></li>
+                <li><a href="/add-patient">Add Patient</a></li>
+                @*<li><a href="/patient-profile">Patient Profile</a></li>
+                <li><a href="/patient-invoice">Patient Invoice</a></li>*@
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-account-o"></i><span>Medicine</span> </a>
+            <ul class="ml-menu">
+                <li><a href="/medicine-categories">Medicine Categories</a></li>
+                <li><a href="/medicine">Medicine</a></li>
+
+                @*<li><a href="/patient-profile">Patient Profile</a></li>
+                <li><a href="/patient-invoice">Patient Invoice</a></li>*@
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-account-o"></i><span>Tests</span> </a>
+            <ul class="ml-menu">
+                <li><a href="/test-categories">Test Categories</a></li>
+                <li><a href="/tests">Tests</a></li>
+                <li><a href="/test-attributes">Test Attributes</a></li>
+
+                @*<li><a href="/patient-profile">Patient Profile</a></li>
+                <li><a href="/patient-invoice">Patient Invoice</a></li>*@
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-account-o"></i><span>Patients Bill</span> </a>
+            <ul class="ml-menu">
+                <li><a href="/patient-bills-listings">Generate Bill</a></li>
+                <li><a href="/Bill_Listing">Bill Listing</a></li>
+                @*<li><a href="/patient-profile">Patient Profile</a></li>
+                <li><a href="/patient-invoice">Patient Invoice</a></li>*@
+            </ul>
+        </li>
+        <li>
+            <a href="/Search"><i class="zmdi zmdi-account-o"></i><span>Search</span> </a>
+        </li>
+    </div>
+</body>
+</html>
