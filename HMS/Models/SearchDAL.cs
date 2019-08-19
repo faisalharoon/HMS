@@ -8,10 +8,10 @@ namespace HMS.Models
 {
     public class SearchDAL
     {
-        private HMS_DBEntities Context;
+        private HMS_DBEntity Context;
         public SearchDAL()
         {
-            Context = new HMS_DBEntities();
+            Context = new HMS_DBEntity();
         }
 
         public IQueryable<tblPatient> GetSearchResults(ProductSearchModel searchModel)

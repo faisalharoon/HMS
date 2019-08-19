@@ -10,7 +10,7 @@ namespace HMS.Controllers
 {
     public class LoginController : Controller
     {
-        HMS_DBEntities db = new HMS_DBEntities();
+        HMS_DBEntity db = new HMS_DBEntity();
         // GET: Login
         public ActionResult Login()
         {

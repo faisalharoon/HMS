@@ -7,16 +7,10 @@ namespace HMS.Models
 {
     public class PatientBillDAL
     {
-        HMS_DBEntities db = new HMS_DBEntities();
+        HMS_DBEntity db = new HMS_DBEntity();
         public List<tblPatient> GetAllRecords()
         {
-            return db.tblPatients.Where(x => x.is_active == true).ToList();
-
-        }
-
-        public List<tblPatientAppointment> GetAllAppointments()
-        {
-            return db.tblPatientAppointments.Where(x => x.isActive == true).ToList();
+            return db.tblPatients.ToList();
 
         }
 

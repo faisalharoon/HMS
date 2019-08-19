@@ -12,8 +12,12 @@ namespace HMS
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-
+            //Menu
+            routes.MapRoute(
+name: "Menu",
+url: "Menu",
+defaults: new { controller = "Home", action = "Menu" }
+);
 
             //Test
             routes.MapRoute(

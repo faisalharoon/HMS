@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -14,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HMS</RootNamespace>
     <AssemblyName>HMS</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -25,7 +26,6 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,18 +46,73 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevDefined.OAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a3261f5b4697e67d, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevDefined.OAuth.0.2\lib\DevDefined.OAuth.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Intuit.Ipp.Core, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.Data, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.DataService, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.DataService.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.Diagnostics, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.Diagnostics.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.EntitlementService, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.EntitlementService.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.Exception, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.Exception.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.GlobalTaxService, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.GlobalTaxService.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.LinqExtender, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.LinqExtender.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.OAuth2PlatformClient, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.OAuth2PlatformClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.PlatformService, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.PlatformService.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.QueryFilter, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.QueryFilter.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.ReportService, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.ReportService.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.Retry, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.Retry.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.Security, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.Utility, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.WebHooksService, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.WebHooksService.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -67,11 +122,13 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -117,9 +174,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -162,169 +216,170 @@
     <Compile Include="Models\DoctorsDAL.cs" />
     <Compile Include="Models\GernalFunction.cs" />
     <Compile Include="Models\GetMenu_Result.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetPatientAdmits_Result.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetPatientAppointements_Result.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetPatientList_Result.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetPatientMedicineList_Result.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetPatientMedList_Result.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetpatientTestDetails_Result.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\HMS_Model.Context.cs">
+    <Compile Include="Models\HMSModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HMS_Model.Context.tt</DependentUpon>
+      <DependentUpon>HMSModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\HMS_Model.cs">
+    <Compile Include="Models\HMSModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\HMS_Model.Designer.cs">
+    <Compile Include="Models\HMSModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HMS_Model.edmx</DependentUpon>
+      <DependentUpon>HMSModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\HospitalDAL.cs" />
     <Compile Include="Models\MedicineDAL.cs" />
     <Compile Include="Models\PatientBillDAL.cs" />
     <Compile Include="Models\PatientDAL.cs" />
     <Compile Include="Models\Patient_Count_Result.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SearchDAL.cs" />
     <Compile Include="Models\Sp_ActivePatientsList_Result.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sp_Dashboard_Result.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sp_PatientAdmissions_Result.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sp_RoomsOccupied_Result.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sp_StaffSpeciality_Result.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblAdmissionType.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblDoctor.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblEmpDesignation.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblEmployee.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblEmployeeQualification.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblEmployeeSatu.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblEmployeeType.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblHospital.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblHospitalRoom.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblMedicine.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblMedicineCategory.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblMedicineOccurance.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblMedicineTiming.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPage.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPatient.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPatientAdmission.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPatientAppointment.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPatientBill.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPatientBillDetail.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPatientMedicine.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPatientStatu.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPatientTest.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPatientTestDetail.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPatientType.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblRoomType.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblTest.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblTestAttribute.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblTestCategory.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblUserPage.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestDAL.cs" />
     <Compile Include="Models\User.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserDAL.cs" />
     <Compile Include="Models\UserInRole.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserLoginHistory.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserRole.cs">
-      <DependentUpon>HMS_Model.tt</DependentUpon>
+      <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AddDoctor.html" />
     <Content Include="assets\bundles\chartscripts.bundle.js" />
     <Content Include="assets\bundles\datatablescripts.bundle.js" />
     <Content Include="assets\bundles\fullcalendarscripts.bundle.js" />
@@ -333,10 +388,8 @@
     <Content Include="assets\bundles\mainscripts.bundle.js" />
     <Content Include="assets\bundles\sparklinescripts.bundle.js" />
     <Content Include="assets\bundles\vendorscripts.bundle.js" />
-    <Content Include="assets\css\jquery.datetimepicker.css" />
     <Content Include="assets\css\login.html" />
     <Content Include="assets\css\main.css" />
-    <Content Include="assets\images\ajax-loader.gif" />
     <Content Include="assets\images\animation-bg.jpg" />
     <Content Include="assets\images\bg-1.jpg" />
     <Content Include="assets\images\image-1.jpg" />
@@ -353,8 +406,6 @@
     <Content Include="assets\images\xs\avatar3.jpg" />
     <Content Include="assets\images\xs\avatar4.jpg" />
     <Content Include="assets\images\xs\avatar5.jpg" />
-    <Content Include="assets\js\datetimepickerPlugin.js" />
-    <Content Include="assets\js\jquery.datetimepicker.js" />
     <Content Include="assets\js\morphing.js" />
     <Content Include="assets\js\pages\calendar\calendar.js" />
     <Content Include="assets\js\pages\cards\basic.js" />
@@ -399,38 +450,155 @@
     <Content Include="assets\plugins\sweetalert\sweetalert.min.js" />
     <Content Include="assets\plugins\waitme\waitMe.css" />
     <Content Include="assets\plugins\waitme\waitMe.js" />
+    <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\Antlr3.Runtime.pdb" />
+    <Content Include="bin\DevDefined.OAuth.dll" />
+    <Content Include="bin\EntityFramework.dll" />
+    <Content Include="bin\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\EntityFramework.SqlServer.xml" />
+    <Content Include="bin\EntityFramework.xml" />
+    <Content Include="bin\HMS.dll" />
+    <Content Include="bin\HMS.pdb" />
+    <Content Include="bin\Intuit.Ipp.Core.dll" />
+    <Content Include="bin\Intuit.Ipp.Core.xml" />
+    <Content Include="bin\Intuit.Ipp.Data.dll" />
+    <Content Include="bin\Intuit.Ipp.Data.xml" />
+    <Content Include="bin\Intuit.Ipp.DataService.dll" />
+    <Content Include="bin\Intuit.Ipp.DataService.xml" />
+    <Content Include="bin\Intuit.Ipp.Diagnostics.dll" />
+    <Content Include="bin\Intuit.Ipp.Diagnostics.xml" />
+    <Content Include="bin\Intuit.Ipp.EntitlementService.dll" />
+    <Content Include="bin\Intuit.Ipp.EntitlementService.xml" />
+    <Content Include="bin\Intuit.Ipp.Exception.dll" />
+    <Content Include="bin\Intuit.Ipp.Exception.xml" />
+    <Content Include="bin\Intuit.Ipp.GlobalTaxService.dll" />
+    <Content Include="bin\Intuit.Ipp.GlobalTaxService.xml" />
+    <Content Include="bin\Intuit.Ipp.LinqExtender.dll" />
+    <Content Include="bin\Intuit.Ipp.LinqExtender.xml" />
+    <Content Include="bin\Intuit.Ipp.OAuth2PlatformClient.dll" />
+    <Content Include="bin\Intuit.Ipp.OAuth2PlatformClient.xml" />
+    <Content Include="bin\Intuit.Ipp.PlatformService.dll" />
+    <Content Include="bin\Intuit.Ipp.PlatformService.xml" />
+    <Content Include="bin\Intuit.Ipp.QueryFilter.dll" />
+    <Content Include="bin\Intuit.Ipp.QueryFilter.xml" />
+    <Content Include="bin\Intuit.Ipp.ReportService.dll" />
+    <Content Include="bin\Intuit.Ipp.ReportService.xml" />
+    <Content Include="bin\Intuit.Ipp.Retry.dll" />
+    <Content Include="bin\Intuit.Ipp.Retry.xml" />
+    <Content Include="bin\Intuit.Ipp.Security.dll" />
+    <Content Include="bin\Intuit.Ipp.Security.xml" />
+    <Content Include="bin\Intuit.Ipp.Utility.dll" />
+    <Content Include="bin\Intuit.Ipp.Utility.xml" />
+    <Content Include="bin\Intuit.Ipp.WebHooksService.dll" />
+    <Content Include="bin\Intuit.Ipp.WebHooksService.xml" />
+    <Content Include="bin\Microsoft.AspNet.TelemetryCorrelation.dll" />
+    <Content Include="bin\Microsoft.AspNet.TelemetryCorrelation.xml" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
+    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\Newtonsoft.Json.pdb" />
+    <Content Include="bin\Newtonsoft.Json.xml" />
+    <Content Include="bin\roslyn\csc.exe" />
+    <Content Include="bin\roslyn\csi.exe" />
+    <Content Include="bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll" />
+    <Content Include="bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll" />
+    <Content Include="bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll" />
+    <Content Include="bin\roslyn\System.AppContext.dll" />
+    <Content Include="bin\roslyn\System.Collections.Immutable.dll" />
+    <Content Include="bin\roslyn\System.Console.dll" />
+    <Content Include="bin\roslyn\System.Diagnostics.FileVersionInfo.dll" />
+    <Content Include="bin\roslyn\System.Diagnostics.StackTrace.dll" />
+    <Content Include="bin\roslyn\System.IO.Compression.dll" />
+    <Content Include="bin\roslyn\System.IO.FileSystem.dll" />
+    <Content Include="bin\roslyn\System.IO.FileSystem.Primitives.dll" />
+    <Content Include="bin\roslyn\System.IO.Pipes.AccessControl.dll" />
+    <Content Include="bin\roslyn\System.IO.Pipes.dll" />
+    <Content Include="bin\roslyn\System.Reflection.Metadata.dll" />
+    <Content Include="bin\roslyn\System.Security.AccessControl.dll" />
+    <Content Include="bin\roslyn\System.Security.Claims.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.Algorithms.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.Encoding.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.Primitives.dll" />
+    <Content Include="bin\roslyn\System.Security.Cryptography.X509Certificates.dll" />
+    <Content Include="bin\roslyn\System.Security.Principal.Windows.dll" />
+    <Content Include="bin\roslyn\System.Text.Encoding.CodePages.dll" />
+    <Content Include="bin\roslyn\System.ValueTuple.dll" />
+    <Content Include="bin\roslyn\System.Xml.ReaderWriter.dll" />
+    <Content Include="bin\roslyn\System.Xml.XmlDocument.dll" />
+    <Content Include="bin\roslyn\System.Xml.XPath.dll" />
+    <Content Include="bin\roslyn\System.Xml.XPath.XDocument.dll" />
+    <Content Include="bin\roslyn\vbc.exe" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe" />
+    <Content Include="bin\System.Diagnostics.DiagnosticSource.dll" />
+    <Content Include="bin\System.Diagnostics.DiagnosticSource.xml" />
+    <Content Include="bin\System.Net.Http.Formatting.dll" />
+    <Content Include="bin\System.Net.Http.Formatting.xml" />
+    <Content Include="bin\System.Web.Helpers.dll" />
+    <Content Include="bin\System.Web.Helpers.xml" />
+    <Content Include="bin\System.Web.Http.dll" />
+    <Content Include="bin\System.Web.Http.WebHost.dll" />
+    <Content Include="bin\System.Web.Http.WebHost.xml" />
+    <Content Include="bin\System.Web.Http.xml" />
+    <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\System.Web.Mvc.xml" />
+    <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\System.Web.Optimization.xml" />
+    <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\System.Web.Razor.xml" />
+    <Content Include="bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="bin\System.Web.WebPages.Deployment.xml" />
+    <Content Include="bin\System.Web.WebPages.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.xml" />
+    <Content Include="bin\System.Web.WebPages.xml" />
+    <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Js_Files\Highcharts_File.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\HMS_Model.Context.tt">
+    <Content Include="Models\HMSModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HMS_Model.edmx</DependentUpon>
-      <LastGenOutput>HMS_Model.Context.cs</LastGenOutput>
+      <DependentUpon>HMSModel.edmx</DependentUpon>
+      <LastGenOutput>HMSModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\HMS_Model.tt">
+    <Content Include="Models\HMSModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HMS_Model.edmx</DependentUpon>
-      <LastGenOutput>HMS_Model.cs</LastGenOutput>
+      <DependentUpon>HMSModel.edmx</DependentUpon>
+      <LastGenOutput>HMSModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="assets\fonts\Material-Design-Iconic-Fontd1f1.ttf" />
     <Content Include="assets\fonts\Material-Design-Iconic-Fontd1f1.woff" />
     <Content Include="assets\fonts\Material-Design-Iconic-Fontd1f1.woff2" />
-    <EntityDeploy Include="Models\HMS_Model.edmx">
+    <Content Include="bin\HMS.dll.config" />
+    <Content Include="bin\roslyn\csc.exe.config" />
+    <Content Include="bin\roslyn\csc.rsp" />
+    <Content Include="bin\roslyn\csi.exe.config" />
+    <Content Include="bin\roslyn\csi.rsp" />
+    <Content Include="bin\roslyn\Microsoft.CSharp.Core.targets" />
+    <Content Include="bin\roslyn\Microsoft.Managed.Core.targets" />
+    <Content Include="bin\roslyn\Microsoft.VisualBasic.Core.targets" />
+    <Content Include="bin\roslyn\vbc.exe.config" />
+    <Content Include="bin\roslyn\vbc.rsp" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <EntityDeploy Include="Models\HMSModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HMS_Model.Designer.cs</LastGenOutput>
+      <LastGenOutput>HMSModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\HMS_Model.edmx.diagram">
-      <DependentUpon>HMS_Model.edmx</DependentUpon>
+    <Content Include="Models\HMSModel.edmx.diagram">
+      <DependentUpon>HMSModel.edmx</DependentUpon>
     </Content>
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -457,48 +625,48 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Doctor\AddDoctor.cshtml" />
-    <Content Include="Views\Login\Register.cshtml" />
-    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Doctor\DoctorList.cshtml" />
     <Content Include="Views\Hospital\AddHospital.cshtml" />
     <Content Include="Views\Hospital\ListOfHospitals.cshtml" />
-    <Content Include="Views\Patient\AddPatient.cshtml" />
-    <Content Include="Views\Patient\PatientAdmission.cshtml" />
-    <Content Include="Views\Doctor\DoctorList.cshtml" />
-    <Content Include="Views\Patient\PatientAppointment.cshtml" />
-    <Content Include="Views\Patient\PatientList.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Login\Register.cshtml" />
+    <Content Include="Views\Medicine\AddMedicine.cshtml" />
     <Content Include="Views\Medicine\AddMedicineCat.cshtml" />
     <Content Include="Views\Medicine\MedicineCategory.cshtml" />
-    <Content Include="Views\Medicine\AddMedicine.cshtml" />
     <Content Include="Views\Medicine\MedicineList.cshtml" />
-    <Content Include="Views\Test\TestCategory.cshtml" />
-    <Content Include="Views\Test\AddTestCat.cshtml" />
-    <Content Include="Views\Test\AddTest.cshtml" />
-    <Content Include="Views\Test\TestList.cshtml" />
-    <Content Include="Views\Test\AddTestAttribute.cshtml" />
-    <Content Include="Views\Test\TestAttributes.cshtml" />
-    <Content Include="Views\Patient\AddPatientTest.cshtml" />
+    <Content Include="Views\PatientsBill\BillListings.cshtml" />
     <Content Include="Views\PatientsBill\Create.cshtml" />
     <Content Include="Views\PatientsBill\Delete.cshtml" />
     <Content Include="Views\PatientsBill\Details.cshtml" />
     <Content Include="Views\PatientsBill\Edit.cshtml" />
     <Content Include="Views\PatientsBill\Index.cshtml" />
-    <Content Include="Views\PatientsBill\BillListings.cshtml" />
+    <Content Include="Views\Patient\AddPatient.cshtml" />
+    <Content Include="Views\Patient\AddPatientMedicine.cshtml" />
+    <Content Include="Views\Patient\AddPatientTest.cshtml" />
+    <Content Include="Views\Patient\PatientAdmission.cshtml" />
+    <Content Include="Views\Patient\PatientAdmissionList.cshtml" />
+    <Content Include="Views\Patient\PatientAppointment.cshtml" />
+    <Content Include="Views\Patient\PatientappointmentList.cshtml" />
+    <Content Include="Views\Patient\PatientList.cshtml" />
+    <Content Include="Views\Patient\PatientMedList.cshtml" />
+    <Content Include="Views\Patient\PatientTestList.cshtml" />
     <Content Include="Views\Search\Create.cshtml" />
     <Content Include="Views\Search\Delete.cshtml" />
     <Content Include="Views\Search\Details.cshtml" />
     <Content Include="Views\Search\Edit.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
-    <Content Include="Views\Patient\PatientappointmentList.cshtml" />
-    <Content Include="Views\Patient\PatientAdmissionList.cshtml" />
-    <Content Include="Views\Patient\AddPatientMedicine.cshtml" />
-    <Content Include="Views\Patient\PatientMedList.cshtml" />
-    <Content Include="Views\Patient\PatientTestList.cshtml" />
+    <Content Include="Views\Test\AddTest.cshtml" />
+    <Content Include="Views\Test\AddTestAttribute.cshtml" />
+    <Content Include="Views\Test\AddTestCat.cshtml" />
+    <Content Include="Views\Test\TestAttributes.cshtml" />
+    <Content Include="Views\Test\TestCategory.cshtml" />
+    <Content Include="Views\Test\TestList.cshtml" />
     <Content Include="Views\Shared\Menu.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="assets\images\Doctor_Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -549,6 +717,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

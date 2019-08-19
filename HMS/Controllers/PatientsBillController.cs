@@ -14,7 +14,7 @@ namespace HMS.Controllers
 {
     public class PatientsBillController : Controller
     {
-        private HMS_DBEntities db = new HMS_DBEntities();
+        private HMS_DBEntity db = new HMS_DBEntity();
 
         // GET: PatientsBill
         public ActionResult Index()
