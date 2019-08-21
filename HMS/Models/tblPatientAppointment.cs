@@ -38,8 +38,8 @@ namespace HMS.Models
         public virtual ICollection<tblPatientMedicine> tblPatientMedicines { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPatientTest> tblPatientTests { get; set; }
+        public virtual tblPatient tblPatient { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPatientAdmission> tblPatientAdmissions { get; set; }
-        public virtual tblPatient tblPatient { get; set; }
     }
 }

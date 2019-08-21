@@ -15,10 +15,10 @@ namespace HMS.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class HMS_DBEntities : DbContext
+    public partial class HMS_DBEntity : DbContext
     {
-        public HMS_DBEntities()
-            : base("name=HMS_DBEntities")
+        public HMS_DBEntity()
+            : base("name=HMS_DBEntity")
         {
         }
     
@@ -60,11 +60,6 @@ namespace HMS.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<tblPage> tblPages { get; set; }
         public virtual DbSet<tblUserPage> tblUserPages { get; set; }
-    
-        public virtual ObjectResult<GetMenu_Result> GetMenu()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMenu_Result>("GetMenu");
-        }
     
         public virtual ObjectResult<GetPatientAdmits_Result> GetPatientAdmits()
         {
@@ -152,6 +147,11 @@ namespace HMS.Models
         public virtual ObjectResult<string> Sp_TestsCategories()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Sp_TestsCategories");
+        }
+    
+        public virtual ObjectResult<GetMenu_Result> GetMenu()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMenu_Result>("GetMenu");
         }
     }
 }

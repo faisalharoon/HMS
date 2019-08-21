@@ -38,7 +38,7 @@
 
                                    foreach (var item in list as IEnumerable<HMS.Models.tblPatient>)
                                    {
-                                       var appoint_id = item.tblPatientAppointments.Where(x => x.patient_id == item.Patient_id).FirstOrDefault();
+                                       var appoint_id = item.tblPatientAppointments.Where(x => x.PatientID == item.Patient_id).FirstOrDefault();
 
 
                                        int PatientAppointID = 0;
@@ -50,8 +50,7 @@
                                            PatientAppointID = appoint_id.ID;
 
                                        }
-                                       if (PatientAppointID != 0)
-                                       {
+
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Patient_id)
@@ -75,8 +74,7 @@
                                         <a href="#">Detail</a> |
                                         <a href="#">Delete</a>*@
                                     </td>
-                                </tr>}
-                            
+                                </tr>
                                     }}
                             </tbody>
 

@@ -7,7 +7,7 @@ namespace HMS.Models
 {
     public class TestDAL
     {
-        HMS_DBEntities db = new HMS_DBEntities();
+        HMS_DBEntity db = new HMS_DBEntity();
         public int AddTestCategory(tblTestCategory obj)
         {
             //obj.ID = 18;

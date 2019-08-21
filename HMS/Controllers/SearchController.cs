@@ -13,7 +13,7 @@ namespace HMS.Controllers
 {
     public class SearchController : Controller
     {
-        private HMS_DBEntities db = new HMS_DBEntities();
+        private HMS_DBEntity db = new HMS_DBEntity();
 
         // GET: Search
         public ActionResult Index(string PatientID, string PatientName,string PatientAddress,string ContactNo)
