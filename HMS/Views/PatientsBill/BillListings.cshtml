@@ -33,13 +33,16 @@
                             </thead>
                             <tbody>
                                 @{
-                                    var Bill = ViewData["GetBills"];
-                                    foreach (var item in Bill as IEnumerable<HMS.Models.tblPatientBill>)
+                                    //var Bill = ViewData["GetBills"];
+                                    foreach (var item in Model)
                                     {
+                                       // var PatientName = item.tblPatientAppointment.Where(x => x.patient_id == item.Patient_id);
+
+
                                 <tr>
                                     <td>@Html.DisplayFor(modelItem => item.ID)</td>
                                     <td>@Html.DisplayFor(modelItem => item.PatientAppointmentID)</td>
-                                    <td>abc</td>
+                                    <td>abcz</td>
                                     <td>@Html.DisplayFor(modelItem => item.BillNo)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Amount)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Discount)</td>
@@ -47,16 +50,9 @@
                                     <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Description)</td>
                                     <td>
-                                        @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
-
-                                        <a href='/DeleteBill?id=@item.ID'>Delete</a> |
+                                        <a href='/DeleteBill?id=@item.ID'>Delete</a>|
                                         <a href='/EditBill?id=@item.ID'>Edit</a>
 
-                                        @*<a href='/add-test?test_id=@item.ID'>Edit |</a>
-        <a href='/DeleteBill?del_id=@item.ID'>Delete</a>*@
-                                        @*<a href='#' onclick="Delete(@item.ID);">Delete</a>*@
                                     </td>
                                 </tr>
                                     }

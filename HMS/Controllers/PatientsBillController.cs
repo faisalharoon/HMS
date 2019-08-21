@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -16,8 +17,8 @@ namespace HMS.Controllers
     {
         private HMS_DBEntities db = new HMS_DBEntities();
 
-        // GET: PatientsBill
-        public ActionResult Index()
+    // GET: PatientsBill
+    public ActionResult Index()
         {
             // return View(db.tblPatients.OrderBy(x => x.Patient_Name).ToList());
             var model = new PatientBillDAL().GetAllRecords().ToList();
@@ -30,10 +31,8 @@ namespace HMS.Controllers
         public ActionResult BillListings()
         {
             var model = new PatientBillDAL().GetPatientBills().ToList();
-            ViewData["GetBills"] = model;
-            return View();
+            return View(model);
         }
-
         // GET: PatientsBill/Create
         public ActionResult Create(int? Appointment_id)
         {
@@ -46,7 +45,6 @@ namespace HMS.Controllers
         // POST: PatientsBill/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -98,6 +96,7 @@ namespace HMS.Controllers
                     patientbill.Discount = model.Discount;
                     patientbill.CreatedAt = model.CreatedAt;
                     patientbill.CreatedBy = username;
+                    patientbill.is_active = true;
                     db.tblPatientBills.Add(patientbill);
                     db.SaveChanges();
 
@@ -111,6 +110,7 @@ namespace HMS.Controllers
                         billdetail.CreatedAt = model.CreatedAt;
                         billdetail.CreatedBy = username;
                         billdetail.Description = model.Description;
+                        billdetail.is_active = true;
 
                         db.tblPatientBillDetails.Add(billdetail);
                         db.SaveChanges();
@@ -130,53 +130,153 @@ namespace HMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             tblPatientBill tblPatient = db.tblPatientBills.Find(id);
-            if (tblPatient == null)
+            tblPatientBillDetail model = db.tblPatientBillDetails.Find(id);
+
+            if (model == null)
             {
-                return HttpNotFound();
+                if (tblPatient == null)
+                {
+                    return HttpNotFound();
+                }
+                else
+                {
+                    return View("PatientsBillDelete",tblPatient);
+                }
             }
-            return View(tblPatient);
+            else
+            {
+                return View("PatientsBillDetail",model);
+            }
         }
 
         // POST: PatientsBill/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(PatientBillViewModel model)
         {
-            db.Database.ExecuteSqlCommand("sp_DeletePatientBill @ID", new SqlParameter("@ID", id)); //trigger it
+            db.Database.ExecuteSqlCommand("sp_DeletePatientBill @ID", new SqlParameter("@ID", model.ID)); //trigger it
+
+            //Update Table TblPatientBill
+            List<tblPatientBill> tblPatientBill = new List<tblPatientBill>();
+
+        var tblPatientBill2 = db.tblPatientBills.FirstOrDefault(x => x.ID == model.PatientBillID && x.is_active == true);
+            tblPatientBill = db.tblPatientBills.Where(x => x.ID == model.PatientBillID && x.is_active == true).ToList();
+
+            if (tblPatientBill.Count != 0)
+            {
+                var lst = db.tblPatientBillDetails
+                       .Where(x => x.PatientBillID == tblPatientBill2.ID && x.is_active == true)
+                      .ToList();
+
+                foreach (var patientBill in tblPatientBill)
+                {
+                    patientBill.Amount = lst.Where(b => b.PatientBillID == tblPatientBill2.ID && b.is_active == true).Select(c => c.Amount).Sum();
+                    if (patientBill.Amount == 0)
+                    {
+                        patientBill.is_active = false;
+                    } 
+                }
+
+                db.SaveChanges();
+            }
+
 
             return RedirectToAction("BillListings");
         }
-        // GET: PatientsBill/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tblPatientBill tblPatient = db.tblPatientBills.Find(id);
-            if (tblPatient == null)
+            var model = db.tblPatientBillDetails.Where(x => x.PatientBillID == id && x.is_active == true).ToList();
+            if (model == null)
             {
                 return HttpNotFound();
             }
-            return View(tblPatient);
+            //ViewData["EditBillRecordID"] = id;
+            return View(model);
         }
 
-        // POST: PatientsBill/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,PatientAppointmentID,BillNo,Amount,Discount,CreatedAt,CreatedBy,Description")] tblPatientBill tblPatient)
+        public ActionResult Edit(PatientBillViewModel model)
         {
-            if (ModelState.IsValid)
+            string username = "";
+            HttpCookie cookie = HttpContext.Request.Cookies["AdminCookies"];
+            if (cookie != null)
             {
-                db.Entry(tblPatient).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("BillListings");
+                username = Convert.ToString(cookie.Values["UserName"]);
             }
-            return View(tblPatient);
+                if (model.ID > 0) {
+                    //update
+                    tblPatientBillDetail emp = db.tblPatientBillDetails.SingleOrDefault(x => x.ID == model.ID && x.is_active == true);
+                    emp.PatientBillID = model.PatientBillID;
+                    emp.Amount = model.Amount;
+                    emp.CreatedAt = DateTime.UtcNow;
+                    emp.CreatedBy = username;
+                    emp.Description = model.Description;
+                    db.SaveChanges();
+
+                    List<tblPatientBill> tblPatientBill = new List<tblPatientBill>();
+
+                    var tblPatientBill2 = db.tblPatientBills.FirstOrDefault(x => x.ID == emp.PatientBillID && x.is_active == true);
+                    tblPatientBill = db.tblPatientBills.Where(x => x.ID == emp.PatientBillID && x.is_active == true).ToList();
+
+                    if (tblPatientBill.Count != 0)
+                    {
+                        var lst = db.tblPatientBillDetails
+                               .Where(x => x.PatientBillID == tblPatientBill2.ID && x.is_active == true)
+                              .ToList();
+
+                        foreach (var patientBill in tblPatientBill)
+                        {
+                            patientBill.Amount = lst.Where(b => b.PatientBillID == tblPatientBill2.ID).Select(c => c.Amount).Sum();
+                        }
+                        db.SaveChanges();
+                    }
+                return Redirect("/EditBill?id=" + emp.PatientBillID);
+            }
+            else
+            {
+                return View();
+            }
+           
+              
         }
+        public ActionResult EditPatient(int id)
+        {
+            HMS_DBEntities db = new HMS_DBEntities();
+            List<tblPatientBillDetail> list = db.tblPatientBillDetails.ToList();
+
+            PatientBillViewModel model = new PatientBillViewModel();
+            if (id > 0)
+            {
+                tblPatientBillDetail detail = db.tblPatientBillDetails.SingleOrDefault(x => x.ID == id && x.is_active == true);
+                model.ID = detail.ID;
+                model.PatientBillID = detail.PatientBillID;
+                model.Amount = detail.Amount;
+                model.Description = detail.Description;
+            }
+            //else
+            //{
+            //    tblPatientBillDetail billdetail = new tblPatientBillDetail();
+            //    billdetail.PatientBillID = model.PatientBillID;
+            //    billdetail.Amount = model.Amount;
+            //    billdetail.Description = model.Description;
+            //}
+            return View(model);
+        }
+
+    
+
+
+
+
+
+
+
 
 
         // GET: PatientsBill/Details/5

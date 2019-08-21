@@ -129,4 +129,46 @@ namespace HMS.ViewModels
         public int TodaysOperations { set; get; }
         public int IsActive { set; get; }
     }
+
+    public class PatientBillViewModel
+    {
+        public int ID { get; set; }
+        public Nullable<int> PatientBillID { get; set; }
+        public Nullable<double> Amount { get; set; }
+        public Nullable<System.DateTime> CreatedAt { get; set; }
+        public string CreatedBy { get; set; }
+        public string Description { get; set; }
+        public Nullable<bool> is_active { get; set; }
+    }
+
+    public class DeleteViewModel
+    {
+        public List<PatientsBill> PatientsBill { set; get; }
+        public List<PatientsBillDetail> PatientsBillDetail { set; get; }
+
+    }
+
+    public class PatientsBill
+    {
+        public int ID { get; set; }
+        public int PatientAppointmentID { get; set; }
+        public string BillNo { get; set; }
+        public float Amount { get; set; }
+        public float Discount { get; set; }
+        public string CreatedAt { get; set; }
+        public string CreatedBy { get; set; }
+        public string Description { get; set; }
+    }
+
+    public class PatientsBillDetail
+    {
+        public int ID { get; set; }
+        public int PatientBillID { get; set; }
+        public float Amount { get; set; }
+        public string CreatedAt { get; set; }
+        public string CreatedBy { get; set; }
+        public string Description { get; set; }
+    }
+
+    
 }

@@ -1,0 +1,57 @@
+﻿
+@model HMS.ViewModels.PatientBillViewModel
+
+<div>
+
+    <form id="myForm">
+        @Html.HiddenFor(m => m.ID)
+        @Html.TextBoxFor(model => model.PatientBillID, new { @class = "form-control", @placeholder = "PatientBillID" })
+        @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", @placeholder = "Amount" })
+        @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = "Description" })
+
+        <a href="#" id="btnSubmit" class="btn btn-success btn-block">
+            @if (Model.ID > 0)
+            {<span>Update</span> }
+            else
+            {<span>Save</span>}
+        </a>
+    </form>
+
+<div style="text-align:center;display:none" id="loaderDiv">
+</div>
+
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+     //   debugger;
+        $("#btnSubmit").click(function () {
+       
+            $("#loaderDiv").show();
+   
+            var myformdata = $("#myForm").serialize();
+
+            $.ajax({
+                type: "POST",
+                url: "/EditBill",
+                data: myformdata,
+                success: function () {
+             
+                    $("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                  
+                   // alert("Data Updated Successfully");  
+                  
+                    window.location.href = "/Bill_Listing";
+
+                }
+
+            })
+        })
+
+    })
+
+
+</script>
