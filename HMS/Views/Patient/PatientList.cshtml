@@ -54,7 +54,7 @@
                                     {
                                         foreach (var item in list as IEnumerable<HMS.Models.tblPatient>)
                                         {
-                                            var appoint_id = item.tblPatientAppointments.Where(x=>x.PatientID==item.Patient_id).FirstOrDefault();
+                                          //  var appoint_id = item.tblPatientAppointments.Where(x=>x.PatientID==item.Patient_id).FirstOrDefault();
 
                                             string admission_style = "style='display:none;'";
                                             string appoint_url = "";

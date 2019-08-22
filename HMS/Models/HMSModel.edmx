@@ -357,6 +357,13 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="Hospital_ID" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="PatientAdmissions">
+          <Property Name="ID" Type="int" />
+          <Property Name="AdmissionDate" Type="datetime" />
+          <Property Name="DischargeDate" Type="datetime" />
+        </EntityType>-->
         <EntityType Name="tblPages">
           <Key>
             <PropertyRef Name="page_id" />
@@ -1038,9 +1045,9 @@
           <NavigationProperty Name="tblPatientBills" Relationship="Self.FK_tblPatientBill_tblPatientAppointment" FromRole="tblPatientAppointment" ToRole="tblPatientBill" />
           <NavigationProperty Name="tblPatientMedicines" Relationship="Self.FK_tblPatientMedicine_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatientMedicine" />
           <NavigationProperty Name="tblPatientTests" Relationship="Self.FK_tblPatientTest_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatientTest" />
-          <NavigationProperty Name="tblPatientAdmissions" Relationship="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatientAppointment" FromRole="tblPatientAppointment" ToRole="tblPatientAdmission" />
           <Property Name="patient_id" Type="Int32" />
           <NavigationProperty Name="tblPatient" Relationship="teamfotech_hmsModel.FK_tblPatientAppointment_tblPatient" FromRole="tblPatientAppointment" ToRole="tblPatient" />
+          <NavigationProperty Name="tblPatientAdmissions" Relationship="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatientAppointment" FromRole="tblPatientAppointment" ToRole="tblPatientAdmission" />
         </EntityType>
         <EntityType Name="tblPatientBill">
           <Key>
@@ -1525,7 +1532,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="HMS_DBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="HMS_DBEntity" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblAdmissionTypes" EntityType="Self.tblAdmissionType" />
           <EntitySet Name="tblDoctors" EntityType="Self.tblDoctor" />
           <EntitySet Name="tblEmpDesignations" EntityType="Self.tblEmpDesignation" />
@@ -1647,7 +1654,6 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UserLoginHistory" EntitySet="UserLoginHistories" />
           </AssociationSet>
-          <FunctionImport Name="GetMenu" ReturnType="Collection(teamfotech_hmsModel.GetMenu_Result)" />
           <FunctionImport Name="GetPatientAdmits" ReturnType="Collection(teamfotech_hmsModel.GetPatientAdmits_Result)" />
           <FunctionImport Name="GetPatientAppointements" ReturnType="Collection(teamfotech_hmsModel.GetPatientAppointements_Result)" />
           <FunctionImport Name="GetPatientList" ReturnType="Collection(teamfotech_hmsModel.GetPatientList_Result)" />
@@ -1668,35 +1674,20 @@
           <FunctionImport Name="Sp_RoomsOccupied" ReturnType="Collection(teamfotech_hmsModel.Sp_RoomsOccupied_Result)" />
           <FunctionImport Name="Sp_StaffSpeciality" ReturnType="Collection(teamfotech_hmsModel.Sp_StaffSpeciality_Result)" />
           <FunctionImport Name="Sp_TestsCategories" ReturnType="Collection(String)" />
+          <FunctionImport Name="GetMenu" ReturnType="Collection(teamfotech_hmsModel.GetMenu_Result)" />
           <AssociationSet Name="FK_tblPatientAdmission_tblPatient" Association="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatient">
             <End Role="tblPatient" EntitySet="tblPatients" />
-            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPatientAdmission_tblPatientAppointment" Association="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatientAppointment">
-            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
             <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
           </AssociationSet>
           <AssociationSet Name="FK_tblPatientAppointment_tblPatient" Association="teamfotech_hmsModel.FK_tblPatientAppointment_tblPatient">
             <End Role="tblPatient" EntitySet="tblPatients" />
             <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblPatientAdmission_tblPatientAppointment" Association="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatientAppointment">
+            <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
+            <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
+          </AssociationSet>
         </EntityContainer>
-        <ComplexType Name="GetMenu_Result">
-          <Property Type="String" Name="page_name" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="page_id" Nullable="false" />
-          <Property Type="Int32" Name="parent_id" Nullable="true" />
-          <Property Type="String" Name="page_url" Nullable="true" MaxLength="50" />
-          <Property Type="Boolean" Name="is_active" Nullable="true" />
-          <Property Type="Boolean" Name="is_parent" Nullable="true" />
-          <Property Type="Boolean" Name="show_in_menu" Nullable="true" />
-          <Property Type="String" Name="RoleName" Nullable="false" />
-          <Property Type="String" Name="UserName" Nullable="false" MaxLength="256" />
-          <Property Type="Int64" Name="ID" Nullable="false" />
-          <Property Type="Boolean" Name="IsActive" Nullable="false" />
-          <Property Type="Boolean" Name="Active_role" Nullable="false" />
-          <Property Type="DateTime" Name="EffectiveFromDate" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
-        </ComplexType>
         <ComplexType Name="GetPatientAdmits_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="Int32" Name="PatientAppointmentID" Nullable="true" />
@@ -1837,6 +1828,22 @@
           <Property Type="Int32" Name="TotalCount" Nullable="true" />
           <Property Type="String" Name="Speciality" Nullable="true" MaxLength="450" />
         </ComplexType>
+        <ComplexType Name="GetMenu_Result">
+          <Property Type="String" Name="page_name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="page_id" Nullable="false" />
+          <Property Type="String" Name="page_url" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="is_active" Nullable="true" />
+          <Property Type="Boolean" Name="is_parent" Nullable="true" />
+          <Property Type="Boolean" Name="show_in_menu" Nullable="true" />
+          <Property Type="String" Name="RoleName" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="256" />
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Boolean" Name="Active_role" Nullable="false" />
+          <Property Type="DateTime" Name="EffectiveFromDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="parent_id" Nullable="true" />
+        </ComplexType>
         <Association Name="FK_tblPatientAdmission_tblPatient">
           <End Type="teamfotech_hmsModel.tblPatient" Role="tblPatient" Multiplicity="0..1" />
           <End Type="teamfotech_hmsModel.tblPatientAdmission" Role="tblPatientAdmission" Multiplicity="*" />
@@ -1845,6 +1852,18 @@
               <PropertyRef Name="Patient_id" />
             </Principal>
             <Dependent Role="tblPatientAdmission">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatientAppointment_tblPatient">
+          <End Type="teamfotech_hmsModel.tblPatient" Role="tblPatient" Multiplicity="0..1" />
+          <End Type="teamfotech_hmsModel.tblPatientAppointment" Role="tblPatientAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatient">
+              <PropertyRef Name="Patient_id" />
+            </Principal>
+            <Dependent Role="tblPatientAppointment">
               <PropertyRef Name="patient_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -1861,24 +1880,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblPatientAppointment_tblPatient">
-          <End Type="teamfotech_hmsModel.tblPatient" Role="tblPatient" Multiplicity="0..1" />
-          <End Type="teamfotech_hmsModel.tblPatientAppointment" Role="tblPatientAppointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblPatient">
-              <PropertyRef Name="Patient_id" />
-            </Principal>
-            <Dependent Role="tblPatientAppointment">
-              <PropertyRef Name="patient_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="teamfotech_hmsModelStoreContainer" CdmEntityContainer="HMS_DBEntities">
+        <EntityContainerMapping StorageEntityContainer="teamfotech_hmsModelStoreContainer" CdmEntityContainer="HMS_DBEntity">
           <EntitySetMapping Name="tblAdmissionTypes">
             <EntityTypeMapping TypeName="teamfotech_hmsModel.tblAdmissionType">
               <MappingFragment StoreEntitySet="tblAdmissionType">
@@ -2265,12 +2272,12 @@
           <EntitySetMapping Name="tblPages">
             <EntityTypeMapping TypeName="teamfotech_hmsModel.tblPage">
               <MappingFragment StoreEntitySet="tblPages">
+                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
                 <ScalarProperty Name="page_id" ColumnName="page_id" />
                 <ScalarProperty Name="page_name" ColumnName="page_name" />
                 <ScalarProperty Name="page_url" ColumnName="page_url" />
                 <ScalarProperty Name="is_active" ColumnName="is_active" />
                 <ScalarProperty Name="is_parent" ColumnName="is_parent" />
-                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2285,26 +2292,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetMenu" FunctionName="teamfotech_hmsModel.Store.GetMenu">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="teamfotech_hmsModel.GetMenu_Result">
-                <ScalarProperty Name="page_name" ColumnName="page_name" />
-                <ScalarProperty Name="page_id" ColumnName="page_id" />
-                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
-                <ScalarProperty Name="page_url" ColumnName="page_url" />
-                <ScalarProperty Name="is_active" ColumnName="is_active" />
-                <ScalarProperty Name="is_parent" ColumnName="is_parent" />
-                <ScalarProperty Name="show_in_menu" ColumnName="show_in_menu" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Active_role" ColumnName="Active_role" />
-                <ScalarProperty Name="EffectiveFromDate" ColumnName="EffectiveFromDate" />
-                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetPatientAdmits" FunctionName="teamfotech_hmsModel.Store.GetPatientAdmits">
             <ResultMapping>
               <ComplexTypeMapping TypeName="teamfotech_hmsModel.GetPatientAdmits_Result">
@@ -2497,6 +2484,26 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="Sp_TestsCategories" FunctionName="teamfotech_hmsModel.Store.Sp_TestsCategories" />
+          <FunctionImportMapping FunctionImportName="GetMenu" FunctionName="teamfotech_hmsModel.Store.GetMenu">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="teamfotech_hmsModel.GetMenu_Result">
+                <ScalarProperty Name="page_name" ColumnName="page_name" />
+                <ScalarProperty Name="page_id" ColumnName="page_id" />
+                <ScalarProperty Name="page_url" ColumnName="page_url" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="is_parent" ColumnName="is_parent" />
+                <ScalarProperty Name="show_in_menu" ColumnName="show_in_menu" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Active_role" ColumnName="Active_role" />
+                <ScalarProperty Name="EffectiveFromDate" ColumnName="EffectiveFromDate" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
