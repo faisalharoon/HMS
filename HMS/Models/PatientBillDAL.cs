@@ -22,11 +22,16 @@ namespace HMS.Models
 
         public List<tblPatientBill> GetPatientBills()
         {
-            return db.tblPatientBills.ToList();
+            return db.tblPatientBills.Where(x => x.is_active == true).ToList();
 
         }
 
-     
+        public List<tblPatientAppointment> ListOfRecords()
+        {
+            return db.tblPatientAppointments.ToList();
+
+        }
+
 
 
 
