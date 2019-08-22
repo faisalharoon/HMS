@@ -195,6 +195,7 @@
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="150" />
           <Property Name="Description" Type="varchar(max)" />
+          <Property Name="is_active" Type="bit" />
         </EntityType>
         <EntityType Name="tblPatientBillDetails">
           <Key>
@@ -206,6 +207,7 @@
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="150" />
           <Property Name="Description" Type="varchar(max)" />
+          <Property Name="is_active" Type="bit" />
         </EntityType>
         <EntityType Name="tblPatientMedicine">
           <Key>
@@ -355,6 +357,13 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="Hospital_ID" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="PatientAdmissions">
+          <Property Name="ID" Type="int" />
+          <Property Name="AdmissionDate" Type="datetime" />
+          <Property Name="DischargeDate" Type="datetime" />
+        </EntityType>-->
         <EntityType Name="tblPages">
           <Key>
             <PropertyRef Name="page_id" />
@@ -1054,6 +1063,7 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblPatientAppointment" Relationship="Self.FK_tblPatientBill_tblPatientAppointment" FromRole="tblPatientBill" ToRole="tblPatientAppointment" />
           <NavigationProperty Name="tblPatientBillDetails" Relationship="Self.FK_tblPatientBillDetails_tblPatientBill" FromRole="tblPatientBill" ToRole="tblPatientBillDetails" />
+          <Property Name="is_active" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblPatientBillDetail">
           <Key>
@@ -1066,6 +1076,7 @@
           <Property Name="CreatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblPatientBill" Relationship="Self.FK_tblPatientBillDetails_tblPatientBill" FromRole="tblPatientBillDetails" ToRole="tblPatientBill" />
+          <Property Name="is_active" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblPatientMedicine">
           <Key>
@@ -2072,6 +2083,7 @@
           <EntitySetMapping Name="tblPatientBills">
             <EntityTypeMapping TypeName="teamfotech_hmsModel.tblPatientBill">
               <MappingFragment StoreEntitySet="tblPatientBill">
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="PatientAppointmentID" ColumnName="PatientAppointmentID" />
                 <ScalarProperty Name="BillNo" ColumnName="BillNo" />
@@ -2086,6 +2098,7 @@
           <EntitySetMapping Name="tblPatientBillDetails">
             <EntityTypeMapping TypeName="teamfotech_hmsModel.tblPatientBillDetail">
               <MappingFragment StoreEntitySet="tblPatientBillDetails">
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="PatientBillID" ColumnName="PatientBillID" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />

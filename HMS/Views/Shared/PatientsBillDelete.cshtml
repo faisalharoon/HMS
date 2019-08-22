@@ -1,7 +1,7 @@
-﻿@model HMS.Models.tblPatientBillDetail
-
+﻿
+@model HMS.Models.tblPatientBill
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "PatientsBill Delete";
 }
 
 <section class="content">
@@ -18,9 +18,30 @@
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        @Html.DisplayNameFor(model => model.PatientBillID)
+                                        @Html.DisplayNameFor(model => model.ID)
                                         <br />
-                                        @Html.DisplayFor(model => model.PatientBillID)
+                                        @Html.DisplayFor(model => model.ID)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row clearfix">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        @Html.DisplayNameFor(model => model.PatientAppointmentID)
+                                        <br />
+                                        @Html.DisplayFor(model => model.PatientAppointmentID)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        @Html.DisplayNameFor(model => model.BillNo)
+                                        <br />
+                                        @Html.DisplayFor(model => model.BillNo)
                                     </div>
                                 </div>
                             </div>
@@ -39,9 +60,9 @@
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        @Html.DisplayNameFor(model => model.CreatedAt)
+                                        @Html.DisplayNameFor(model => model.Discount)
                                         <br />
-                                        @Html.DisplayFor(model => model.CreatedAt)
+                                        @Html.DisplayFor(model => model.Discount)
                                     </div>
                                 </div>
                             </div>
@@ -51,23 +72,22 @@
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        @Html.DisplayNameFor(model => model.CreatedBy)
-                                        <br />
-                                        @Html.DisplayFor(model => model.CreatedBy)
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <div class="form-line">
                                         @Html.DisplayNameFor(model => model.CreatedAt)
                                         <br />
                                         @Html.DisplayFor(model => model.CreatedAt)
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        @Html.DisplayNameFor(model => model.CreatedBy)
+                                        <br />
+                                        @Html.DisplayFor(model => model.CreatedBy)
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
                         <div class="row clearfix">
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
@@ -85,11 +105,11 @@
                                 {
                                     @Html.AntiForgeryToken()
 
-                                <div class="form-actions no-color">
-                                    @Html.HiddenFor(model => model.PatientBillID)
-                                    <input type="submit" value="Delete" class="btn btn-default" /> |
-                                    @Html.ActionLink("Back to List", "EditBill")
-                                </div>
+                                    <div class="form-actions no-color">
+                                        @Html.HiddenFor(model => model.ID)
+                                        <input type="submit" value="Delete" class="btn btn-default" /> |
+                                        @Html.ActionLink("Back to List", "BillListings")
+                                    </div>
                                 }
                             </div>
                         </div>
