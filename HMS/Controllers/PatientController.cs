@@ -10,7 +10,7 @@ namespace HMS.Controllers
     public class PatientController : Controller
     {
         // GET: Patient
-        HMS_DBEntities db = new HMS_DBEntities();
+        HMS_DBEntity db = new HMS_DBEntity();
         public ActionResult Index()
         {
             return View();
