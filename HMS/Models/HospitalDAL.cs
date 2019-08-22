@@ -7,7 +7,7 @@ namespace HMS.Models
 {
     public class HospitalDAL
     {
-        HMS_DBEntities db = new HMS_DBEntities();
+        HMS_DBEntity db = new HMS_DBEntity();
         public void InsertRecord(tblHospital obj)
         {
             //obj.ID = 18;

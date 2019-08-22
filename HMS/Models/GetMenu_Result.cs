@@ -15,7 +15,6 @@ namespace HMS.Models
     {
         public string page_name { get; set; }
         public int page_id { get; set; }
-        public Nullable<int> parent_id { get; set; }
         public string page_url { get; set; }
         public Nullable<bool> is_active { get; set; }
         public Nullable<bool> is_parent { get; set; }
@@ -27,5 +26,6 @@ namespace HMS.Models
         public bool Active_role { get; set; }
         public Nullable<System.DateTime> EffectiveFromDate { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public Nullable<int> parent_id { get; set; }
     }
 }

@@ -1,0 +1,60 @@
+﻿
+@model IEnumerable<HMS.Models.GetMenu_Result>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Menu</title>
+</head>
+<body>
+    <div class="menu">
+        <ul class="list">
+
+            <li class="active open">
+                <a href="/dashboard">
+                    <i class="zmdi zmdi-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            @{
+                if (Model != null)
+                {
+                    var menulist = Model as IEnumerable<HMS.Models.GetMenu_Result>;
+                    var parentMenu = menulist.Where(x => x.is_parent == true && x.parent_id == 0).ToList();
+                    foreach (var item in parentMenu)
+                    {
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle">
+                                <i class="zmdi zmdi-calendar-check"></i><span>@item.page_name</span>
+                            </a>
+                            <ul class="ml-menu">
+                                <li>
+                                    <a href="@item.page_url">
+                                      @item.page_name
+                                    </a>
+                                </li>
+
+                                @{
+                                    var subitems = menulist.Where(x => x.parent_id == item.page_id).ToList();
+                                    foreach (var sub in subitems)
+                                    {
+                                    <li><a href="@sub.page_url">@sub.page_name</a></li>
+                                        }
+                                    }
+                            </ul>
+                        </li>
+                    }
+                }
+
+            }
+
+
+           </ul>
+    </div>
+</body>
+</html>
