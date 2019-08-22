@@ -86,7 +86,7 @@
                                 {
                                     foreach (var item in list as IEnumerable<HMS.Models.tblPatient>)
                                     {
-                                        var appoint_id = item.tblPatientAppointments.Where(x => x.PatientID == item.Patient_id).FirstOrDefault();
+                                        var appoint_id = item.tblPatientAppointments.Where(x => x.patient_id == item.Patient_id).FirstOrDefault();
                                         int PatientAppointID = 0;
                                         if (appoint_id != null)
                                         {

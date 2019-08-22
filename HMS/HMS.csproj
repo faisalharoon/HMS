@@ -490,6 +490,10 @@
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Patient\PatientappointmentList.cshtml" />
     <Content Include="Views\Patient\PatientAdmissionList.cshtml" />
+    <Content Include="Views\Shared\Partial2.cshtml" />
+    <Content Include="Views\PatientsBill\EditPatient.cshtml" />
+    <Content Include="Views\Shared\PatientsBillDelete.cshtml" />
+    <Content Include="Views\Shared\PatientsBillDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

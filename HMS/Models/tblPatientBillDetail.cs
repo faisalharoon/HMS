@@ -20,6 +20,7 @@ namespace HMS.Models
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public string CreatedBy { get; set; }
         public string Description { get; set; }
+        public Nullable<bool> is_active { get; set; }
     
         public virtual tblPatientBill tblPatientBill { get; set; }
     }
