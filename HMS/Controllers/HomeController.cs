@@ -13,16 +13,14 @@ namespace HMS.Controllers
         private HMS_DBEntity db = new HMS_DBEntity();
         public ActionResult Index()
         {
-            DashboardViewModel model = new DashboardViewModel
-            {
-                DashboardsModel = db.Database.SqlQuery<DashboardModel>("[Sp_Dashboard]").ToList(),
-                ActivePatientsList = db.Database.SqlQuery<ActivePatientList>("[Sp_ActivePatientsList]").ToList(),
-                PatientsCount = db.Database.SqlQuery<PatientCount>("[Patient_Count]").ToList(),
-                RoomsOccupied = db.Database.SqlQuery<RoomOccupied>("[Sp_RoomsOccupied]").ToList()
-            };
+            DashboardViewModel model = new DashboardViewModel();
+            model.DashboardsModel = db.Database.SqlQuery<DashboardModel>("[Sp_Dashboard]").ToList();
+            model.ActivePatientsList = db.Database.SqlQuery<ActivePatientList>("[Sp_ActivePatientsList]").ToList();
+            db.Database.ExecuteSqlCommand("PatientAdmission");//Trigger it
+            model.PatientsCount = db.Database.SqlQuery<PatientCount>("[Patient_Count]").ToList();
+            model.RoomsOccupied = db.Database.SqlQuery<RoomOccupied>("[Sp_RoomsOccupied]").ToList();
             return View(model);
         }
-
         [HttpGet]
         public ActionResult Get_Highcharts_Data()
         {
@@ -33,10 +31,8 @@ namespace HMS.Controllers
             //var result = lst.Where(r => Convert.ToDateTime(r.AdmissionDate).Month == month);
 
             var list = db.tblPatientAdmissions.GroupBy(r => Convert.ToDateTime(r.AdmissionDate).Month == month && r.IsActive == true).Count();
-            PatientCount obj = new PatientCount
-            {
-                PatientsAdmittedCurrentMonth = list
-            };
+            PatientCount obj = new PatientCount();
+            obj.PatientsAdmittedCurrentMonth = list;
 
             //.Select(u => new PatientCount
             //     {

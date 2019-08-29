@@ -34,14 +34,15 @@
                             <tbody>
 
                                @{ var list = ViewData["GetPatients"];
-                                   //List <HMS.Models.tblPatientAppointment> patientbillList = ViewBag.appointment;
+                                   List <HMS.Models.tblPatientAppointment> patientbillList = ViewBag.appointment;
 
                                    foreach (var item in list as IEnumerable<HMS.Models.tblPatient>)
                                    {
-                                       var appoint_id = item.tblPatientAppointments.Where(x => x.PatientID == item.Patient_id).FirstOrDefault();
+                                       var appoint_id = patientbillList.Where(x => x.patient_id == item.Patient_id).FirstOrDefault();
 
 
                                        int PatientAppointID = 0;
+                                     //  int Gender = 0;
 
                                        if (appoint_id != null)
                                        {
@@ -49,7 +50,8 @@
                                            PatientAppointID = appoint_id.ID;
 
                                        }
-
+                                       if (PatientAppointID != 0)
+                                       {
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Patient_id)
@@ -73,7 +75,8 @@
                                         <a href="#">Detail</a> |
                                         <a href="#">Delete</a>*@
                                     </td>
-                                </tr>
+                                </tr>}
+                            
                                     }}
                             </tbody>
 

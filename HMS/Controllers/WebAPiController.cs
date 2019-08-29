@@ -1,17 +1,19 @@
 ﻿using HMS.Models;
 using HMS.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
-using System.Web.Mvc;
 
 namespace HMS.Controllers
 {
     public class WebAPiController : ApiController
     {
         private HMS_DBEntity db = new HMS_DBEntity();
-        [System.Web.Http.HttpGet]
-        [System.Web.Mvc.Route("WebApi/AdmissionsProgress")]
+        [HttpGet]
+        [Route("WebApi/AdmissionsProgress")]
         public IEnumerable<AdmissionMonthly> AdmissionsMonthly()
         {
             List<AdmissionMonthly> acb = new List<AdmissionMonthly>();
@@ -19,8 +21,8 @@ namespace HMS.Controllers
             return acb;
         }
 
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("WebApi/PatientDetails")]
+        [HttpGet]
+        [Route("WebApi/PatientDetails")]
         public IEnumerable<DashboardModel> DashboardModel()
         {
             List<DashboardModel> acb = new List<DashboardModel>();
@@ -28,8 +30,8 @@ namespace HMS.Controllers
             return acb;
         }
 
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("WebApi/RoomOccupied")]
+        [HttpGet]
+        [Route("WebApi/RoomOccupied")]
         public IEnumerable<RoomOccupied> RoomOccupied()
         {
             List<RoomOccupied> acb = new List<RoomOccupied>();
@@ -37,9 +39,8 @@ namespace HMS.Controllers
             return acb;
         }
 
-        [System.Web.Http.HttpGet]
-
-        [System.Web.Http.Route("WebApi/StaffSpeciality")]
+        [HttpGet]
+        [Route("WebApi/StaffSpeciality")]
         public IEnumerable<StaffSpeciality> StaffSpeciality()
         {
             List<StaffSpeciality> acb = new List<StaffSpeciality>();

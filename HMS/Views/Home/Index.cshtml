@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = "Home Page";
-   // Layout = "~/Views/Shared/_Layout.cshtml";
+    // Layout = "~/Views/Shared/_Layout.cshtml";
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
 }
 <section class="content home">
@@ -139,26 +139,26 @@
                 </div>
             </div>
             @*<div class=" col-sm-12 col-md-4 col-lg-4">
-                <div class="card">
-                    <div class="header">
-                        <h2>Available Tests Facility</h2>
-                    </div>
-                    <div class="body">
-
-                        <div class="stats-report">
-                            <div class="stat-item">
-                                <h5>Available Staff Specialities</h5>
-                                <b class="col-indigo">32</b>
-                            </div>
+                    <div class="card">
+                        <div class="header">
+                            <h2>Available Tests Facility</h2>
                         </div>
+                        <div class="body">
 
-                        <div id="StaffSpeciality" class="sparkline" data-type="line" data-spot-Radius="3" data-highlight-Spot-Color="rgb(233, 30, 99)" data-highlight-Line-Color="#222"
-                             data-min-Spot-Color="rgb(233, 30, 99)" data-max-Spot-Color="rgb(96, 125, 139)" data-spot-Color="rgb(96, 125, 139, 0.7)"
-                             data-offset="90" data-width="100%" data-height="100px" data-line-Width="1" data-line-Color="rgb(96, 125, 139, 0.7)"
-                             data-fill-Color="rgba(96, 125, 139, 0.3)">Rooms Availability</div>
+                            <div class="stats-report">
+                                <div class="stat-item">
+                                    <h5>Available Staff Specialities</h5>
+                                    <b class="col-indigo">32</b>
+                                </div>
+                            </div>
+
+                            <div id="StaffSpeciality" class="sparkline" data-type="line" data-spot-Radius="3" data-highlight-Spot-Color="rgb(233, 30, 99)" data-highlight-Line-Color="#222"
+                                 data-min-Spot-Color="rgb(233, 30, 99)" data-max-Spot-Color="rgb(96, 125, 139)" data-spot-Color="rgb(96, 125, 139, 0.7)"
+                                 data-offset="90" data-width="100%" data-height="100px" data-line-Width="1" data-line-Color="rgb(96, 125, 139, 0.7)"
+                                 data-fill-Color="rgba(96, 125, 139, 0.3)">Rooms Availability</div>
+                        </div>
                     </div>
-                </div>
-            </div>*@
+                </div>*@
         </div>
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -221,9 +221,10 @@
 @section Scripts
 {
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
-    <script src="~/Content/Js_Files/Highcharts_File.js"></script>
+      <script src="~/Content/Js_Files/Highcharts_File.js"></script>
     <script>
         $(document).ready(function () {
+
             $('#dtBasicExample').DataTable({
                 "paging": true,// false to disable pagination (or any other option)
                 "pageLength": 10
@@ -231,9 +232,9 @@
             $('.dataTables_length').addClass('bs-select');
         });
 
-        //$('#dtBasicExample').dataTable({
-        //    "pageLength": 10
-        //});
+            //$('#dtBasicExample').dataTable({
+            //    "pageLength": 10
+            //});
     </script>
 }
 

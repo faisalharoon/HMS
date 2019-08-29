@@ -11,7 +11,7 @@ namespace HMS.App_Start
         public static void Register(HttpConfiguration config)
         {
             // Web API routes
-          //  config.MapHttpAttributeRoutes();
+            config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
