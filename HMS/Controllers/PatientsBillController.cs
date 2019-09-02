@@ -123,32 +123,42 @@ namespace HMS.Controllers
             return View(model);
         }
 
-        // GET: PatientsBill/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, DeleteViewModel model)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            tblPatientBill tblPatient = db.tblPatientBills.Find(id);
-            tblPatientBillDetail model = db.tblPatientBillDetails.Find(id);
 
-            if (model == null)
+            DeleteViewModel deleteViewModel = new DeleteViewModel();
+            deleteViewModel.billmodel = new PatientsBillViewModel();
+            deleteViewModel.billdetailmodel = new PatientsBillDetailViewModel();
+
+            tblPatientBill bill = db.tblPatientBills.Find(id);
+            tblPatientBillDetail billdetail = db.tblPatientBillDetails.Find(id);
+
+            if (bill != null)
             {
-                if (tblPatient == null)
-                {
-                    return HttpNotFound();
-                }
-                else
-                {
-                    return View("PatientsBillDelete",tblPatient);
-                }
+                deleteViewModel.billmodel.ID = bill.ID;
+                deleteViewModel.billmodel.PatientAppointmentID = bill.PatientAppointmentID;
+                deleteViewModel.billmodel.BillNo = bill.BillNo;
+                deleteViewModel.billmodel.Amount = bill.Amount;
+                deleteViewModel.billmodel.Discount = bill.Discount;
+                deleteViewModel.billmodel.CreatedAt = bill.CreatedAt;
+                deleteViewModel.billmodel.CreatedBy = bill.CreatedBy;
+                deleteViewModel.billmodel.Description = bill.Description;
             }
-            else
+            if (billdetail != null)
             {
-                return View("PatientsBillDetail",model);
+                deleteViewModel.billdetailmodel.ID = billdetail.ID;
+                deleteViewModel.billdetailmodel.PatientBillID = billdetail.PatientBillID;
+                deleteViewModel.billdetailmodel.Amount = billdetail.Amount;
+                deleteViewModel.billdetailmodel.CreatedAt = billdetail.CreatedAt;
+                deleteViewModel.billdetailmodel.CreatedBy = billdetail.CreatedBy;
+                deleteViewModel.billdetailmodel.Description = billdetail.Description;
             }
+            return View(deleteViewModel);
         }
 
         // POST: PatientsBill/Delete/5
@@ -161,7 +171,7 @@ namespace HMS.Controllers
             //Update Table TblPatientBill
             List<tblPatientBill> tblPatientBill = new List<tblPatientBill>();
 
-        var tblPatientBill2 = db.tblPatientBills.FirstOrDefault(x => x.ID == model.PatientBillID && x.is_active == true);
+            var tblPatientBill2 = db.tblPatientBills.FirstOrDefault(x => x.ID == model.PatientBillID && x.is_active == true);
             tblPatientBill = db.tblPatientBills.Where(x => x.ID == model.PatientBillID && x.is_active == true).ToList();
 
             if (tblPatientBill.Count != 0)
@@ -176,7 +186,7 @@ namespace HMS.Controllers
                     if (patientBill.Amount == 0)
                     {
                         patientBill.is_active = false;
-                    } 
+                    }
                 }
 
                 db.SaveChanges();

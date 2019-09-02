@@ -1,5 +1,5 @@
-﻿
-@model HMS.Models.tblPatientBill
+﻿@using HMS.ViewModels
+@model HMS.ViewModels.DeleteViewModel
 @{
     ViewBag.Title = "PatientsBill Delete";
 }
@@ -18,9 +18,9 @@
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        @Html.DisplayNameFor(model => model.ID)
+                                        @Html.DisplayNameFor(m => m.billmodel.ID)
                                         <br />
-                                        @Html.DisplayFor(model => model.ID)
+                                        @Html.DisplayFor(m => m.billmodel.ID)
                                     </div>
                                 </div>
                             </div>
@@ -30,18 +30,19 @@
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        @Html.DisplayNameFor(model => model.PatientAppointmentID)
+                                        @Html.DisplayNameFor(m => m.billmodel.PatientAppointmentID)
                                         <br />
-                                        @Html.DisplayFor(model => model.PatientAppointmentID)
+                                        @Html.DisplayFor(m => m.billmodel.PatientAppointmentID)
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        @Html.DisplayNameFor(model => model.BillNo)
+
+                                        @Html.DisplayNameFor(m => m.billmodel.BillNo)
                                         <br />
-                                        @Html.DisplayFor(model => model.BillNo)
+                                        @Html.DisplayFor(m => m.billmodel.BillNo)
                                     </div>
                                 </div>
                             </div>
@@ -51,18 +52,18 @@
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        @Html.DisplayNameFor(model => model.Amount)
+                                        @Html.DisplayNameFor(m => m.billmodel.Amount)
                                         <br />
-                                        @Html.DisplayFor(model => model.Amount)
+                                        @Html.DisplayFor(m => m.billmodel.Amount)
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        @Html.DisplayNameFor(model => model.Discount)
+                                        @Html.DisplayNameFor(m => m.billmodel.Discount)
                                         <br />
-                                        @Html.DisplayFor(model => model.Discount)
+                                        @Html.DisplayFor(m => m.billmodel.Discount)
                                     </div>
                                 </div>
                             </div>
@@ -72,18 +73,18 @@
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        @Html.DisplayNameFor(model => model.CreatedAt)
+                                        @Html.DisplayNameFor(m => m.billmodel.CreatedAt)
                                         <br />
-                                        @Html.DisplayFor(model => model.CreatedAt)
+                                        @Html.DisplayFor(m => m.billmodel.CreatedAt)
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        @Html.DisplayNameFor(model => model.CreatedBy)
+                                        @Html.DisplayNameFor(m => m.billmodel.CreatedBy)
                                         <br />
-                                        @Html.DisplayFor(model => model.CreatedBy)
+                                        @Html.DisplayFor(m => m.billmodel.CreatedBy)
                                     </div>
                                 </div>
                             </div>
@@ -92,9 +93,9 @@
                             <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        @Html.DisplayNameFor(model => model.Description)
+                                        @Html.DisplayNameFor(m => m.billmodel.Description)
                                         <br />
-                                        @Html.DisplayFor(model => model.Description)
+                                        @Html.DisplayFor(m => m.billmodel.Description)
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +107,7 @@
                                     @Html.AntiForgeryToken()
 
                                     <div class="form-actions no-color">
-                                        @Html.HiddenFor(model => model.ID)
+                                        @Html.HiddenFor(m => m.billmodel.ID)
                                         <input type="submit" value="Delete" class="btn btn-default" /> |
                                         @Html.ActionLink("Back to List", "BillListings")
                                     </div>
