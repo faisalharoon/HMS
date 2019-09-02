@@ -1,0 +1,15 @@
+﻿@using HMS.ViewModels
+@model HMS.ViewModels.DashboardViewModel
+
+
+<ul>
+
+    @foreach (var item in Model.Navbars)
+    {
+        <li><span> @item.Patients<i>Patients</i></span></li>
+        <li><span>@item.AdmittedPatients<i>Admitted</i></span></li>
+        <li><span>@item.TotalAppointments<i>Appointments</i></span></li>
+    }
+
+</ul>
+

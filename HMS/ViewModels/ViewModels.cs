@@ -69,6 +69,15 @@ namespace HMS.ViewModels
         public List<PatientCount> PatientsCount { set; get; }
         public List<RoomOccupied> RoomsOccupied { set; get; }
         public List<StaffSpeciality> StaffsSpeciality { set; get; }
+        public List<Navbar> Navbars { set; get; }
+    }
+
+    public class Navbar
+    {
+        public int AdmittedPatients { get; set; }
+        public int NonAdmittedPatients { get; set; }
+        public int TotalAppointments { get; set; }
+        public int Patients { get; set; }
     }
 
     public class StaffSpeciality

@@ -266,7 +266,11 @@ name: "Search",
 url: "Search",
 defaults: new { controller = "Search", action = "Index", id = UrlParameter.Optional }
 );
-
+            routes.MapRoute(
+name: "Navbar",
+url: "Navbar",
+defaults: new { controller = "Shared", action = "NavbarPatientInfo", id = UrlParameter.Optional }
+);
 
 
 
