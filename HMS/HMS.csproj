@@ -210,6 +210,7 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\UserRolesController.cs" />
     <Compile Include="Controllers\WebAPiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -688,6 +689,11 @@
     <Content Include="Views\Shared\PatientsBillDelete.cshtml" />
     <Content Include="Views\Shared\PatientsBillDetail.cshtml" />
     <Content Include="Views\Shared\_NavbarPatientInfo.cshtml" />
+    <Content Include="Views\UserRoles\Create.cshtml" />
+    <Content Include="Views\UserRoles\Delete.cshtml" />
+    <Content Include="Views\UserRoles\Details.cshtml" />
+    <Content Include="Views\UserRoles\Edit.cshtml" />
+    <Content Include="Views\UserRoles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

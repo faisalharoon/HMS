@@ -272,6 +272,26 @@ url: "Navbar",
 defaults: new { controller = "Shared", action = "NavbarPatientInfo", id = UrlParameter.Optional }
 );
 
+            routes.MapRoute(
+name: "UserRole",
+url: "UserRolesPage",
+defaults: new { controller = "UserRoles", action = "Index", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
+name: "UserRoleCreate",
+url: "UserRolesCreate",
+defaults: new { controller = "UserRoles", action = "Create", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
+name: "UserRoleEdit",
+url: "UserRoleEdit",
+defaults: new { controller = "UserRoles", action = "Edit", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
+name: "UserRoleDelete",
+url: "UserRoleDelete",
+defaults: new { controller = "UserRoles", action = "Delete", id = UrlParameter.Optional }
+);
 
 
 

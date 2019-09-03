@@ -101,10 +101,10 @@ namespace HMS.Controllers
                     db.SaveChanges();
 
                     List<PatientViewModel> lst = (List<PatientViewModel>)Session["templist"];
+                    tblPatientBillDetail billdetail = new tblPatientBillDetail();
+                    int PatientBill_ID = Convert.ToInt32(patientbill.ID);
                     foreach (var o in lst)
                     {
-                        int PatientBill_ID = Convert.ToInt32(patientbill.ID);
-                        tblPatientBillDetail billdetail = new tblPatientBillDetail();
                         billdetail.PatientBillID = PatientBill_ID;
                         billdetail.Amount = model.Amount;
                         billdetail.CreatedAt = model.CreatedAt;
@@ -114,7 +114,7 @@ namespace HMS.Controllers
 
                         db.tblPatientBillDetails.Add(billdetail);
                         db.SaveChanges();
-                        Session.Clear();
+                      //  Session.Clear();
                     }
 
                     return RedirectToAction("Index");
@@ -252,8 +252,6 @@ namespace HMS.Controllers
             {
                 return View();
             }
-           
-              
         }
         public ActionResult EditPatient(int id)
         {
@@ -278,16 +276,6 @@ namespace HMS.Controllers
             //}
             return View(model);
         }
-
-    
-
-
-
-
-
-
-
-
 
         // GET: PatientsBill/Details/5
         public ActionResult Details(int? id)
