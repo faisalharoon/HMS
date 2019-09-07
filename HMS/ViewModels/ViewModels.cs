@@ -177,6 +177,30 @@ namespace HMS.ViewModels
         public string CreatedBy { get; set; }
         public string Description { get; set; }
     }
+    //ViewModels for PrintToPDF
+    public class Patient
+    {
+        public string Patient_Name { get; set; }
+        public string Patient_address { get; set; }
+        public string Contact_no { get; set; }
+        public Nullable<int> Age { get; set; }
+        public string Gender { get; set; }
+        public Nullable<System.DateTime> Date_of_Birth { get; set; }
+        public string AppointmentDate { get; set; }
+       
+        public Nullable<double> TotalAmount { get; set; }
+        public Nullable<double> Discount { get; set; }
 
-
+    }
+    public class PatientBillDetail
+    {
+        public Nullable<int> PatientBillID { get; set; }
+        public string BillNo { get; set; }
+        public Nullable<double> Amount { get; set; }
+        public Nullable<System.DateTime> CreatedAt { get; set; }
+        public string CreatedBy { get; set; }
+        public string Description { get; set; }
+        
+    }
+   
 }

@@ -229,8 +229,8 @@ defaults: new { controller = "Patient", action = "Delete", id = UrlParameter.Opt
          );
 
             routes.MapRoute(
-              name: "PatientBills",
-              url: "patient-bills-listings",
+              name: "GeneratePatientBill",
+              url: "GeneratePatientBill",
               defaults: new { controller = "PatientsBill", action = "Index", id = UrlParameter.Optional }
           );
 
@@ -291,6 +291,12 @@ defaults: new { controller = "UserRoles", action = "Edit", id = UrlParameter.Opt
 name: "UserRoleDelete",
 url: "UserRoleDelete",
 defaults: new { controller = "UserRoles", action = "Delete", id = UrlParameter.Optional }
+);
+
+            routes.MapRoute(
+name: "PrintTo PDF",
+url: "Patients Bill Details",
+defaults: new { controller = "PatientsBill", action = "PrintPartialViewToPdf", id = UrlParameter.Optional }
 );
 
 

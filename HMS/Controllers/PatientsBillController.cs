@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using HMS.Models;
 using HMS.ViewModels;
+using Rotativa;
 
 namespace HMS.Controllers
 {
@@ -31,6 +32,10 @@ namespace HMS.Controllers
         public ActionResult BillListings()
         {
             var model = new PatientBillDAL().GetPatientBills().ToList();
+            var Appointments = new PatientBillDAL().ListOfRecords().ToList();
+            var PatientsData = db.tblPatients.ToList();
+            ViewBag.patient = PatientsData;
+            ViewBag.appointment = Appointments;
             return View(model);
         }
         // GET: PatientsBill/Create
@@ -114,10 +119,10 @@ namespace HMS.Controllers
 
                         db.tblPatientBillDetails.Add(billdetail);
                         db.SaveChanges();
-                      //  Session.Clear();
+                       Session.Clear();
                     }
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction("BillListings");
                 }
             }
             return View(model);
@@ -290,6 +295,43 @@ namespace HMS.Controllers
                 return HttpNotFound();
             }
             return View(tblPatient);
+        }
+
+        public ActionResult PrintPartialViewToPdf(int id)
+        {
+            var result = (from p in db.tblPatientBills where p.ID == id
+                          join o in db.tblPatientAppointments on p.PatientAppointmentID equals o.ID
+                          join c in db.tblPatients on o.patient_id equals c.Patient_id
+                          select new Patient
+                          {
+                              Patient_Name = c.Patient_Name,
+                              Patient_address = c.Patient_address,
+                              Contact_no = c.Contact_no,
+                              Age = c.Age,
+                              Gender = c.Gender,
+                              Date_of_Birth = c.Date_of_Birth,
+                              AppointmentDate = o.AppointmentDate,
+
+                              TotalAmount = p.Amount,
+                              Discount = p.Discount
+                          }
+                          ).ToList();
+            var detail = (from p in db.tblPatientBills where p.ID == id
+                          join o in db.tblPatientBillDetails on p.ID equals o.PatientBillID
+                          select new PatientBillDetail
+                          {
+                              PatientBillID = o.PatientBillID,
+                              BillNo = p.BillNo,
+                              Amount = o.Amount,
+                              CreatedAt = o.CreatedAt,
+                              CreatedBy = o.CreatedBy,
+                              Description = o.Description
+                          }
+                          ).ToList();
+            ViewBag.BillDetails = detail;
+
+            var report = new PartialViewAsPdf("~/Views/Shared/PatientBillToPDF.cshtml", result);
+            return report;
         }
         protected override void Dispose(bool disposing)
         {

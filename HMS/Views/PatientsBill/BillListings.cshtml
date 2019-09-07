@@ -10,7 +10,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
-            <h2>Patients Record</h2>
+            <h2>Patients Bills Listings</h2>
         </div>
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -19,7 +19,7 @@
                         <table class="table table-bordered table-striped table-hover dataTable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>#</th>
                                     <th>Patient Appointment ID</th>
                                     <th>Patient Name</th>
                                     <th>Bill No</th>
@@ -34,15 +34,21 @@
                             <tbody>
                                 @{
                                     //var Bill = ViewData["GetBills"];
+
+                                    List<HMS.Models.tblPatientAppointment> patientbillList = ViewBag.appointment;
+                                    List<HMS.Models.tblPatient> PatientList = ViewBag.patient;
+
+                                    int i = 1;
                                     foreach (var item in Model)
                                     {
-                                       // var PatientName = item.tblPatientAppointment.Where(x => x.patient_id == item.Patient_id);
-
-
+                                        var AppointmentData = patientbillList.Where(x => x.ID == item.PatientAppointmentID && x.isActive == true).FirstOrDefault();
+                                        int? PatientID = AppointmentData.patient_id;
+                                        var PatientData = PatientList.Where(x => x.Patient_id == @PatientID && x.is_active == true).FirstOrDefault();
+                                       
                                 <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                                    <td>@i</td>
                                     <td>@Html.DisplayFor(modelItem => item.PatientAppointmentID)</td>
-                                    <td>abcz</td>
+                                    <td>@PatientData.Patient_Name</td>
                                     <td>@Html.DisplayFor(modelItem => item.BillNo)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Amount)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Discount)</td>
@@ -51,10 +57,11 @@
                                     <td>@Html.DisplayFor(modelItem => item.Description)</td>
                                     <td>
                                         <a href='/DeleteBill?id=@item.ID'>Delete</a>|
-                                        <a href='/EditBill?id=@item.ID'>Edit</a>
-
+                                        <a href='/EditBill?id=@item.ID'>Edit</a>|
+                                        <a href='/Patients Bill Details?id=@item.ID'>Print</a>|
                                     </td>
                                 </tr>
+                                        i++;
                                     }
                                 }
                             </tbody>
