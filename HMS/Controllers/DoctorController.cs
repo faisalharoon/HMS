@@ -55,6 +55,13 @@ namespace HMS.Controllers
         [HttpPost]
         public ActionResult AddDoctor(tblEmployee employee, int? Doctor_id)
         {
+            int hospital_id = 0;
+            HttpCookie cookie = HttpContext.Request.Cookies["AdminCookies"];
+            if (cookie != null)
+            {
+                hospital_id = Convert.ToInt32(cookie.Values["hospital_id"]);
+            }
+            employee.hospital_id = hospital_id;
             try
             {
                 string file_name = "";

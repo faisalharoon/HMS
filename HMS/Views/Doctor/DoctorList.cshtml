@@ -29,6 +29,7 @@
                                     <th>Doctors ID</th>
                                     <th>Doctors Name</th>
                                     <th>Designation</th>
+                                    <th>Qualification</th>
                                     <th>Status</th>
                                     <th>Gender</th>
                                     <th>Actions</th>
@@ -40,15 +41,21 @@
                                 @{
                                     var list = ViewData["listOfData"];
                                     if (list != null)
-                                    {
+                                    { string gender = "";
                                         foreach (var item in ViewData["listOfData"] as IEnumerable<HMS.Models.tblEmployee>)
                                         {
+                                            if(item.Gender=="1")
+                                            { gender = "Male"; }
+
+                                            if (item.Gender == "2")
+                                            { gender = "Female"; }
                                             <tr>
                                                 <td>@item.ID</td>
                                                 <td>@item.Name</td>
                                                 <td>@item.tblEmpDesignation.Designation</td>
+                                                <td>@item.tblEmployeeQualification.Qualification</td>
                                                 <td>@item.tblEmployeeSatu.Satus</td>
-                                                <td>@item.Gender</td>
+                                                <td>@gender</td>
                                                 <td>
                                                     <a href='/add-doctor?Doctor_id=@item.ID'>Edit</a>
                                                     <a href='#' onclick="Delete(@item.ID);">

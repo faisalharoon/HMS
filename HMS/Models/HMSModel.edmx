@@ -12,19 +12,6 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AdmissionTypeName" Type="nvarchar" MaxLength="250" />
         </EntityType>
-        <EntityType Name="tblDoctor">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DoctorName" Type="nvarchar" MaxLength="250" />
-          <Property Name="Speciality" Type="varchar" MaxLength="450" />
-          <Property Name="Address" Type="varchar" MaxLength="250" />
-          <Property Name="MobileNo" Type="varchar" MaxLength="50" />
-          <Property Name="HospitalID" Type="int" />
-          <Property Name="Description" Type="varchar" MaxLength="500" />
-          <Property Name="IsActive" Type="bit" />
-        </EntityType>
         <EntityType Name="tblEmpDesignation">
           <Key>
             <PropertyRef Name="Designation_id" />
@@ -50,6 +37,7 @@
           <Property Name="status_id" Type="int" />
           <Property Name="designation_id" Type="int" />
           <Property Name="Qualification_id" Type="int" />
+          <Property Name="hospital_id" Type="int" />
         </EntityType>
         <EntityType Name="tblEmployeeQualification">
           <Key>
@@ -385,18 +373,6 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <Property Name="Role_id" Type="int" />
           <Property Name="show_in_menu" Type="bit" />
         </EntityType>
-        <Association Name="FK_tblDoctor_tblHospital">
-          <End Role="tblHospital" Type="Self.tblHospital" Multiplicity="0..1" />
-          <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblHospital">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblDoctor">
-              <PropertyRef Name="HospitalID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblEmployee_tblEmpDesignation">
           <End Role="tblEmpDesignation" Type="Self.tblEmpDesignation" Multiplicity="0..1" />
           <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
@@ -442,6 +418,18 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
             </Principal>
             <Dependent Role="tblEmployee">
               <PropertyRef Name="EmployeeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblEmployee_tblHospital">
+          <End Role="tblHospital" Type="Self.tblHospital" Multiplicity="0..1" />
+          <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblHospital">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="hospital_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -708,7 +696,6 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
         <Function Name="Sp_TestsCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
         <EntityContainer Name="teamfotech_hmsModelStoreContainer">
           <EntitySet Name="tblAdmissionType" EntityType="Self.tblAdmissionType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblDoctor" EntityType="Self.tblDoctor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblEmpDesignation" EntityType="Self.tblEmpDesignation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblEmployee" EntityType="Self.tblEmployee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblEmployeeQualification" EntityType="Self.tblEmployeeQualification" Schema="dbo" store:Type="Tables" />
@@ -740,10 +727,6 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPages" EntityType="Self.tblPages" Schema="saa" store:Type="Tables" />
           <EntitySet Name="tblUserPages" EntityType="Self.tblUserPages" Schema="saa" store:Type="Tables" />
-          <AssociationSet Name="FK_tblDoctor_tblHospital" Association="Self.FK_tblDoctor_tblHospital">
-            <End Role="tblHospital" EntitySet="tblHospital" />
-            <End Role="tblDoctor" EntitySet="tblDoctor" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblEmployee_tblEmpDesignation" Association="Self.FK_tblEmployee_tblEmpDesignation">
             <End Role="tblEmpDesignation" EntitySet="tblEmpDesignation" />
             <End Role="tblEmployee" EntitySet="tblEmployee" />
@@ -758,6 +741,10 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           </AssociationSet>
           <AssociationSet Name="FK_tblEmployee_tblEmployeeType" Association="Self.FK_tblEmployee_tblEmployeeType">
             <End Role="tblEmployeeType" EntitySet="tblEmployeeType" />
+            <End Role="tblEmployee" EntitySet="tblEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblEmployee_tblHospital" Association="Self.FK_tblEmployee_tblHospital">
+            <End Role="tblHospital" EntitySet="tblHospital" />
             <End Role="tblEmployee" EntitySet="tblEmployee" />
           </AssociationSet>
           <AssociationSet Name="FK_tblHospitalRoom_tblHospital" Association="Self.FK_tblHospitalRoom_tblHospital">
@@ -852,20 +839,6 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AdmissionTypeName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="tblDoctor">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DoctorName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Speciality" Type="String" MaxLength="450" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="HospitalID" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="tblHospital" Relationship="Self.FK_tblDoctor_tblHospital" FromRole="tblDoctor" ToRole="tblHospital" />
-        </EntityType>
         <EntityType Name="tblEmpDesignation">
           <Key>
             <PropertyRef Name="Designation_id" />
@@ -896,6 +869,8 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <NavigationProperty Name="tblEmployeeQualification" Relationship="Self.FK_tblEmployee_tblEmployeeQualification" FromRole="tblEmployee" ToRole="tblEmployeeQualification" />
           <NavigationProperty Name="tblEmployeeSatu" Relationship="Self.FK_tblEmployee_tblEmployeeSatus" FromRole="tblEmployee" ToRole="tblEmployeeSatus" />
           <NavigationProperty Name="tblEmployeeType" Relationship="Self.FK_tblEmployee_tblEmployeeType" FromRole="tblEmployee" ToRole="tblEmployeeType" />
+          <Property Name="hospital_id" Type="Int32" />
+          <NavigationProperty Name="tblHospital" Relationship="teamfotech_hmsModel.FK_tblEmployee_tblHospital" FromRole="tblEmployee" ToRole="tblHospital" />
         </EntityType>
         <EntityType Name="tblEmployeeQualification">
           <Key>
@@ -931,9 +906,9 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblDoctors" Relationship="Self.FK_tblDoctor_tblHospital" FromRole="tblHospital" ToRole="tblDoctor" />
           <NavigationProperty Name="tblHospitalRooms" Relationship="Self.FK_tblHospitalRoom_tblHospital" FromRole="tblHospital" ToRole="tblHospitalRoom" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Users_tblHospital" FromRole="tblHospital" ToRole="Users" />
+          <NavigationProperty Name="tblEmployees" Relationship="teamfotech_hmsModel.FK_tblEmployee_tblHospital" FromRole="tblHospital" ToRole="tblEmployee" />
         </EntityType>
         <EntityType Name="tblHospitalRoom">
           <Key>
@@ -1268,18 +1243,6 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <Property Name="Role_id" Type="Int32" />
           <Property Name="show_in_menu" Type="Boolean" />
         </EntityType>
-        <Association Name="FK_tblDoctor_tblHospital">
-          <End Role="tblHospital" Type="Self.tblHospital" Multiplicity="0..1" />
-          <End Role="tblDoctor" Type="Self.tblDoctor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblHospital">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblDoctor">
-              <PropertyRef Name="HospitalID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblEmployee_tblEmpDesignation">
           <End Role="tblEmpDesignation" Type="Self.tblEmpDesignation" Multiplicity="0..1" />
           <End Role="tblEmployee" Type="Self.tblEmployee" Multiplicity="*" />
@@ -1534,7 +1497,6 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
         </Association>
         <EntityContainer Name="HMS_DBEntity" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblAdmissionTypes" EntityType="Self.tblAdmissionType" />
-          <EntitySet Name="tblDoctors" EntityType="Self.tblDoctor" />
           <EntitySet Name="tblEmpDesignations" EntityType="Self.tblEmpDesignation" />
           <EntitySet Name="tblEmployees" EntityType="Self.tblEmployee" />
           <EntitySet Name="tblEmployeeQualifications" EntityType="Self.tblEmployeeQualification" />
@@ -1566,10 +1528,6 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="tblPages" EntityType="Self.tblPage" />
           <EntitySet Name="tblUserPages" EntityType="Self.tblUserPage" />
-          <AssociationSet Name="FK_tblDoctor_tblHospital" Association="Self.FK_tblDoctor_tblHospital">
-            <End Role="tblHospital" EntitySet="tblHospitals" />
-            <End Role="tblDoctor" EntitySet="tblDoctors" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblEmployee_tblEmpDesignation" Association="Self.FK_tblEmployee_tblEmpDesignation">
             <End Role="tblEmpDesignation" EntitySet="tblEmpDesignations" />
             <End Role="tblEmployee" EntitySet="tblEmployees" />
@@ -1687,6 +1645,10 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
             <End Role="tblPatientAppointment" EntitySet="tblPatientAppointments" />
             <End Role="tblPatientAdmission" EntitySet="tblPatientAdmissions" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblEmployee_tblHospital" Association="teamfotech_hmsModel.FK_tblEmployee_tblHospital">
+            <End Role="tblHospital" EntitySet="tblHospitals" />
+            <End Role="tblEmployee" EntitySet="tblEmployees" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetPatientAdmits_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -1708,7 +1670,6 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
         </ComplexType>
         <ComplexType Name="GetPatientAppointements_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="Int32" Name="PatientID" Nullable="true" />
           <Property Type="Int32" Name="DoctorID" Nullable="true" />
           <Property Type="String" Name="Description" Nullable="true" />
           <Property Type="Boolean" Name="isActive" Nullable="true" />
@@ -1721,6 +1682,7 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <Property Type="String" Name="Patient_address" Nullable="true" MaxLength="200" />
           <Property Type="Boolean" Name="PatientStatus" Nullable="true" />
           <Property Type="Boolean" Name="Appstatus" Nullable="true" />
+          <Property Type="Int32" Name="patient_id" Nullable="true" />
         </ComplexType>
         <ComplexType Name="GetPatientList_Result">
           <Property Type="Int32" Name="Patient_id" Nullable="false" />
@@ -1880,6 +1842,18 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblEmployee_tblHospital">
+          <End Type="teamfotech_hmsModel.tblHospital" Role="tblHospital" Multiplicity="0..1" />
+          <End Type="teamfotech_hmsModel.tblEmployee" Role="tblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblHospital">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblEmployee">
+              <PropertyRef Name="hospital_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1891,20 +1865,6 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
               <MappingFragment StoreEntitySet="tblAdmissionType">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="AdmissionTypeName" ColumnName="AdmissionTypeName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblDoctors">
-            <EntityTypeMapping TypeName="teamfotech_hmsModel.tblDoctor">
-              <MappingFragment StoreEntitySet="tblDoctor">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
-                <ScalarProperty Name="Speciality" ColumnName="Speciality" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1920,6 +1880,7 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <EntitySetMapping Name="tblEmployees">
             <EntityTypeMapping TypeName="teamfotech_hmsModel.tblEmployee">
               <MappingFragment StoreEntitySet="tblEmployee">
+                <ScalarProperty Name="hospital_id" ColumnName="hospital_id" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -2318,7 +2279,6 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
             <ResultMapping>
               <ComplexTypeMapping TypeName="teamfotech_hmsModel.GetPatientAppointements_Result">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
                 <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
@@ -2331,6 +2291,7 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
                 <ScalarProperty Name="Patient_address" ColumnName="Patient_address" />
                 <ScalarProperty Name="PatientStatus" ColumnName="PatientStatus" />
                 <ScalarProperty Name="Appstatus" ColumnName="Appstatus" />
+                <ScalarProperty Name="patient_id" ColumnName="patient_id" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

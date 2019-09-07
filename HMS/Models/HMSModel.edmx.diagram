@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="f28832b3059f474b94127353c98c2b13" Name="Diagram1">
         <EntityTypeShape EntityType="teamfotech_hmsModel.tblAdmissionType" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="teamfotech_hmsModel.tblDoctor" Width="1.5" PointX="8" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="teamfotech_hmsModel.tblEmpDesignation" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="teamfotech_hmsModel.tblEmployee" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="teamfotech_hmsModel.tblEmployeeQualification" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
@@ -38,7 +37,6 @@
         <EntityTypeShape EntityType="teamfotech_hmsModel.User" Width="1.5" PointX="8" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="teamfotech_hmsModel.tblPage" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="teamfotech_hmsModel.tblUserPage" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
-        <AssociationConnector Association="teamfotech_hmsModel.FK_tblDoctor_tblHospital" ManuallyRouted="false" />
         <AssociationConnector Association="teamfotech_hmsModel.FK_tblEmployee_tblEmpDesignation" ManuallyRouted="false" />
         <AssociationConnector Association="teamfotech_hmsModel.FK_tblEmployee_tblEmployeeQualification" ManuallyRouted="false" />
         <AssociationConnector Association="teamfotech_hmsModel.FK_tblEmployee_tblEmployeeSatus" ManuallyRouted="false" />
@@ -63,6 +61,7 @@
         <AssociationConnector Association="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatient" />
         <AssociationConnector Association="teamfotech_hmsModel.FK_tblPatientAppointment_tblPatient" />
         <AssociationConnector Association="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatientAppointment" />
+        <AssociationConnector Association="teamfotech_hmsModel.FK_tblEmployee_tblHospital" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

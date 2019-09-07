@@ -14,7 +14,6 @@ namespace HMS.Models
     public partial class GetPatientAppointements_Result
     {
         public int ID { get; set; }
-        public Nullable<int> PatientID { get; set; }
         public Nullable<int> DoctorID { get; set; }
         public string Description { get; set; }
         public Nullable<bool> isActive { get; set; }
@@ -27,5 +26,6 @@ namespace HMS.Models
         public string Patient_address { get; set; }
         public Nullable<bool> PatientStatus { get; set; }
         public Nullable<bool> Appstatus { get; set; }
+        public Nullable<int> patient_id { get; set; }
     }
 }

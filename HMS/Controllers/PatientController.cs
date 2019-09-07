@@ -49,7 +49,7 @@ namespace HMS.Controllers
             try
             {
                 // TODO: Add insert logic here
-                if (patient_id == 0)
+                if (obj.Patient_id == 0)
                 {
 
                     patient_id = new PatientDAL().InsertRecord(obj);
@@ -66,7 +66,7 @@ namespace HMS.Controllers
 
                 return Redirect("/patients");
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
@@ -82,7 +82,13 @@ namespace HMS.Controllers
         }
         public ActionResult PatientAdmission(int? Patient_id, int? appointment_id, int? addmission_id)
         {
-            List<tblHospitalRoom> lstRoom = db.tblHospitalRooms.Where(x => x.isActive == true).ToList();
+            int hospital_id = 0;
+            HttpCookie cookie = HttpContext.Request.Cookies["AdminCookies"];
+            if (cookie != null)
+            {
+                hospital_id = Convert.ToInt32(cookie.Values["hospital_id"]);
+            }
+            List<tblHospitalRoom> lstRoom = db.tblHospitalRooms.Where(x => x.isActive == true&&x.HospitalID==hospital_id).ToList();
             ViewBag.ListRoom = lstRoom;
             List<tblAdmissionType> listAdmitType = db.tblAdmissionTypes.ToList();
             ViewBag.listAdmitType = listAdmitType;
@@ -132,8 +138,10 @@ namespace HMS.Controllers
                     username = Convert.ToString(cookie.Values["UserName"]);
                 } obj.CreatedBy = username;
                 obj.IsActive = true;
-                obj.PatientAppointmentID = Convert.ToInt32(AppointmentId);
-
+                if (AppointmentId != "")
+                {
+                    obj.PatientAppointmentID = Convert.ToInt32(AppointmentId);
+                }
 
                 // TODO: Add insert logic here
                 if (addmission_id != null && addmission_id != 0)
@@ -310,7 +318,7 @@ namespace HMS.Controllers
                     new PatientDAL().SavePatientTestDetails(test_details);
                 }
 
-                return Redirect("/patient-tests");
+                return Redirect("/patient-tests?patient_id="+patient_id);
             }
             catch (Exception ex)
             {
@@ -460,7 +468,7 @@ namespace HMS.Controllers
         }
 
 
-        public ActionResult PatientTestList(int patient_id)
+        public ActionResult PatientTestList(int? patient_id)
         {
             var patientTestDetails = new PatientDAL().GetPatientTestDetail(Convert.ToInt32(patient_id)).ToList();
             if (patientTestDetails != null)
@@ -471,11 +479,14 @@ namespace HMS.Controllers
         }
 
 
-        public ActionResult PatientappointmentList(int patient_id)
+        public ActionResult PatientappointmentList(int? patient_id)
         {
-            var model = new PatientDAL().GetPatientAllAppointments(Convert.ToInt32(patient_id));
-         
+            var model = new PatientDAL().GetPatientAllAppointments().ToList();
 
+            if (patient_id != null && patient_id!=0)
+            {
+                model = model.Where(x => x.patient_id == patient_id).ToList();
+            }
                 return View(model);
             
            

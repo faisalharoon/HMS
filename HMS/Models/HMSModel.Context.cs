@@ -28,7 +28,6 @@ namespace HMS.Models
         }
     
         public virtual DbSet<tblAdmissionType> tblAdmissionTypes { get; set; }
-        public virtual DbSet<tblDoctor> tblDoctors { get; set; }
         public virtual DbSet<tblEmpDesignation> tblEmpDesignations { get; set; }
         public virtual DbSet<tblEmployee> tblEmployees { get; set; }
         public virtual DbSet<tblEmployeeQualification> tblEmployeeQualifications { get; set; }

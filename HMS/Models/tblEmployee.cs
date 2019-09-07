@@ -27,10 +27,12 @@ namespace HMS.Models
         public Nullable<int> status_id { get; set; }
         public Nullable<int> designation_id { get; set; }
         public Nullable<int> Qualification_id { get; set; }
+        public Nullable<int> hospital_id { get; set; }
     
         public virtual tblEmpDesignation tblEmpDesignation { get; set; }
         public virtual tblEmployeeQualification tblEmployeeQualification { get; set; }
         public virtual tblEmployeeSatu tblEmployeeSatu { get; set; }
         public virtual tblEmployeeType tblEmployeeType { get; set; }
+        public virtual tblHospital tblHospital { get; set; }
     }
 }

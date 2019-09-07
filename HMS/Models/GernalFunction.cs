@@ -19,6 +19,8 @@ namespace HMS.Models
             AdminCookie.Values["UserName"] = user.UserName.ToString();
             AdminCookie.Values["Password"] = user.UserPassword.ToString();
             AdminCookie.Values["ID"] = user.ID.ToString();
+            AdminCookie.Values["hospital_id"] = user.Hospital_ID.ToString();
+
             HttpContext.Current.Response.SetCookie(AdminCookie);
         }
 

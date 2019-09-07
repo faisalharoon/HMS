@@ -277,9 +277,6 @@
     <Compile Include="Models\tblAdmissionType.cs">
       <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblDoctor.cs">
-      <DependentUpon>HMSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\tblEmpDesignation.cs">
       <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>

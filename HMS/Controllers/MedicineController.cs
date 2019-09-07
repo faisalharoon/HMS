@@ -37,6 +37,8 @@ namespace HMS.Controllers
         public ActionResult AddMedicineCat(int? cat_id, tblMedicineCategory medicineCategory)
         {
             string username = "";
+            medicineCategory.isActive = true;
+
             HttpCookie cookie = HttpContext.Request.Cookies["AdminCookies"];
             if (cookie != null)
             {
@@ -56,7 +58,6 @@ namespace HMS.Controllers
                 else
                 {
                     medicineCategory.CreatedBy = username;
-                    medicineCategory.isActive = true;
                     medicineCategory.CreatedAt = DateTime.UtcNow;
                     cat_id = new MedicineDAL().InsertRecord(medicineCategory);
                     TempData["AlertTask"] = "medicine added successfully";
@@ -106,6 +107,7 @@ namespace HMS.Controllers
 
             try
             {
+                Obj.isActive = true;
                 // TODO: Add insert logic here
                 if (medicine_id != null)
                 {
@@ -117,7 +119,7 @@ namespace HMS.Controllers
                 else
                 {
                     Obj.CreatedBy = username;
-                    Obj.isActive = true;
+                  
                     Obj.CreatedAt = DateTime.UtcNow;
                     medicine_id = new MedicineDAL().AddMedicine(Obj);
                     TempData["AlertTask"] = "medicine added successfully";
