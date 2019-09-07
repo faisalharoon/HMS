@@ -229,8 +229,8 @@ defaults: new { controller = "Patient", action = "Delete", id = UrlParameter.Opt
          );
 
             routes.MapRoute(
-              name: "PatientBills",
-              url: "patient-bills-listings",
+              name: "GeneratePatientBill",
+              url: "GeneratePatientBill",
               defaults: new { controller = "PatientsBill", action = "Index", id = UrlParameter.Optional }
           );
 
@@ -266,8 +266,38 @@ name: "Search",
 url: "Search",
 defaults: new { controller = "Search", action = "Index", id = UrlParameter.Optional }
 );
+            routes.MapRoute(
+name: "Navbar",
+url: "Navbar",
+defaults: new { controller = "Shared", action = "NavbarPatientInfo", id = UrlParameter.Optional }
+);
 
+            routes.MapRoute(
+name: "UserRole",
+url: "UserRolesPage",
+defaults: new { controller = "UserRoles", action = "Index", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
+name: "UserRoleCreate",
+url: "UserRolesCreate",
+defaults: new { controller = "UserRoles", action = "Create", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
+name: "UserRoleEdit",
+url: "UserRoleEdit",
+defaults: new { controller = "UserRoles", action = "Edit", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
+name: "UserRoleDelete",
+url: "UserRoleDelete",
+defaults: new { controller = "UserRoles", action = "Delete", id = UrlParameter.Optional }
+);
 
+            routes.MapRoute(
+name: "PrintTo PDF",
+url: "Patients Bill Details",
+defaults: new { controller = "PatientsBill", action = "PrintPartialViewToPdf", id = UrlParameter.Optional }
+);
 
 
 

@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using HMS.Models;
 using HMS.ViewModels;
+using Rotativa;
 
 namespace HMS.Controllers
 {
@@ -31,6 +32,10 @@ namespace HMS.Controllers
         public ActionResult BillListings()
         {
             var model = new PatientBillDAL().GetPatientBills().ToList();
+            var Appointments = new PatientBillDAL().ListOfRecords().ToList();
+            var PatientsData = db.tblPatients.ToList();
+            ViewBag.patient = PatientsData;
+            ViewBag.appointment = Appointments;
             return View(model);
         }
         // GET: PatientsBill/Create
@@ -101,10 +106,10 @@ namespace HMS.Controllers
                     db.SaveChanges();
 
                     List<PatientViewModel> lst = (List<PatientViewModel>)Session["templist"];
+                    tblPatientBillDetail billdetail = new tblPatientBillDetail();
+                    int PatientBill_ID = Convert.ToInt32(patientbill.ID);
                     foreach (var o in lst)
                     {
-                        int PatientBill_ID = Convert.ToInt32(patientbill.ID);
-                        tblPatientBillDetail billdetail = new tblPatientBillDetail();
                         billdetail.PatientBillID = PatientBill_ID;
                         billdetail.Amount = model.Amount;
                         billdetail.CreatedAt = model.CreatedAt;
@@ -114,41 +119,51 @@ namespace HMS.Controllers
 
                         db.tblPatientBillDetails.Add(billdetail);
                         db.SaveChanges();
-                        Session.Clear();
+                       Session.Clear();
                     }
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction("BillListings");
                 }
             }
             return View(model);
         }
 
-        // GET: PatientsBill/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, DeleteViewModel model)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            tblPatientBill tblPatient = db.tblPatientBills.Find(id);
-            tblPatientBillDetail model = db.tblPatientBillDetails.Find(id);
 
-            if (model == null)
+            DeleteViewModel deleteViewModel = new DeleteViewModel();
+            deleteViewModel.billmodel = new PatientsBillViewModel();
+            deleteViewModel.billdetailmodel = new PatientsBillDetailViewModel();
+
+            tblPatientBill bill = db.tblPatientBills.Find(id);
+            tblPatientBillDetail billdetail = db.tblPatientBillDetails.Find(id);
+
+            if (bill != null)
             {
-                if (tblPatient == null)
-                {
-                    return HttpNotFound();
-                }
-                else
-                {
-                    return View("PatientsBillDelete",tblPatient);
-                }
+                deleteViewModel.billmodel.ID = bill.ID;
+                deleteViewModel.billmodel.PatientAppointmentID = bill.PatientAppointmentID;
+                deleteViewModel.billmodel.BillNo = bill.BillNo;
+                deleteViewModel.billmodel.Amount = bill.Amount;
+                deleteViewModel.billmodel.Discount = bill.Discount;
+                deleteViewModel.billmodel.CreatedAt = bill.CreatedAt;
+                deleteViewModel.billmodel.CreatedBy = bill.CreatedBy;
+                deleteViewModel.billmodel.Description = bill.Description;
             }
-            else
+            if (billdetail != null)
             {
-                return View("PatientsBillDetail",model);
+                deleteViewModel.billdetailmodel.ID = billdetail.ID;
+                deleteViewModel.billdetailmodel.PatientBillID = billdetail.PatientBillID;
+                deleteViewModel.billdetailmodel.Amount = billdetail.Amount;
+                deleteViewModel.billdetailmodel.CreatedAt = billdetail.CreatedAt;
+                deleteViewModel.billdetailmodel.CreatedBy = billdetail.CreatedBy;
+                deleteViewModel.billdetailmodel.Description = billdetail.Description;
             }
+            return View(deleteViewModel);
         }
 
         // POST: PatientsBill/Delete/5
@@ -161,7 +176,7 @@ namespace HMS.Controllers
             //Update Table TblPatientBill
             List<tblPatientBill> tblPatientBill = new List<tblPatientBill>();
 
-        var tblPatientBill2 = db.tblPatientBills.FirstOrDefault(x => x.ID == model.PatientBillID && x.is_active == true);
+            var tblPatientBill2 = db.tblPatientBills.FirstOrDefault(x => x.ID == model.PatientBillID && x.is_active == true);
             tblPatientBill = db.tblPatientBills.Where(x => x.ID == model.PatientBillID && x.is_active == true).ToList();
 
             if (tblPatientBill.Count != 0)
@@ -176,7 +191,7 @@ namespace HMS.Controllers
                     if (patientBill.Amount == 0)
                     {
                         patientBill.is_active = false;
-                    } 
+                    }
                 }
 
                 db.SaveChanges();
@@ -242,8 +257,6 @@ namespace HMS.Controllers
             {
                 return View();
             }
-           
-              
         }
         public ActionResult EditPatient(int id)
         {
@@ -269,16 +282,6 @@ namespace HMS.Controllers
             return View(model);
         }
 
-    
-
-
-
-
-
-
-
-
-
         // GET: PatientsBill/Details/5
         public ActionResult Details(int? id)
         {
@@ -292,6 +295,43 @@ namespace HMS.Controllers
                 return HttpNotFound();
             }
             return View(tblPatient);
+        }
+
+        public ActionResult PrintPartialViewToPdf(int id)
+        {
+            var result = (from p in db.tblPatientBills where p.ID == id
+                          join o in db.tblPatientAppointments on p.PatientAppointmentID equals o.ID
+                          join c in db.tblPatients on o.patient_id equals c.Patient_id
+                          select new Patient
+                          {
+                              Patient_Name = c.Patient_Name,
+                              Patient_address = c.Patient_address,
+                              Contact_no = c.Contact_no,
+                              Age = c.Age,
+                              Gender = c.Gender,
+                              Date_of_Birth = c.Date_of_Birth,
+                              AppointmentDate = o.AppointmentDate,
+
+                              TotalAmount = p.Amount,
+                              Discount = p.Discount
+                          }
+                          ).ToList();
+            var detail = (from p in db.tblPatientBills where p.ID == id
+                          join o in db.tblPatientBillDetails on p.ID equals o.PatientBillID
+                          select new PatientBillDetail
+                          {
+                              PatientBillID = o.PatientBillID,
+                              BillNo = p.BillNo,
+                              Amount = o.Amount,
+                              CreatedAt = o.CreatedAt,
+                              CreatedBy = o.CreatedBy,
+                              Description = o.Description
+                          }
+                          ).ToList();
+            ViewBag.BillDetails = detail;
+
+            var report = new PartialViewAsPdf("~/Views/Shared/PatientBillToPDF.cshtml", result);
+            return report;
         }
         protected override void Dispose(bool disposing)
         {

@@ -10,7 +10,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="block-header">
-            <h2>Patients Record</h2>
+            <h2>Patients Appointments Records</h2>
 
         </div>
         <div class="row clearfix">
@@ -21,12 +21,14 @@
 
                             <thead>
                                 <tr>
-                                    <th>Patient ID</th>
+                                    <th>#</th>
                                     <th>Patient Appointment ID</th>
                                     <th>Patient Name</th>
+                                    <th>Patient Address</th>
                                     <th>Contact No</th>
                                     <th>Age</th>
                                     <th>Gender</th>
+                                    <th>Appointment Date</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -34,31 +36,42 @@
                             <tbody>
 
                                @{ var list = ViewData["GetPatients"];
+                                   int i = 1;
+                                   string Date,Gender;
                                    List <HMS.Models.tblPatientAppointment> patientbillList = ViewBag.appointment;
 
                                    foreach (var item in list as IEnumerable<HMS.Models.tblPatient>)
                                    {
-                                       var appoint_id = patientbillList.Where(x => x.patient_id == item.Patient_id).FirstOrDefault();
-
-
+                                       var appoint_id = patientbillList.Where(x => x.patient_id == item.Patient_id && x.isActive == true).FirstOrDefault();
                                        int PatientAppointID = 0;
-                                     //  int Gender = 0;
 
                                        if (appoint_id != null)
                                        {
-                                           // var apointmnt = patientbillList.Where(x => x.ID == item.Patient_id).FirstOrDefault();
                                            PatientAppointID = appoint_id.ID;
 
                                        }
                                        if (PatientAppointID != 0)
                                        {
+                                           Date = appoint_id.AppointmentDate;
+                                           Gender = item.Gender;
+                                           if(Gender == "1")
+                                           {
+                                               Gender = "Male";
+                                           }
+                                           else
+                                           {
+                                               Gender = "Female";
+                                           }
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Patient_id)
+                                        @i
                                     </td>
                                     <td> @PatientAppointID </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Patient_Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Patient_address)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Contact_no)
@@ -67,27 +80,26 @@
                                         @Html.DisplayFor(modelItem => item.Age)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Gender)
+                                        @Gender
                                     </td>
                                     <td>
-                                        <a href='/patient-create-bill?Appointment_id=@PatientAppointID'>Generate Bill</a>|
-                                        @*<a href='#' onclick="Delete(@item.Patient_id);"> Edit </a> |
-                                        <a href="#">Detail</a> |
-                                        <a href="#">Delete</a>*@
+                                        @Date
                                     </td>
-                                </tr>}
-                            
-                                    }}
+                                    <td>
+                                        <a href='/patient-create-bill?Appointment_id=@PatientAppointID'>Generate Bill</a>
+                                        @*<a href='#' onclick="Delete(@item.Patient_id);"> Edit </a> |
+            <a href="#">Detail</a> |
+            <a href="#">Delete</a>*@
+                                    </td>
+                                </tr>
+                                           i++;
+                                       }
+                                   }}
                             </tbody>
-
                         </table>
                     </div>
-
-
-
                     </div>
                 </div>
-
                 </div>
             </div>
 </section>
