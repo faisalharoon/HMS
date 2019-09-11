@@ -28,7 +28,6 @@ namespace HMS.Controllers
             ViewData["GetPatients"] = model;
             return View();
         }
-
         public ActionResult BillListings()
         {
             var model = new PatientBillDAL().GetPatientBills().ToList();
@@ -46,11 +45,9 @@ namespace HMS.Controllers
             Session["QueryVal"] = Appointment_id;
             return View(model);
         }
-
         // POST: PatientsBill/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(string nameValueInsert, string nameValueSubmit, CreateBillViewModel model)
@@ -106,35 +103,52 @@ namespace HMS.Controllers
                     db.SaveChanges();
 
                     List<PatientViewModel> lst = (List<PatientViewModel>)Session["templist"];
-                    tblPatientBillDetail billdetail = new tblPatientBillDetail();
-                    int PatientBill_ID = Convert.ToInt32(patientbill.ID);
-                    foreach (var o in lst)
+                    if (lst != null)
                     {
-                        billdetail.PatientBillID = PatientBill_ID;
-                        billdetail.Amount = model.Amount;
-                        billdetail.CreatedAt = model.CreatedAt;
-                        billdetail.CreatedBy = username;
-                        billdetail.Description = model.Description;
-                        billdetail.is_active = true;
-
-                        db.tblPatientBillDetails.Add(billdetail);
-                        db.SaveChanges();
-                       Session.Clear();
+                        tblPatientBillDetail billdetail = new tblPatientBillDetail();
+                        foreach (var item in lst)
+                        {
+                            int PatientBill_ID = Convert.ToInt32(patientbill.ID);
+                            billdetail.PatientBillID = PatientBill_ID;
+                            billdetail.Amount = item.Amount;
+                            billdetail.CreatedAt = DateTime.UtcNow;
+                            billdetail.CreatedBy = username;
+                            billdetail.Description = item.Description;
+                            billdetail.is_active = true;
+                            db.tblPatientBillDetails.Add(billdetail);
+                            db.SaveChanges();
+                        }
+                        Session.Clear();
                     }
+                        
+
+                    //tblPatientBillDetail billdetail = new tblPatientBillDetail();
+                    //int PatientBill_ID = Convert.ToInt32(patientbill.ID);
+                    //foreach (var o in lst)
+                    //{
+                    //    billdetail.PatientBillID = PatientBill_ID;
+                    //    billdetail.Amount = model.Amount;
+                    //    billdetail.CreatedAt = model.CreatedAt;
+                    //    billdetail.CreatedBy = username;
+                    //    billdetail.Description = model.Description;
+                    //    billdetail.is_active = true;
+
+                    //    db.tblPatientBillDetails.Add(billdetail);
+                    //    db.SaveChanges();
+                    //   //Session.Clear();
+                    //}
 
                     return RedirectToAction("BillListings");
                 }
             }
             return View(model);
         }
-
         public ActionResult Delete(int? id, DeleteViewModel model)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
 
             DeleteViewModel deleteViewModel = new DeleteViewModel();
             deleteViewModel.billmodel = new PatientsBillViewModel();
@@ -184,10 +198,6 @@ namespace HMS.Controllers
                                   select p)
                                    .ToList();
 
-
-            //  var tblPatientBill2 = db.tblPatientBills.FirstOrDefault(x => x.ID == model.PatientBillID && x.is_active == true);
-            //  var tblPatientBill = db.tblPatientBills.Where(x => x.ID == model.PatientBillID && x.is_active == true).ToList();
-
             if (tblPatientBill.Count != 0)
             {
                 var lst = db.tblPatientBillDetails
@@ -202,7 +212,6 @@ namespace HMS.Controllers
                         patientBill.is_active = false;
                     }
                 }
-
                 db.SaveChanges();
             }
             return RedirectToAction("BillListings");
@@ -240,8 +249,6 @@ namespace HMS.Controllers
                     emp.CreatedBy = username;
                     emp.Description = model.Description;
                     db.SaveChanges();
-
-                   // List<tblPatientBill> tblPatientBill = new List<tblPatientBill>();
 
                     var tblPatientBill2 = db.tblPatientBills.FirstOrDefault(x => x.ID == emp.PatientBillID && x.is_active == true);
                    var  tblPatientBill = db.tblPatientBills.Where(x => x.ID == emp.PatientBillID && x.is_active == true).ToList();
