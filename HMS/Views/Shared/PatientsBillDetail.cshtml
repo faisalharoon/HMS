@@ -84,11 +84,12 @@
                                 {
                                     @Html.AntiForgeryToken()
 
-                                    <div class="form-actions no-color">
-                                        @Html.HiddenFor(model => model.billdetailmodel.ID)
-                                        <input type="submit" value="Delete" class="btn btn-default" /> |
-                                        @Html.ActionLink("Back to List", "BillListings")
-                                    </div>
+                                <div class="form-actions no-color">
+                                    @Html.HiddenFor(model => model.billdetailmodel.ID)
+                                    @Html.HiddenFor(model => model.billdetailmodel.PatientBillID)
+                                    <input type="submit" value="Delete" class="btn btn-default" /> |
+                                    @Html.ActionLink("Back to List1", "BillListings")
+                                </div>
                                 }
                             </div>
                         </div>

@@ -142,7 +142,7 @@ namespace HMS.ViewModels
     public class PatientBillViewModel
     {
         public int ID { get; set; }
-        public Nullable<int> PatientBillID { get; set; }
+        public int? PatientBillID { get; set; }
         public Nullable<double> Amount { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public string CreatedBy { get; set; }

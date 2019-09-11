@@ -173,11 +173,20 @@ namespace HMS.Controllers
         {
             db.Database.ExecuteSqlCommand("sp_DeletePatientBill @ID", new SqlParameter("@ID", model.ID)); //trigger it
 
-            //Update Table TblPatientBill
-            List<tblPatientBill> tblPatientBill = new List<tblPatientBill>();
+            var tblPatientBill2 = (from o in db.tblPatientBillDetails
+                          join p in db.tblPatientBills on o.PatientBillID equals p.ID 
+                          where o.ID == model.ID && p.is_active == true
+                          select p).FirstOrDefault();
 
-            var tblPatientBill2 = db.tblPatientBills.FirstOrDefault(x => x.ID == model.PatientBillID && x.is_active == true);
-            tblPatientBill = db.tblPatientBills.Where(x => x.ID == model.PatientBillID && x.is_active == true).ToList();
+            var tblPatientBill = (from o in db.tblPatientBillDetails
+                                   join p in db.tblPatientBills on o.PatientBillID equals p.ID
+                                   where o.ID == model.ID && p.is_active == true
+                                  select p)
+                                   .ToList();
+
+
+            //  var tblPatientBill2 = db.tblPatientBills.FirstOrDefault(x => x.ID == model.PatientBillID && x.is_active == true);
+            //  var tblPatientBill = db.tblPatientBills.Where(x => x.ID == model.PatientBillID && x.is_active == true).ToList();
 
             if (tblPatientBill.Count != 0)
             {
@@ -196,8 +205,6 @@ namespace HMS.Controllers
 
                 db.SaveChanges();
             }
-
-
             return RedirectToAction("BillListings");
         }
         public ActionResult Edit(int? id)
@@ -234,10 +241,10 @@ namespace HMS.Controllers
                     emp.Description = model.Description;
                     db.SaveChanges();
 
-                    List<tblPatientBill> tblPatientBill = new List<tblPatientBill>();
+                   // List<tblPatientBill> tblPatientBill = new List<tblPatientBill>();
 
                     var tblPatientBill2 = db.tblPatientBills.FirstOrDefault(x => x.ID == emp.PatientBillID && x.is_active == true);
-                    tblPatientBill = db.tblPatientBills.Where(x => x.ID == emp.PatientBillID && x.is_active == true).ToList();
+                   var  tblPatientBill = db.tblPatientBills.Where(x => x.ID == emp.PatientBillID && x.is_active == true).ToList();
 
                     if (tblPatientBill.Count != 0)
                     {
