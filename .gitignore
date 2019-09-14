@@ -260,3 +260,6 @@ paket-files/
 __pycache__/
 *.pyc
 *.csproj
+/HMS/assets/images/Doctor_Images
+HMS/DBPath
+HMS/HMS.csproj
