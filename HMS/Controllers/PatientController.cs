@@ -28,7 +28,7 @@ namespace HMS.Controllers
             var model = new tblPatient();
             if (patient_id != null)
             {
-                model = new PatientDAL().SingleRecord(Convert.ToInt32(patient_id));
+                model = new PatientDAL().SingleRecord(Convert.ToInt32(patient_id));                
             }
             return View(model);
         }

@@ -1,6 +1,10 @@
 ﻿@model HMS.Models.tblPatient
 @{
     ViewBag.Title = "AddPatient";
+    if (Model.Date_of_Birth != null)
+    {
+        string testval = Convert.ToDateTime(Model.Date_of_Birth).ToString("dd/MM/yyyy");
+    }
 }
 
 @using (Html.BeginForm("AddPatient", "Patient", new { patient_id = Request.QueryString["patient_id"] }))
@@ -51,7 +55,7 @@
                                 <div class="col-lg-3 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <div class="form-line">
-                                            @Html.TextBoxFor(x => x.Date_of_Birth, new { @type = "text", @class = "datepicker form-control", @id = "txtDOB", @placeholder = "Date of Birth", @required = "required" })
+                                            @Html.TextBoxFor(x => x.Date_of_Birth, "{0:dddd dd MMMM yyyy}", new {@type = "text", @class = "datepicker form-control", @id = "txtDOB", @placeholder = "Date of Birth", @required = "required" })
 
                                         </div>
                                     </div>

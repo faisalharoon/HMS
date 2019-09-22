@@ -259,3 +259,7 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+*.csproj
+/HMS/assets/images/Doctor_Images
+HMS/DBPath
+HMS/HMS.csproj
