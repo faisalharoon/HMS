@@ -20,12 +20,12 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Patient Appointment ID</th>
+                                    @*<th>Patient Appointment ID</th>*@
                                     <th>Patient Name</th>
                                     <th>Bill No</th>
                                     <th>Amount</th>
                                     <th>Discount</th>
-                                    <th>Created AT</th>
+                                    @*<th>Created AT</th>*@
                                     <th>Created By</th>
                                     <th>Description</th>
                                     <th>Action</th>
@@ -44,21 +44,21 @@
                                         var AppointmentData = patientbillList.Where(x => x.ID == item.PatientAppointmentID && x.isActive == true).FirstOrDefault();
                                         int? PatientID = AppointmentData.patient_id;
                                         var PatientData = PatientList.Where(x => x.Patient_id == @PatientID && x.is_active == true).FirstOrDefault();
-                                       
+                                        int ID = item.ID;
                                 <tr>
                                     <td>@i</td>
-                                    <td>@Html.DisplayFor(modelItem => item.PatientAppointmentID)</td>
+                                    @*<td>@Html.DisplayFor(modelItem => item.PatientAppointmentID)</td>*@
                                     <td>@PatientData.Patient_Name</td>
                                     <td>@Html.DisplayFor(modelItem => item.BillNo)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Amount)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Discount)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                                    @*<td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>*@
                                     <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Description)</td>
                                     <td>
                                         <a href='/DeleteBill?id=@item.ID'>Delete</a>|
                                         <a href='/EditBill?id=@item.ID'>Edit</a>|
-                                        <a href='/Patients Bill Details?id=@item.ID'>Print</a>|
+                                        <a href='/Print_Page?Billid=@ID'>Print</a>|
                                     </td>
                                 </tr>
                                         i++;

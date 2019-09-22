@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
+//using System.ComponentModel.DataAnnotations;
+//using System.ComponentModel.DataAnnotations.Schema;
+//using System.Linq;
+//using System.Web;
+//using System.Web.Mvc;
 
 namespace HMS.ViewModels
 {
@@ -13,6 +14,7 @@ namespace HMS.ViewModels
         {
             PatientsBill = new List<PatientViewModel>();
         }
+        public string ID { get; set; }
         public int? PatientAppointmentID { set; get; }
         public string BillNo { set; get; }
         public Nullable<double> Amount { get; set; }
@@ -24,8 +26,14 @@ namespace HMS.ViewModels
         public string CreatedBy { get;  set; }
         public Nullable<double> AmountTotal { get; set; }
         public string Note { set; get; }
-
         public List<PatientViewModel> PatientsBill { set; get; }
+
+        //[Required(ErrorMessage = "Please select a role")]
+        //public string Role { get; set; }
+        //public IEnumerable<SelectListItem> RoleList { get; set; }
+
+        //  public string AppointmentDate { get; set; }
+        // public List<Appointments> AppointmentsCollection { get; set; }
     }
 
     public class PatientViewModel
@@ -40,19 +48,6 @@ namespace HMS.ViewModels
         public Nullable<double> AmountTotal { get; set; }
         public string Note { set; get; }
     }
-
-    //public class Product
-    //{
-    //    public int? Patient_ID { set; get; }
-    //    public string Patient_Name { set; get; }
-    //    public string Patient_Address { set; get; }
-    //    public string Contact_Number { set; get; }
-    //    public int Age { set; get; }
-    //    public string Gender { set; get; }
-
-
-
-    //}
     public class ProductSearchModel
     {
         public int? Patient_ID { set; get; }
@@ -71,7 +66,6 @@ namespace HMS.ViewModels
         public List<StaffSpeciality> StaffsSpeciality { set; get; }
         public List<Navbar> Navbars { set; get; }
     }
-
     public class Navbar
     {
         public int AdmittedPatients { get; set; }
@@ -79,13 +73,11 @@ namespace HMS.ViewModels
         public int TotalAppointments { get; set; }
         public int Patients { get; set; }
     }
-
     public class StaffSpeciality
     {
         public string Speciality { get; set; }
         public int? TotalCount { get; set; }
     }
-
     public class RoomOccupied
     {
         public int? TotalRooms { get; set; }
@@ -103,7 +95,6 @@ namespace HMS.ViewModels
         public int? Nursery { get; set; }
         public string TestCategories { get; set; }
     }
-
     public class PatientCount
     {
         public int ID { get; set; }
@@ -111,13 +102,11 @@ namespace HMS.ViewModels
         public int? PatientsAdmittedCurrentMonth { get; set; }
         public int? PatientsAdmittedToday { get; set; }
     }
-
     public class AdmissionMonthly
     {
         public int Total_Patients { get; set; }
         public DateTime Admission_Date { get; set; }
     }
-
     public class ActivePatientList
     {
         public int Patient_id { get; set; }
@@ -128,7 +117,6 @@ namespace HMS.ViewModels
         public string Gender { get; set; }
         public string Note { get; set; }
     }
-
     public class DashboardModel
     {
         public Nullable<double> HospitalEarnings { set; get; }
@@ -138,7 +126,6 @@ namespace HMS.ViewModels
         public int TodaysOperations { set; get; }
         public int IsActive { set; get; }
     }
-
     public class PatientBillViewModel
     {
         public int ID { get; set; }
@@ -149,7 +136,6 @@ namespace HMS.ViewModels
         public string Description { get; set; }
         public Nullable<bool> is_active { get; set; }
     }
-
     public class DeleteViewModel
     {
         public PatientsBillViewModel billmodel { set; get; }
@@ -167,7 +153,6 @@ namespace HMS.ViewModels
         public string CreatedBy { get; set; }
         public string Description { get; set; }
     }
-
     public class PatientsBillDetailViewModel
     {
         public int ID { get; set; }
@@ -202,5 +187,9 @@ namespace HMS.ViewModels
         public string Description { get; set; }
         
     }
-   
+    //public class Appointments
+    //{
+    //    public int AppointmentID { get; set; }
+    //    public string AppointmentDate { get; set; }
+    //}
 }

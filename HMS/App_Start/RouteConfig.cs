@@ -293,10 +293,22 @@ url: "UserRoleDelete",
 defaults: new { controller = "UserRoles", action = "Delete", id = UrlParameter.Optional }
 );
 
+//            routes.MapRoute(
+//name: "PrintTo PDF",
+//url: "Patients Bill Details",
+//defaults: new { controller = "PatientsBill", action = "PrintPartialViewToPdf", id = UrlParameter.Optional }
+//);
+
+
             routes.MapRoute(
-name: "PrintTo PDF",
-url: "Patients Bill Details",
-defaults: new { controller = "PatientsBill", action = "PrintPartialViewToPdf", id = UrlParameter.Optional }
+name: "SessionDelete",
+url: "Session_Delete",
+defaults: new { controller = "PatientsBill", action = "DeleteBillSession", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
+name: "Print",
+url: "Print_Page",
+defaults: new { controller = "PatientsBill", action = "Print", id = UrlParameter.Optional }
 );
 
 

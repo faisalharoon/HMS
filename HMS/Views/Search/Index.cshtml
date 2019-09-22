@@ -82,10 +82,12 @@
                             <tbody>
                             @{ 
                                 var list = ViewData["GetSearchList"];
+                                string Gender;
                                 if (list != null)
                                 {
                                     foreach (var item in list as IEnumerable<HMS.Models.tblPatient>)
                                     {
+
                                         var appoint_id = item.tblPatientAppointments.Where(x => x.patient_id == item.Patient_id).FirstOrDefault();
                                         int PatientAppointID = 0;
                                         if (appoint_id != null)
@@ -93,21 +95,31 @@
                                             PatientAppointID = appoint_id.ID;
 
                                         }
+                                        Gender = item.Gender;
+                                        if (Gender == "1")
+                                        {
+                                            Gender = "Male";
+                                        }
+                                        else
+                                        {
+                                            Gender = "Female";
+                                        }
+
                                             <tr>
                                                 <td>@item.Patient_id</td>
                                                 <td>@item.Patient_Name</td>
                                                 <td>@item.Patient_address</td>
                                                 <td>@item.Contact_no</td>
                                                 <td>@item.Age</td>
-                                                <td>@item.Gender</td>
+                                                <td>@Gender</td>
                                                 <td>
-                                                    <a href='/tests?id='>Add Test</a> 
+                                                    <a href='/tests?id=@item.Patient_id'>Add Patient Test</a> 
                                                     <br />
-                                                    <a href='/add-patient?id='>Add Addmission</a> 
+                                                    <a href='/patient-admission?id=@item.Patient_id'>Add Addmission</a> 
                                                     <br />
-                                                    <a href='/patient-create-bill?id='>Make Appointment</a>
+                                                    <a href='/patient-appointments?id=@item.Patient_id'>Make Appointment</a>
                                                     <br />
-                                                    <a href='/patient-create-bill?Appointment_id=@PatientAppointID '>Generate Bill</a>
+                                                    <a href='/patient-create-bill?Patient_id=@item.Patient_id'>Generate Bill</a>
                                                 </td>
                                             </tr>
                                         }

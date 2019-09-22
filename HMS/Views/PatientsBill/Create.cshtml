@@ -21,22 +21,24 @@
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-sm-6 col-md-6 col-lg-6">
-                                    <div class="form-group">
-
-                                        @Html.TextBoxFor(m => m.PatientAppointmentID, new { @style = "display: none;", @type = "Text", @Value = Session["QueryVal"], @class = "form-control", @id = "PatientAptID", @required = "required" })
-
+                                    <div class="form-group form-line">
+                                        @*@Html.TextBoxFor(m => m.PatientAppointmentID, new { @style = "display: none;", @type = "Text", @Value = Session["QueryVal"], @class = "form-control", @id = "PatientAptID", @required = "required" })*@
+                                        @{
+                                            if (Session["QueryVal"] == null)
+                                            {
+                                                <div class="drop-custum">
+                                                    @Html.DropDownListFor(m => m.PatientAppointmentID, ViewData["Appointments"] as List<SelectListItem>, "Select Role", new { @class = "form-control show-tick" })
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @Html.TextBoxFor(m => m.PatientAppointmentID, new { @style = "display: none;", @type = "Text", @Value = Session["QueryVal"], @class = "form-control", @id = "PatientAptID", @required = "required" })
+                                            }
+                                        }
                                     </div>
                                 </div>
                             </div>
                             <div class="row clearfix">
-                                <div class="col-sm-6 col-md-6 col-lg-6">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            @Html.TextBoxFor(m => m.BillNo, new { @type = "Text", @class = "form-control", @id = "BillNo", @value = Model.BillNo, @placeholder = "Bill No", @required = "required" })
-                                            @Html.ValidationMessageFor(m => m.BillNo, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <div class="form-line">
@@ -46,7 +48,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row clearfix">
                                 <div class="col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group">
@@ -76,14 +77,15 @@
                         </div>
                         <div class="card">
                             <div class="body table-responsive">
-                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                <table id="tblBills" class="table table-bordered table-striped table-hover js-basic-example dataTable" id="testing">
 
                                     <thead>
                                         <tr>
                                             <th>Patient Appointmnet ID</th>
-                                            <th>Bill No</th>
+                                            @*<th>Bill No</th>*@
                                             <th>Amount</th>
                                             <th>Description</th>
+                                            @*<th></th>*@
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -98,14 +100,16 @@
                                                 foreach (var o in lst)
                                                 {
                                                     <tr>
-                                                        <td>@Session["QueryVal"]</td>
-                                                        <td>@o.BillNo</td>
-                                                        <td>@o.Amount</td>
-                                                        <td>@o.Description</td>
+                                                        <td><span>@o.PatientAppointmentID</span></td>
+                                                        @*<td>@o.BillNo</td>*@
+                                                        <td><span>@o.Amount</span></td>
+                                                        <td><span>@o.Description</span></td>
+                                                        @*<td>
+                                                                <a class="Delete" href="javascript:;">Delete</a>
+                                                            </td>*@
                                                     </tr>
                                                     AmountTotal += @o.Amount;
                                                 }
-
                                             }
                                             else
                                             {
@@ -154,25 +158,58 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
         </div>
-
-
     }
 </section>
 
+@*<script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>*@
+@*<script type="text/javascript">
+        //Delete event handler.
+        //$("body").on("click", "#tblBills .Delete", function () {
+        //    if (confirm("Do you want to delete this row?")) {
+        //        var row = $(this).closest("tr");
+        //        var AppointId = row.find("span").html();
+        //        $.ajax({
+        //            type: "POST",
+        //            url: "/Session_Delete",
+        //            data: '{AppointmentId: ' + AppointId + '}',
+        //            contentType: "application/json; charset=utf-8",
+        //            dataType: "json",
+        //            success: function (response) {
+        //                //  debugger;
+        //                if ($("#tblBills tr").length > 2) {
+        //                    row.remove();
+        //                } else {
+        //                    row.find(".Delete").hide();
+        //                    row.find("span").html('&nbsp;');
+        //                }
+        //            }
+        //        });
+        //    }
+        //});
 
-@*<script>
-        $("#btnInsert").on("click", function () {
-            $("#test-Div").css("display", "block")
-        });
+        //function SessionDelete(id) {
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "/Session_Delete",
+        //        data: '{AppointmenttId: ' + id + '}',
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (response) {
+        //            debugger;
+        //            if ($("#testing tr").length > 2) {
+        //                row.remove();
+        //            }
+        //        }
+        //    });
+        //}
+    </script>
+    @*<script>
+            $("#btnInsert").on("click", function () {
+                $("#test-Div").css("display", "block")
+            });
 
-    </script>*@
+        </script>*@
 
 
 

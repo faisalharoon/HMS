@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections;
+//using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
+//using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using HMS.Models;
 using HMS.ViewModels;
-using Rotativa;
+//using System.Web.SessionState;
 
 namespace HMS.Controllers
 {
@@ -18,13 +18,12 @@ namespace HMS.Controllers
     {
         private HMS_DBEntity db = new HMS_DBEntity();
 
-    // GET: PatientsBill
-    public ActionResult Index()
+        // GET: PatientsBill
+        public ActionResult Index()
         {
-            // return View(db.tblPatients.OrderBy(x => x.Patient_Name).ToList());
             var model = new PatientBillDAL().GetAllRecords().ToList();
-             var Appointments = new PatientBillDAL().ListOfRecords().ToList();
-             ViewBag.appointment = Appointments;
+            var Appointments = new PatientBillDAL().ListOfRecords().ToList();
+            ViewBag.appointment = Appointments;
             ViewData["GetPatients"] = model;
             return View();
         }
@@ -38,16 +37,25 @@ namespace HMS.Controllers
             return View(model);
         }
         // GET: PatientsBill/Create
-        public ActionResult Create(int? Appointment_id)
+        public ActionResult Create(int? Appointment_id, int? Patient_id)
         {
             CreateBillViewModel model = new CreateBillViewModel();
             //ViewBag.result = Appointment_id;
             Session["QueryVal"] = Appointment_id;
+            if (Patient_id != null)
+            {
+                List<SelectListItem> AppointmentDates = (from p in db.tblPatientAppointments
+                                                         where p.patient_id == Patient_id
+                                                         select new SelectListItem
+                                                         {
+                                                             Text = p.AppointmentDate,
+                                                             Value = p.ID.ToString()
+                                                         }).ToList();
+                ViewData["Appointments"] = AppointmentDates;
+            }
             return View(model);
         }
-        // POST: PatientsBill/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(string nameValueInsert, string nameValueSubmit, CreateBillViewModel model)
@@ -60,7 +68,8 @@ namespace HMS.Controllers
                     List<PatientViewModel> lst = new List<PatientViewModel>();
                     lst.Add(new PatientViewModel()
                     {
-                        BillNo = Request.Form["BillNo"],
+                        PatientAppointmentID = Int32.Parse(Request.Form["PatientAppointmentID"]),
+                        // BillNo = Request.Form["BillNo"],
                         Amount = double.Parse(Request.Form["Amount"]),
                         Description = Request.Form["Description"]
                     });
@@ -72,11 +81,11 @@ namespace HMS.Controllers
 
                     lst.Add(new PatientViewModel()
                     {
-                        BillNo = Request.Form["BillNo"],
+                        PatientAppointmentID = Int32.Parse(Request.Form["PatientAppointmentID"]),
+                        // BillNo = Request.Form["BillNo"],
                         Amount = double.Parse(Request.Form["Amount"]),
                         Description = Request.Form["Description"]
                     });
-
                     Session["templist"] = lst;
                 }
             }
@@ -92,7 +101,7 @@ namespace HMS.Controllers
                     }
                     tblPatientBill patientbill = new tblPatientBill();
                     patientbill.PatientAppointmentID = model.PatientAppointmentID;
-                    patientbill.BillNo = model.BillNo;
+                    //  patientbill.BillNo = model.ID;
                     patientbill.Amount = model.AmountTotal;
                     patientbill.Description = model.Note;
                     patientbill.Discount = model.Discount;
@@ -102,13 +111,13 @@ namespace HMS.Controllers
                     db.tblPatientBills.Add(patientbill);
                     db.SaveChanges();
 
+                    int PatientBill_ID = Convert.ToInt32(patientbill.ID);
                     List<PatientViewModel> lst = (List<PatientViewModel>)Session["templist"];
                     if (lst != null)
                     {
                         tblPatientBillDetail billdetail = new tblPatientBillDetail();
                         foreach (var item in lst)
                         {
-                            int PatientBill_ID = Convert.ToInt32(patientbill.ID);
                             billdetail.PatientBillID = PatientBill_ID;
                             billdetail.Amount = item.Amount;
                             billdetail.CreatedAt = DateTime.UtcNow;
@@ -120,28 +129,21 @@ namespace HMS.Controllers
                         }
                         Session.Clear();
                     }
-                        
-
-                    //tblPatientBillDetail billdetail = new tblPatientBillDetail();
-                    //int PatientBill_ID = Convert.ToInt32(patientbill.ID);
-                    //foreach (var o in lst)
-                    //{
-                    //    billdetail.PatientBillID = PatientBill_ID;
-                    //    billdetail.Amount = model.Amount;
-                    //    billdetail.CreatedAt = model.CreatedAt;
-                    //    billdetail.CreatedBy = username;
-                    //    billdetail.Description = model.Description;
-                    //    billdetail.is_active = true;
-
-                    //    db.tblPatientBillDetails.Add(billdetail);
-                    //    db.SaveChanges();
-                    //   //Session.Clear();
-                    //}
-
-                    return RedirectToAction("BillListings");
+                    return RedirectToAction("Print", new { Billid = @PatientBill_ID });
                 }
             }
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteBillSession(int AppointmenttId)
+        {
+
+            var list = (List<PatientViewModel>)Session["templist"];
+            list.Where(x => x.PatientAppointmentID == AppointmenttId).ToList();
+            Session.Remove("list");
+
+            return new EmptyResult();
         }
         public ActionResult Delete(int? id, DeleteViewModel model)
         {
@@ -188,13 +190,13 @@ namespace HMS.Controllers
             db.Database.ExecuteSqlCommand("sp_DeletePatientBill @ID", new SqlParameter("@ID", model.ID)); //trigger it
 
             var tblPatientBill2 = (from o in db.tblPatientBillDetails
-                          join p in db.tblPatientBills on o.PatientBillID equals p.ID 
-                          where o.ID == model.ID && p.is_active == true
-                          select p).FirstOrDefault();
-
-            var tblPatientBill = (from o in db.tblPatientBillDetails
                                    join p in db.tblPatientBills on o.PatientBillID equals p.ID
                                    where o.ID == model.ID && p.is_active == true
+                                   select p).FirstOrDefault();
+
+            var tblPatientBill = (from o in db.tblPatientBillDetails
+                                  join p in db.tblPatientBills on o.PatientBillID equals p.ID
+                                  where o.ID == model.ID && p.is_active == true
                                   select p)
                                    .ToList();
 
@@ -240,31 +242,32 @@ namespace HMS.Controllers
             {
                 username = Convert.ToString(cookie.Values["UserName"]);
             }
-                if (model.ID > 0) {
-                    //update
-                    tblPatientBillDetail emp = db.tblPatientBillDetails.SingleOrDefault(x => x.ID == model.ID && x.is_active == true);
-                    emp.PatientBillID = model.PatientBillID;
-                    emp.Amount = model.Amount;
-                    emp.CreatedAt = DateTime.UtcNow;
-                    emp.CreatedBy = username;
-                    emp.Description = model.Description;
-                    db.SaveChanges();
+            if (model.ID > 0)
+            {
+                //update
+                tblPatientBillDetail emp = db.tblPatientBillDetails.SingleOrDefault(x => x.ID == model.ID && x.is_active == true);
+                emp.PatientBillID = model.PatientBillID;
+                emp.Amount = model.Amount;
+                emp.CreatedAt = DateTime.UtcNow;
+                emp.CreatedBy = username;
+                emp.Description = model.Description;
+                db.SaveChanges();
 
-                    var tblPatientBill2 = db.tblPatientBills.FirstOrDefault(x => x.ID == emp.PatientBillID && x.is_active == true);
-                   var  tblPatientBill = db.tblPatientBills.Where(x => x.ID == emp.PatientBillID && x.is_active == true).ToList();
+                var tblPatientBill2 = db.tblPatientBills.FirstOrDefault(x => x.ID == emp.PatientBillID && x.is_active == true);
+                var tblPatientBill = db.tblPatientBills.Where(x => x.ID == emp.PatientBillID && x.is_active == true).ToList();
 
-                    if (tblPatientBill.Count != 0)
+                if (tblPatientBill.Count != 0)
+                {
+                    var lst = db.tblPatientBillDetails
+                           .Where(x => x.PatientBillID == tblPatientBill2.ID && x.is_active == true)
+                          .ToList();
+
+                    foreach (var patientBill in tblPatientBill)
                     {
-                        var lst = db.tblPatientBillDetails
-                               .Where(x => x.PatientBillID == tblPatientBill2.ID && x.is_active == true)
-                              .ToList();
-
-                        foreach (var patientBill in tblPatientBill)
-                        {
-                            patientBill.Amount = lst.Where(b => b.PatientBillID == tblPatientBill2.ID).Select(c => c.Amount).Sum();
-                        }
-                        db.SaveChanges();
+                        patientBill.Amount = lst.Where(b => b.PatientBillID == tblPatientBill2.ID).Select(c => c.Amount).Sum();
                     }
+                    db.SaveChanges();
+                }
                 return Redirect("/EditBill?id=" + emp.PatientBillID);
             }
             else
@@ -286,13 +289,6 @@ namespace HMS.Controllers
                 model.Amount = detail.Amount;
                 model.Description = detail.Description;
             }
-            //else
-            //{
-            //    tblPatientBillDetail billdetail = new tblPatientBillDetail();
-            //    billdetail.PatientBillID = model.PatientBillID;
-            //    billdetail.Amount = model.Amount;
-            //    billdetail.Description = model.Description;
-            //}
             return View(model);
         }
 
@@ -310,10 +306,10 @@ namespace HMS.Controllers
             }
             return View(tblPatient);
         }
-
-        public ActionResult PrintPartialViewToPdf(int id)
+        public ActionResult Print(int? Billid)
         {
-            var result = (from p in db.tblPatientBills where p.ID == id
+            var result = (from p in db.tblPatientBills
+                          where p.ID == Billid
                           join o in db.tblPatientAppointments on p.PatientAppointmentID equals o.ID
                           join c in db.tblPatients on o.patient_id equals c.Patient_id
                           select new Patient
@@ -330,7 +326,8 @@ namespace HMS.Controllers
                               Discount = p.Discount
                           }
                           ).ToList();
-            var detail = (from p in db.tblPatientBills where p.ID == id
+            var detail = (from p in db.tblPatientBills
+                          where p.ID == Billid
                           join o in db.tblPatientBillDetails on p.ID equals o.PatientBillID
                           select new PatientBillDetail
                           {
@@ -343,9 +340,7 @@ namespace HMS.Controllers
                           }
                           ).ToList();
             ViewBag.BillDetails = detail;
-
-            var report = new PartialViewAsPdf("~/Views/Shared/PatientBillToPDF.cshtml", result);
-            return report;
+            return View(result);
         }
         protected override void Dispose(bool disposing)
         {

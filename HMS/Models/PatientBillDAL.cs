@@ -27,7 +27,8 @@ namespace HMS.Models
 
         public List<tblPatientAppointment> ListOfRecords()
         {
-            return db.tblPatientAppointments.ToList();
+            return db.tblPatientAppointments.Where(x => x.isActive == true).ToList();
+            //return db.tblPatientAppointments.Where(x => x.isActive == true)ToList();
 
         }
 
