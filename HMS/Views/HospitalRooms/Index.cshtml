@@ -1,0 +1,85 @@
+﻿@model IEnumerable<HMS.Models.tblHospitalRoom>
+
+@{
+    ViewBag.Title = "Index";
+}
+<section class="content">
+    <div class="row clearfix">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h2>Hospital Rooms Details</h2>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row clearfix">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <a href='/Hospital_Rooms_Create' class="btn btn-raised g-bg-cyan waves-effect">Create</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="body table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable">
+                                <tr>
+                                    <th>
+                                       Sr.#
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.RoomName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CreatedAt)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CreatedBy)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Description)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.tblHospital.HospitalName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.tblRoomType.RoomTypeName)
+                                    </th>
+                                    <th>Actions</th>
+                                </tr>
+                                @{ int i = 1;}
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>
+                                       @i
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RoomName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedBy)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.tblHospital.HospitalName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.tblRoomType.RoomTypeName)
+                                    </td>
+                                    <td>
+                                        <a href='/Hospital_Rooms_Edit?id=@item.ID'>Edit</a> |
+                                        <a href='/Hospital_Rooms_Delete?id=@item.ID'>Delete</a> 
+                                    </td>
+                                </tr>
+                                    i++;
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

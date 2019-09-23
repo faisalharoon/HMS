@@ -310,11 +310,27 @@ name: "Print",
 url: "Print_Page",
 defaults: new { controller = "PatientsBill", action = "Print", id = UrlParameter.Optional }
 );
+            routes.MapRoute(
+name: "HospitalRooms",
+url: "Hospital_Rooms",
+defaults: new { controller = "HospitalRooms", action = "Index", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
+name: "HospitalRoomsCreate",
+url: "Hospital_Rooms_Create",
+defaults: new { controller = "HospitalRooms", action = "Create", id = UrlParameter.Optional }
+);
 
-
-
-
-
+            routes.MapRoute(
+name: "Hospital_RoomsEdit",
+url: "Hospital_Rooms_Edit",
+defaults: new { controller = "HospitalRooms", action = "Edit", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
+name: "Hospital_RoomsDelete",
+url: "Hospital_Rooms_Delete",
+defaults: new { controller = "HospitalRooms", action = "Delete", id = UrlParameter.Optional }
+);
         }
     }
 }
