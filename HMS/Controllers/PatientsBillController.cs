@@ -44,14 +44,7 @@ namespace HMS.Controllers
             Session["QueryVal"] = Appointment_id;
             if (Patient_id != null)
             {
-                List<SelectListItem> AppointmentDates = (from p in db.tblPatientAppointments
-                                                         where p.patient_id == Patient_id
-                                                         select new SelectListItem
-                                                         {
-                                                             Text = p.AppointmentDate,
-                                                             Value = p.ID.ToString()
-                                                         }).ToList();
-                ViewData["Appointments"] = AppointmentDates;
+                ViewBag.AppointmentDate = new SelectList(db.tblPatientAppointments.Where(o => o.patient_id == Patient_id && o.isActive == true), "ID", "AppointmentDate");
             }
             return View(model);
         }
@@ -65,7 +58,9 @@ namespace HMS.Controllers
             {
                 if (Session["templist"] == null)
                 {
+
                     List<PatientViewModel> lst = new List<PatientViewModel>();
+
                     lst.Add(new PatientViewModel()
                     {
                         PatientAppointmentID = Int32.Parse(Request.Form["PatientAppointmentID"]),

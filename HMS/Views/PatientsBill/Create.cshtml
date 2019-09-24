@@ -2,7 +2,9 @@
 @model HMS.ViewModels.CreateBillViewModel
 
 @{
-    ViewBag.Title = "Create Bill";
+                /**/
+
+                ViewBag.Title = "Create Bill";
 }
 
 <section class="content">
@@ -27,7 +29,9 @@
                                             if (Session["QueryVal"] == null)
                                             {
                                                 <div class="drop-custum">
-                                                    @Html.DropDownListFor(m => m.PatientAppointmentID, ViewData["Appointments"] as List<SelectListItem>, "Select Role", new { @class = "form-control show-tick" })
+                                                    @*@Html.DropDownListFor(m => m.PatientAppointmentID, ViewData["Appointments"] as List<SelectListItem>, "Select Role", new { @class = "form-control show-tick" })*@
+                                                    @Html.DropDownList("AppointmentDate", null, "- Select Appointment Date -", htmlAttributes: new { @class = "form-control" })
+                                                    @*@Html.DropDownListFor(m => m.PatientAppointmentID, ViewBag.AppointmentDate as List<SelectListItem>, " - Select Appointment Date -", new { @class = "form-control" })*@
                                                 </div>
                                             }
                                             else
