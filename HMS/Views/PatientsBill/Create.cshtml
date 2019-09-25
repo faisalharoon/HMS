@@ -2,14 +2,12 @@
 @model HMS.ViewModels.CreateBillViewModel
 
 @{
-                /**/
-
-                ViewBag.Title = "Create Bill";
+    ViewBag.Title = "Create Bill";
 }
 
 <section class="content">
 
-    @using (Html.BeginForm("Create", "PatientsBill", new { PatientAppointmentID = Request.QueryString["Appointment_id"] }))
+    @using (Html.BeginForm("Create", "PatientsBill", new { Patient_id = Request.QueryString["Patient_id"], Appointment_id = Request.QueryString["Appointment_id"] }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -24,14 +22,11 @@
                             <div class="row clearfix">
                                 <div class="col-sm-6 col-md-6 col-lg-6">
                                     <div class="form-group form-line">
-                                        @*@Html.TextBoxFor(m => m.PatientAppointmentID, new { @style = "display: none;", @type = "Text", @Value = Session["QueryVal"], @class = "form-control", @id = "PatientAptID", @required = "required" })*@
                                         @{
                                             if (Session["QueryVal"] == null)
                                             {
                                                 <div class="drop-custum">
-                                                    @*@Html.DropDownListFor(m => m.PatientAppointmentID, ViewData["Appointments"] as List<SelectListItem>, "Select Role", new { @class = "form-control show-tick" })*@
-                                                    @Html.DropDownList("AppointmentDate", null, "- Select Appointment Date -", htmlAttributes: new { @class = "form-control" })
-                                                    @*@Html.DropDownListFor(m => m.PatientAppointmentID, ViewBag.AppointmentDate as List<SelectListItem>, " - Select Appointment Date -", new { @class = "form-control" })*@
+                                                    @Html.DropDownListFor(m => m.PatientAppointmentID, Model.PatientAppointmentDate ?? new List<SelectListItem>(), "- Select Appointment Date - ", new { @class = "form-control" })
                                                 </div>
                                             }
                                             else
@@ -118,7 +113,7 @@
                                             else
                                             {
                                                 <tr>
-                                                    <td colspan="4">No Data Found</td>
+                                                    <td colspan="4"> No Data Found</td>
                                                 </tr>
                                             }
                                         }
@@ -129,7 +124,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="container-fluid">
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -165,7 +159,6 @@
         </div>
     }
 </section>
-
 @*<script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>*@
 @*<script type="text/javascript">
         //Delete event handler.

@@ -40,18 +40,23 @@ namespace HMS.Controllers
         public ActionResult Create(int? Appointment_id, int? Patient_id)
         {
             CreateBillViewModel model = new CreateBillViewModel();
-            //ViewBag.result = Appointment_id;
             Session["QueryVal"] = Appointment_id;
             if (Patient_id != null)
             {
-                ViewBag.AppointmentDate = new SelectList(db.tblPatientAppointments.Where(o => o.patient_id == Patient_id && o.isActive == true), "ID", "AppointmentDate");
+              model.PatientAppointmentDate = (from p in db.tblPatientAppointments
+                                              where p.patient_id == Patient_id
+                                              select new SelectListItem
+                                              {
+                                                  Text = p.AppointmentDate,
+                                                  Value = p.ID.ToString()
+                                              }).ToList();
             }
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(string nameValueInsert, string nameValueSubmit, CreateBillViewModel model)
+        public ActionResult Create(string nameValueInsert, string nameValueSubmit, CreateBillViewModel model, int? Patient_id)
         {
             var button = nameValueInsert ?? nameValueSubmit;
             if (button == "Insert")
@@ -127,6 +132,13 @@ namespace HMS.Controllers
                     return RedirectToAction("Print", new { Billid = @PatientBill_ID });
                 }
             }
+            model.PatientAppointmentDate = (from p in db.tblPatientAppointments
+                                            where p.patient_id == Patient_id
+                                            select new SelectListItem
+                                            {
+                                                Text = p.AppointmentDate,
+                                                Value = p.ID.ToString()
+                                            }).ToList();
             return View(model);
         }
 

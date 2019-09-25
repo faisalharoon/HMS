@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-//using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 //using System.ComponentModel.DataAnnotations.Schema;
 //using System.Linq;
 //using System.Web;
-//using System.Web.Mvc;
+using System.Web.Mvc;
 
 namespace HMS.ViewModels
 {
@@ -15,7 +15,6 @@ namespace HMS.ViewModels
             PatientsBill = new List<PatientViewModel>();
         }
         public string ID { get; set; }
-        public int? PatientAppointmentID { set; get; }
         public string BillNo { set; get; }
         public Nullable<double> Amount { get; set; }
         public string Description { get; set; }
@@ -28,12 +27,12 @@ namespace HMS.ViewModels
         public string Note { set; get; }
         public List<PatientViewModel> PatientsBill { set; get; }
 
-        //[Required(ErrorMessage = "Please select a role")]
-        //public string Role { get; set; }
-        //public IEnumerable<SelectListItem> RoleList { get; set; }
+        //[Display(Name = "Patient Appointmnet Date")]
+        //[Required(ErrorMessage = "Please Select Date")]
+        //public int? PatientAppointmentID { get; set; }
 
-        //  public string AppointmentDate { get; set; }
-        // public List<Appointments> AppointmentsCollection { get; set; }
+        public IEnumerable<SelectListItem> PatientAppointmentDate { get; set; }
+        public int PatientAppointmentID { get; set; }
     }
 
     public class PatientViewModel
