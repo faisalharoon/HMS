@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using HMS.Models;
 using HMS.ViewModels;
 //using System.Web.SessionState;
@@ -58,6 +59,7 @@ namespace HMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(string nameValueInsert, string nameValueSubmit, CreateBillViewModel model, int? Patient_id)
         {
+            int count = 0;
             var button = nameValueInsert ?? nameValueSubmit;
             if (button == "Insert")
             {
@@ -67,7 +69,7 @@ namespace HMS.Controllers
                     List<PatientViewModel> lst = new List<PatientViewModel>();
 
                     lst.Add(new PatientViewModel()
-                    {
+                    {   Count = count,
                         PatientAppointmentID = Int32.Parse(Request.Form["PatientAppointmentID"]),
                         // BillNo = Request.Form["BillNo"],
                         Amount = double.Parse(Request.Form["Amount"]),
@@ -81,6 +83,7 @@ namespace HMS.Controllers
 
                     lst.Add(new PatientViewModel()
                     {
+                        Count = lst.Count,
                         PatientAppointmentID = Int32.Parse(Request.Form["PatientAppointmentID"]),
                         // BillNo = Request.Form["BillNo"],
                         Amount = double.Parse(Request.Form["Amount"]),
@@ -140,17 +143,6 @@ namespace HMS.Controllers
                                                 Value = p.ID.ToString()
                                             }).ToList();
             return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult DeleteBillSession(int AppointmenttId)
-        {
-
-            var list = (List<PatientViewModel>)Session["templist"];
-            list.Where(x => x.PatientAppointmentID == AppointmenttId).ToList();
-            Session.Remove("list");
-
-            return new EmptyResult();
         }
         public ActionResult Delete(int? id, DeleteViewModel model)
         {
@@ -349,6 +341,27 @@ namespace HMS.Controllers
             ViewBag.BillDetails = detail;
             return View(result);
         }
+
+        [HttpPost]
+        public ActionResult DeleteBillSession(int customerId)
+        {
+            List<PatientViewModel> lst = (List<PatientViewModel>)Session["templist"];
+            //foreach(var o in lst)
+            //{
+            //    Console.WriteLine(o + "");
+            //}
+            lst.RemoveAt(customerId);
+
+            // lst.Remove(lst.FirstOrDefault(lst.Count == customerId));
+
+            Session["templist"] = lst;
+
+
+            // lst.RemoveAt(customerId);
+            return Json(new { success = "Valid" }, JsonRequestBehavior.AllowGet);
+            //return new EmptyResult();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
