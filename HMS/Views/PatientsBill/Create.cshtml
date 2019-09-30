@@ -78,32 +78,32 @@
                             <div class="body table-responsive">
                                 <table id="tblBills" class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                     <tr>
-                                        <th style="width:100px">Sr.#</th>
                                         <th style="width:100px">Patient Appointmnet ID</th>
                                         <th style="width:100px">Amount</th>
                                         <th style="width:150px">Description</th>
-                                        <th style="width:40px"></th>
+                                        <th style="width:40px">Action</th>
                                     </tr>
                                     @{
-                                        double? AmountTotal = 0;
+                                         double? AmountTotal = 0;
                                         if (Session["templist"] != null)
                                         {
                                             List<PatientViewModel> lst = (List<PatientViewModel>)Session["templist"];
                                             int count = 0;
 
+
                                             foreach (var o in lst)
                                             {
-                                                <tr id="test">
-                                                    <td class="Count">
+                                                <tr>
+                                                    <td class="Count" style="display:none">
                                                         <span>@count</span>
                                                     </td>
-                                                    <td class="">
+                                                    <td class="AppointmentID">
                                                         <span>@o.PatientAppointmentID</span>
                                                     </td>
-                                                    <td class="">
+                                                    <td class="Amount">
                                                         <span>@o.Amount</span>
                                                     </td>
-                                                    <td class="">
+                                                    <td class="Description">
                                                         <span>@o.Description</span>
                                                     </td>
                                                     <td>
@@ -167,97 +167,20 @@
     $("body").on("click", "#tblBills .Delete", function () {
         if (confirm("Do you want to delete this row?")) {
             var row = $(this).closest("tr");
-            var customerId = row.find("span").html();
-            console.log("customerId");
-            debugger;
+            var id = row.find("span").html();
             $.ajax({
                 type: "POST",
                 url: "/Session_Delete",
-                data: '{customerId: ' + customerId + '}',
+                data: '{ID: ' + id + '}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    alert("hello");
-                    $("#test").remove();
-                    //row.find("span").remove();
-                        //row.find(".Delete").hide();
-                        //row.find("span").html('&nbsp;');
+                    $("#tblBills").load(window.location + " #tblBills");
                 }
             });
         }
     });
-
-
-
-
-
-
-    //Delete event handler.
-    //$("body").on("click", "#tblBills .Delete", function () {
-    //    if (confirm("Do you want to delete this row?")) {
-
-    //      //  var row = $(this).closest("tr");
-    //      //var customerId = row.find(".appt").data("id").html();
-
-    //        var row = $(this).closest("tr");
-    //        var customerId = row.find("span").html();
-    //      //  $(customerId).append(" Clicked");
-    //        debugger;
-    //        $.ajax({
-    //            type: "POST",
-    //            url: "/Session_Delete",
-    //            data: '{AppointmenttId: ' + customerId + '}',
-    //            contentType: "application/json; charset=utf-8",
-    //            dataType: "json",
-    //            success: function (response) {
-    //                alert("hello");
-    //              //  if ($("#tblBills tr").length > 2) {
-    //                //    row.remove();
-    //                //} else {
-    //                {
-    //                    row.find(".Delete").hide();
-    //                    row.find("span").html('&nbsp;');
-    //                }
-    //            }
-    //        });
-    //    }
-    //});
-
-    ////   Delete event handler.
-    //$("body").on("click", "#tblBills .Delete", function (e) {
-    //    if (confirm("Do you want to delete this row?")) {
-    //        var row = $(this).closest("tr");
-    //        //var AppointId = ;
-    //        var row = $(this).closest("tr");
-    //        var customerId = row.find(".appt").data("id").html();
-    //        //spanObj = row.find(".appt");
-    //        // ID = $(spanObj).data("id").html();
-    //        debugger;
-    //        $.ajax({
-    //            type: "POST",
-    //            url: "/Session_Delete",
-    //            data: '{AppointmentId: ' + customerId + '}',
-    //            contentType: "application/json; charset=utf-8",
-    //            dataType: "json",
-    //            success: function (response) {
-    //                debugger;
-    //                if ($("#tblBills tr").length > 2) {
-    //                    row.remove();
-    //                } else {
-    //                    row.find(".Delete").hide();
-    //                    row.find("span").html('&nbsp;');
-    //                }
-    //            }
-    //        });
-    //    }
-    //});
 </script>
-@*<script>
-        $("#btnInsert").on("click", function () {
-            $("#test-Div").css("display", "block")
-        });
-
-    </script>*@
 
 
 

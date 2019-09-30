@@ -59,7 +59,6 @@ namespace HMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(string nameValueInsert, string nameValueSubmit, CreateBillViewModel model, int? Patient_id)
         {
-            int count = 0;
             var button = nameValueInsert ?? nameValueSubmit;
             if (button == "Insert")
             {
@@ -69,7 +68,7 @@ namespace HMS.Controllers
                     List<PatientViewModel> lst = new List<PatientViewModel>();
 
                     lst.Add(new PatientViewModel()
-                    {   Count = count,
+                    {
                         PatientAppointmentID = Int32.Parse(Request.Form["PatientAppointmentID"]),
                         // BillNo = Request.Form["BillNo"],
                         Amount = double.Parse(Request.Form["Amount"]),
@@ -83,7 +82,6 @@ namespace HMS.Controllers
 
                     lst.Add(new PatientViewModel()
                     {
-                        Count = lst.Count,
                         PatientAppointmentID = Int32.Parse(Request.Form["PatientAppointmentID"]),
                         // BillNo = Request.Form["BillNo"],
                         Amount = double.Parse(Request.Form["Amount"]),
@@ -343,25 +341,14 @@ namespace HMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteBillSession(int customerId)
+        public ActionResult DeleteBillSession(int ID)
         {
             List<PatientViewModel> lst = (List<PatientViewModel>)Session["templist"];
-            //foreach(var o in lst)
-            //{
-            //    Console.WriteLine(o + "");
-            //}
-            lst.RemoveAt(customerId);
-
-            // lst.Remove(lst.FirstOrDefault(lst.Count == customerId));
-
+            lst.RemoveAt(ID);
             Session["templist"] = lst;
-
-
-            // lst.RemoveAt(customerId);
-            return Json(new { success = "Valid" }, JsonRequestBehavior.AllowGet);
-            //return new EmptyResult();
+           // return new EmptyResult();
+             return Json(new { success = "Valid" }, JsonRequestBehavior.AllowGet);
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
