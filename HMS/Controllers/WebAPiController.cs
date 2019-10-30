@@ -47,9 +47,6 @@ namespace HMS.Controllers
             acb = db.Database.SqlQuery<StaffSpeciality>("[Sp_StaffSpeciality]").ToList();
             return acb;
         }
-
-
-
         // GET api/<controller>
         public IEnumerable<string> Get()
         {

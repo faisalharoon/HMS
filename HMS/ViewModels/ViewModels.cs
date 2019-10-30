@@ -37,6 +37,7 @@ namespace HMS.ViewModels
 
     public class PatientViewModel
     {
+        public int? Count { set; get; }
         public int? PatientAppointmentID { set; get; }
         public string BillNo { set; get; }
         public Nullable<double> Amount { get; set; }

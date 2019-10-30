@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using HMS.Models;
 using HMS.ViewModels;
 //using System.Web.SessionState;
@@ -140,17 +141,6 @@ namespace HMS.Controllers
                                                 Value = p.ID.ToString()
                                             }).ToList();
             return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult DeleteBillSession(int AppointmenttId)
-        {
-
-            var list = (List<PatientViewModel>)Session["templist"];
-            list.Where(x => x.PatientAppointmentID == AppointmenttId).ToList();
-            Session.Remove("list");
-
-            return new EmptyResult();
         }
         public ActionResult Delete(int? id, DeleteViewModel model)
         {
@@ -348,6 +338,16 @@ namespace HMS.Controllers
                           ).ToList();
             ViewBag.BillDetails = detail;
             return View(result);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteBillSession(int ID)
+        {
+            List<PatientViewModel> lst = (List<PatientViewModel>)Session["templist"];
+            lst.RemoveAt(ID);
+            Session["templist"] = lst;
+           // return new EmptyResult();
+             return Json(new { success = "Valid" }, JsonRequestBehavior.AllowGet);
         }
         protected override void Dispose(bool disposing)
         {
