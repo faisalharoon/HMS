@@ -25,6 +25,7 @@ namespace HMS.Controllers
             if (user != null)
             {
                 new GernalFunction().SetCookie(user);
+                new GernalFunction().setSession(user);
                 TempData["Msg"] = "Login Successfully.";
                 redirect = "/";
                 UserLoginHistory loginHistory = new UserLoginHistory();
@@ -83,6 +84,7 @@ string browserName = req.Browser.Browser;
                 var c = new HttpCookie("AdminCookies");
                 c.Expires = DateTime.Now.AddDays(-1);
                 Response.Cookies.Add(c);
+                new GernalFunction().deleteSession();
             }
             return RedirectToAction("Login");
         }

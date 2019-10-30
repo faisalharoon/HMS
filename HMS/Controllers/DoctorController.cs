@@ -39,7 +39,7 @@ namespace HMS.Controllers
             if (Doctor_id != null)
             {
                 model = new DoctorsDAL().SingleRecord(Convert.ToInt32(Doctor_id));
-                designation = designation.Where(x => x.Qualification_id == model.Qualification_id).ToList();
+               // designation = designation.Where(x => x.Qualification_id == model.Qualification_id).ToList();
                 ViewBag.gender = model.Gender;
                 if(model.Image!=null && model.Image!="")
                 {

@@ -211,6 +211,7 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserRolesController.cs" />
     <Compile Include="Controllers\WebAPiController.cs" />
     <Compile Include="Global.asax.cs">
@@ -359,6 +360,9 @@
       <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblUserPage.cs">
+      <DependentUpon>HMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblUserRolePage.cs">
       <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestDAL.cs" />
@@ -700,6 +704,9 @@
     <Content Include="Views\HospitalRooms\Details.cshtml" />
     <Content Include="Views\HospitalRooms\Edit.cshtml" />
     <Content Include="Views\HospitalRooms\Index.cshtml" />
+    <Content Include="Views\User\AddUser.cshtml" />
+    <Content Include="Views\User\UserList.cshtml" />
+    <Content Include="Views\UserRoles\UserPages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

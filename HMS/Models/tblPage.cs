@@ -14,11 +14,20 @@ namespace HMS.Models
     
     public partial class tblPage
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblPage()
+        {
+            this.tblUserRolePages = new HashSet<tblUserRolePage>();
+        }
+    
         public int page_id { get; set; }
         public string page_name { get; set; }
         public string page_url { get; set; }
         public Nullable<bool> is_active { get; set; }
         public Nullable<bool> is_parent { get; set; }
         public Nullable<int> parent_id { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblUserRolePage> tblUserRolePages { get; set; }
     }
 }

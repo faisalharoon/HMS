@@ -178,44 +178,44 @@
     }
     <script>
         $(document).ready(function () {
-            $('#ddlQualifications').change(function () {
-                debugger;
-                var id = $('#ddlQualifications').find(":selected").val();
-                if (id != 0 && id != "") {
-                    debugger;
-                    $.ajax({
-                        url: "/getDesignationByQulif_id",
-                        type: 'post',
-                        contentType: 'application/json',
-                        dataType: 'json',
-                        data: '{"qualification_id":"' + id + '"}',
+        //    $('#ddlQualifications').change(function () {
+        //        debugger;
+        //        var id = $('#ddlQualifications').find(":selected").val();
+        //        if (id != 0 && id != "") {
+        //            debugger;
+        //            $.ajax({
+        //                url: "/getDesignationByQulif_id",
+        //                type: 'post',
+        //                contentType: 'application/json',
+        //                dataType: 'json',
+        //                data: '{"qualification_id":"' + id + '"}',
 
-                        beforeSend: function () {
-                            $('#ddlDesignation').html("");
-                            $('#ddlDesignation').append('<option value="0" selected>---Select Designation---</optoin>');
-                            //  showLoader();
-                        },
-                        success: function (data) {
-                            debugger;
-                            if (data.Success === "true") {
-                                var lstDesignation = data.Data.lstDesignation;
-                                if (lstDesignation.length > 0) {
-                                    for (var i = 0; i < lstDesignation.length; i++) {
-                                        var des = '<option value=' + lstDesignation[i].Designation_id + '>' + lstDesignation[i].Designation + '</option>'
-                                        $('#ddlDesignation').append(des);
-                                    }
-                                }
+        //                beforeSend: function () {
+        //                    $('#ddlDesignation').html("");
+        //                    $('#ddlDesignation').append('<option value="0" selected>---Select Designation---</optoin>');
+        //                    //  showLoader();
+        //                },
+        //                success: function (data) {
+        //                    debugger;
+        //                    if (data.Success === "true") {
+        //                        var lstDesignation = data.Data.lstDesignation;
+        //                        if (lstDesignation.length > 0) {
+        //                            for (var i = 0; i < lstDesignation.length; i++) {
+        //                                var des = '<option value=' + lstDesignation[i].Designation_id + '>' + lstDesignation[i].Designation + '</option>'
+        //                                $('#ddlDesignation').append(des);
+        //                            }
+        //                        }
 
-                            }
-                        },
-                        error: function () {
-                        },
-                        complete: function () {
-                            // hideLoader();
-                        }
-                    });
-                }
-            });
+        //                    }
+        //                },
+        //                error: function () {
+        //                },
+        //                complete: function () {
+        //                    // hideLoader();
+        //                }
+        //            });
+        //        }
+        //    });
         });
         function showLoader() {
             $(".overlay").show();

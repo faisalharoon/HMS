@@ -123,5 +123,51 @@ namespace HMS.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult UserPages(int? ID)
+        {
+            var pages = db.tblPages.ToList();
+            ViewBag.pages = pages;
+            string role_name = "";
+            if(ID!=null && ID!=0)
+            {
+                var role = db.UserRoles.Where(x => x.ID == ID).FirstOrDefault();
+                role_name = role.RoleName;
+            }
+            ViewBag.role_name = role_name;
+            return View();
+        }
+       [HttpPost]
+        public ActionResult UserPages(int? ID, tblUserRolePage userpage)
+        {
+            try
+            {
+                string count = Request.Form["hdncount"];
+                List<string> lstpage = new List<string>();
+                string[] stringSeparators = new string[] { "," };
+                lstpage = count.Split(stringSeparators, StringSplitOptions.None).ToList();
+                for(int i=0; i<lstpage.Count;i++)
+                {
+                    string pageid = Request.Form["txtid_" + i];
+                    userpage.PageId = Convert.ToInt32(pageid);
+                    userpage.RoleId = Convert.ToInt32(ID);
+                    List<tblUserRolePage> lst = db.tblUserRolePages.Where(x => x.RoleId == ID).ToList();
+                    if(lst!=null && lst.Count>0)
+                    {
+                        foreach(var item in lst)
+                        {
+                            new UserDAL().deletepages(item.RoleId);
+                        }
+                    }
+                    new UserDAL().insertRolePages(userpage);
+                }
+
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return Redirect("/UserRolesPage");
+        }
     }
 }

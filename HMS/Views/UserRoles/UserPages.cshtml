@@ -1,0 +1,76 @@
+﻿@model HMS.Models.tblUserRolePage
+@{
+    ViewBag.Title = "UserPages";
+}  @using (Html.BeginForm("UserPages", "UserRoles", new { ID = Request.QueryString["ID"] }))
+{
+    string role_name = ViewBag.role_name;
+    var pageslist = ViewBag.pages;
+    int count = 0;
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h2>User Pages</h2>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row clearfix">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+
+                            <label>Pages For @role_name </label>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="body table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable">
+                                <thead>
+                                    <tr>
+
+                                        <th>Page Name</th>
+                                        <th>Page URL</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in pageslist)
+                                    {
+                                        string id = "txtid_" + count;
+                                        string page = "txtpage_" + count;
+                                        string url = "txturl_" + count;
+                                        string chk = "chkpage_" + count;
+
+                                        <tr>
+                                            <td style="display:none;">
+                                                <input id="@id" style="display:none;" name='@id' type="text" readonly value="@item.page_id" />
+
+                                            </td>
+                                            <td>
+                                                @item.page_name
+                                            </td>
+                                            <td>@item.page_url</td>
+                                            <td><input type="checkbox" name='@chk' id='@chk' onclick="getpage(@count);" class="filled-in chk-col-blue" /></td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                            <input type="hidden" id="hdncount" name="hdncount" />
+
+                        </div>
+                        <button type="submit"  class="btn btn-raised g-bg-cyan">ADD</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        function getpage(cnt) {
+            debugger;
+            var v = $("#hdncount").val();
+            v += cnt + ",";
+            $("#hdncount").val(v);
+
+        }
+    </script>
+}

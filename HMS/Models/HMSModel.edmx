@@ -30,7 +30,7 @@
           <Property Name="Phone_no" Type="varchar" MaxLength="50" />
           <Property Name="Mobile_no" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" />
-          <Property Name="Image" Type="varchar" MaxLength="100" />
+          <Property Name="Image" Type="varchar" MaxLength="500" />
           <Property Name="Gender" Type="varchar" MaxLength="50" />
           <Property Name="Is_active" Type="bit" Nullable="false" />
           <Property Name="EmployeeTypeID" Type="int" />
@@ -345,13 +345,6 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="Hospital_ID" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="PatientAdmissions">
-          <Property Name="ID" Type="int" />
-          <Property Name="AdmissionDate" Type="datetime" />
-          <Property Name="DischargeDate" Type="datetime" />
-        </EntityType>-->
         <EntityType Name="tblPages">
           <Key>
             <PropertyRef Name="page_id" />
@@ -372,6 +365,14 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <Property Name="user_id" Type="int" />
           <Property Name="Role_id" Type="int" />
           <Property Name="show_in_menu" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblUserRolePages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="PageId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_tblEmployee_tblEmpDesignation">
           <End Role="tblEmpDesignation" Type="Self.tblEmpDesignation" Multiplicity="0..1" />
@@ -625,6 +626,30 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblUserRolePages_tblPages">
+          <End Role="tblPages" Type="Self.tblPages" Multiplicity="1" />
+          <End Role="tblUserRolePages" Type="Self.tblUserRolePages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPages">
+              <PropertyRef Name="page_id" />
+            </Principal>
+            <Dependent Role="tblUserRolePages">
+              <PropertyRef Name="PageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUserRolePages_UserRole">
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
+          <End Role="tblUserRolePages" Type="Self.tblUserRolePages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblUserRolePages">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserInRole_RoleID">
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
           <End Role="UserInRole" Type="Self.UserInRole" Multiplicity="*" />
@@ -727,6 +752,7 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPages" EntityType="Self.tblPages" Schema="saa" store:Type="Tables" />
           <EntitySet Name="tblUserPages" EntityType="Self.tblUserPages" Schema="saa" store:Type="Tables" />
+          <EntitySet Name="tblUserRolePages" EntityType="Self.tblUserRolePages" Schema="saa" store:Type="Tables" />
           <AssociationSet Name="FK_tblEmployee_tblEmpDesignation" Association="Self.FK_tblEmployee_tblEmpDesignation">
             <End Role="tblEmpDesignation" EntitySet="tblEmpDesignation" />
             <End Role="tblEmployee" EntitySet="tblEmployee" />
@@ -811,6 +837,14 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
             <End Role="tblTest" EntitySet="tblTest" />
             <End Role="tblTestAttributes" EntitySet="tblTestAttributes" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblUserRolePages_tblPages" Association="Self.FK_tblUserRolePages_tblPages">
+            <End Role="tblPages" EntitySet="tblPages" />
+            <End Role="tblUserRolePages" EntitySet="tblUserRolePages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUserRolePages_UserRole" Association="Self.FK_tblUserRolePages_UserRole">
+            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="tblUserRolePages" EntitySet="tblUserRolePages" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserInRole_RoleID" Association="Self.FK_UserInRole_RoleID">
             <End Role="UserRole" EntitySet="UserRole" />
             <End Role="UserInRole" EntitySet="UserInRole" />
@@ -858,7 +892,7 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <Property Name="Phone_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Mobile_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Is_active" Type="Boolean" Nullable="false" />
           <Property Name="EmployeeTypeID" Type="Int32" />
@@ -1191,6 +1225,7 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="UserInRoles" Relationship="Self.FK_UserInRole_RoleID" FromRole="UserRole" ToRole="UserInRole" />
+          <NavigationProperty Name="tblUserRolePages" Relationship="teamfotech_hmsModel.FK_tblUserRolePages_UserRole" FromRole="UserRole" ToRole="tblUserRolePage" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1232,6 +1267,7 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
           <Property Name="is_active" Type="Boolean" />
           <Property Name="is_parent" Type="Boolean" />
           <Property Name="parent_id" Type="Int32" />
+          <NavigationProperty Name="tblUserRolePages" Relationship="teamfotech_hmsModel.FK_tblUserRolePages_tblPages" FromRole="tblPage" ToRole="tblUserRolePage" />
         </EntityType>
         <EntityType Name="tblUserPage">
           <Key>
@@ -1649,7 +1685,16 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
             <End Role="tblHospital" EntitySet="tblHospitals" />
             <End Role="tblEmployee" EntitySet="tblEmployees" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="tblUserRolePages" EntityType="teamfotech_hmsModel.tblUserRolePage" />
+          <AssociationSet Name="FK_tblUserRolePages_UserRole" Association="teamfotech_hmsModel.FK_tblUserRolePages_UserRole">
+            <End Role="UserRole" EntitySet="UserRoles" />
+            <End Role="tblUserRolePage" EntitySet="tblUserRolePages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUserRolePages_tblPages" Association="teamfotech_hmsModel.FK_tblUserRolePages_tblPages">
+            <End Role="tblPage" EntitySet="tblPages" />
+            <End Role="tblUserRolePage" EntitySet="tblUserRolePages" />
+          </AssociationSet>
+          </EntityContainer>
         <ComplexType Name="GetPatientAdmits_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="Int32" Name="PatientAppointmentID" Nullable="true" />
@@ -1854,7 +1899,41 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="tblUserRolePage">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="PageId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserRole" Relationship="teamfotech_hmsModel.FK_tblUserRolePages_UserRole" FromRole="tblUserRolePage" ToRole="UserRole" />
+          <NavigationProperty Name="tblPage" Relationship="teamfotech_hmsModel.FK_tblUserRolePages_tblPages" FromRole="tblUserRolePage" ToRole="tblPage" />
+        </EntityType>
+        <Association Name="FK_tblUserRolePages_UserRole">
+          <End Type="teamfotech_hmsModel.UserRole" Role="UserRole" Multiplicity="1" />
+          <End Type="teamfotech_hmsModel.tblUserRolePage" Role="tblUserRolePage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblUserRolePage">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUserRolePages_tblPages">
+          <End Type="teamfotech_hmsModel.tblPage" Role="tblPage" Multiplicity="1" />
+          <End Type="teamfotech_hmsModel.tblUserRolePage" Role="tblUserRolePage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPage">
+              <PropertyRef Name="page_id" />
+            </Principal>
+            <Dependent Role="tblUserRolePage">
+              <PropertyRef Name="PageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -2465,6 +2544,15 @@ warning 6013: The table/view 'teamfotech_hms.saa.PatientAdmissions' does not hav
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblUserRolePages">
+            <EntityTypeMapping TypeName="teamfotech_hmsModel.tblUserRolePage">
+              <MappingFragment StoreEntitySet="tblUserRolePages">
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

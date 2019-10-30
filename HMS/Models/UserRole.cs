@@ -18,6 +18,7 @@ namespace HMS.Models
         public UserRole()
         {
             this.UserInRoles = new HashSet<UserInRole>();
+            this.tblUserRolePages = new HashSet<tblUserRolePage>();
         }
     
         public int ID { get; set; }
@@ -25,5 +26,7 @@ namespace HMS.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserInRole> UserInRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblUserRolePage> tblUserRolePages { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 
+
 namespace HMS.Models
 {
     public class GernalFunction
@@ -23,7 +24,16 @@ namespace HMS.Models
 
             HttpContext.Current.Response.SetCookie(AdminCookie);
         }
+        public void setSession(User user)
+        {
+            HttpContext.Current.Session["User"] = user;
+           
+        }
+        public void deleteSession()
+        {
+            HttpContext.Current.Session["User"] = null;
 
+        }
         public void CheckAdminLogin()
         {
             HttpCookie cookie = HttpContext.Current.Request.Cookies["AdminCookies"];

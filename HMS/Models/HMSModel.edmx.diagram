@@ -62,7 +62,10 @@
         <AssociationConnector Association="teamfotech_hmsModel.FK_tblPatientAppointment_tblPatient" />
         <AssociationConnector Association="teamfotech_hmsModel.FK_tblPatientAdmission_tblPatientAppointment" />
         <AssociationConnector Association="teamfotech_hmsModel.FK_tblEmployee_tblHospital" />
-      </Diagram>
+        <EntityTypeShape EntityType="teamfotech_hmsModel.tblUserRolePage" Width="1.5" PointX="15" PointY="16.75" />
+        <AssociationConnector Association="teamfotech_hmsModel.FK_tblUserRolePages_UserRole" />
+        <AssociationConnector Association="teamfotech_hmsModel.FK_tblUserRolePages_tblPages" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -292,12 +292,17 @@ name: "UserRoleDelete",
 url: "UserRoleDelete",
 defaults: new { controller = "UserRoles", action = "Delete", id = UrlParameter.Optional }
 );
-
-//            routes.MapRoute(
-//name: "PrintTo PDF",
-//url: "Patients Bill Details",
-//defaults: new { controller = "PatientsBill", action = "PrintPartialViewToPdf", id = UrlParameter.Optional }
-//);
+            routes.MapRoute(
+name: "UserPages",
+url: "role-pages",
+defaults: new { controller = "UserRoles", action = "UserPages", id = UrlParameter.Optional }
+);
+            //
+            //            routes.MapRoute(
+            //name: "PrintTo PDF",
+            //url: "Patients Bill Details",
+            //defaults: new { controller = "PatientsBill", action = "PrintPartialViewToPdf", id = UrlParameter.Optional }
+            //);
 
 
             routes.MapRoute(
@@ -331,6 +336,20 @@ name: "Hospital_RoomsDelete",
 url: "Hospital_Rooms_Delete",
 defaults: new { controller = "HospitalRooms", action = "Delete", id = UrlParameter.Optional }
 );
+
+
+            //USER
+
+            routes.MapRoute(
+name: "Adduser",
+url: "add-user",
+defaults: new { controller = "User", action = "AddUser", id = UrlParameter.Optional }
+);
+            routes.MapRoute(
+name: "userList",
+url: "user-list",
+defaults: new { controller = "User", action = "UserList", id = UrlParameter.Optional }
+);          //
         }
     }
 }

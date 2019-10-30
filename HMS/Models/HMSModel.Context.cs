@@ -59,6 +59,7 @@ namespace HMS.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<tblPage> tblPages { get; set; }
         public virtual DbSet<tblUserPage> tblUserPages { get; set; }
+        public virtual DbSet<tblUserRolePage> tblUserRolePages { get; set; }
     
         public virtual ObjectResult<GetPatientAdmits_Result> GetPatientAdmits()
         {
