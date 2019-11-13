@@ -705,6 +705,9 @@
         <Function Name="GetPatientMedicineList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
         <Function Name="GetPatientMedList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
         <Function Name="GetpatientTestDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
+        <Function Name="GetUserPagesbyId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa">
+          <Parameter Name="user_id" Type="int" Mode="In" />
+        </Function>
         <Function Name="Patient_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
         <Function Name="PatientAdmission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
         <Function Name="Sp_ActivePatientsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saa" />
@@ -1694,6 +1697,9 @@
             <End Role="tblPage" EntitySet="tblPages" />
             <End Role="tblUserRolePage" EntitySet="tblUserRolePages" />
           </AssociationSet>
+          <FunctionImport Name="GetUserPagesbyId" ReturnType="Collection(teamfotech_hmsModel.GetUserPagesbyId_Result)">
+            <Parameter Name="user_id" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="GetPatientAdmits_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -1933,6 +1939,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GetUserPagesbyId_Result">
+          <Property Type="Int32" Name="page_id" Nullable="false" />
+          <Property Type="String" Name="page_name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="page_url" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="is_active" Nullable="true" />
+          <Property Type="Boolean" Name="is_parent" Nullable="true" />
+          <Property Type="Int32" Name="parent_id" Nullable="true" />
+          <Property Type="Boolean" Name="show_in_menu" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2553,6 +2568,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetUserPagesbyId" FunctionName="teamfotech_hmsModel.Store.GetUserPagesbyId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="teamfotech_hmsModel.GetUserPagesbyId_Result">
+                <ScalarProperty Name="page_id" ColumnName="page_id" />
+                <ScalarProperty Name="page_name" ColumnName="page_name" />
+                <ScalarProperty Name="page_url" ColumnName="page_url" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="is_parent" ColumnName="is_parent" />
+                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
+                <ScalarProperty Name="show_in_menu" ColumnName="show_in_menu" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

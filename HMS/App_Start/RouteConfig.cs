@@ -339,17 +339,27 @@ defaults: new { controller = "HospitalRooms", action = "Delete", id = UrlParamet
 
 
             //USER
-
+            routes.MapRoute(
+name: "DeleteUser",
+url: "user-delete",
+defaults: new { controller = "User", action = "delete", id = UrlParameter.Optional }
+);
             routes.MapRoute(
 name: "Adduser",
 url: "add-user",
 defaults: new { controller = "User", action = "AddUser", id = UrlParameter.Optional }
 );
             routes.MapRoute(
+name: "user-status",
+url: "user-status",
+defaults: new { controller = "User", action = "userStatusChange", UserId = UrlParameter.Optional, status= UrlParameter.Optional }
+);
+            routes.MapRoute(
 name: "userList",
 url: "user-list",
 defaults: new { controller = "User", action = "UserList", id = UrlParameter.Optional }
-);          //
+); 
+            //
         }
     }
 }

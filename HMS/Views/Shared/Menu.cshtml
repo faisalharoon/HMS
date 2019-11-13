@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<HMS.Models.GetMenu_Result>
+@model IEnumerable<HMS.Models.GetUserPagesbyId_Result>
 @{
     Layout = null;
 }
@@ -24,7 +24,7 @@
             @{
                 if (Model != null)
                 {
-                    var menulist = Model as IEnumerable<HMS.Models.GetMenu_Result>;
+                    var menulist = Model as IEnumerable<HMS.Models.GetUserPagesbyId_Result>;
                     var parentMenu = menulist.Where(x => x.is_parent == true && x.parent_id == 0).ToList();
                     foreach (var item in parentMenu)
                     {

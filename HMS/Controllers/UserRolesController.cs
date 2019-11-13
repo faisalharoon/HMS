@@ -127,14 +127,18 @@ namespace HMS.Controllers
         public ActionResult UserPages(int? ID)
         {
             var pages = db.tblPages.ToList();
+            var UserRolePages = new List<tblUserRolePage>();
             ViewBag.pages = pages;
             string role_name = "";
             if(ID!=null && ID!=0)
             {
                 var role = db.UserRoles.Where(x => x.ID == ID).FirstOrDefault();
                 role_name = role.RoleName;
+                UserRolePages = db.tblUserRolePages.Where(x => x.RoleId == ID).ToList();
+
             }
             ViewBag.role_name = role_name;
+            ViewBag.UserRolePages = UserRolePages;
             return View();
         }
        [HttpPost]
@@ -142,23 +146,24 @@ namespace HMS.Controllers
         {
             try
             {
+                List<tblUserRolePage> lst = db.tblUserRolePages.Where(x => x.RoleId == ID ).ToList();
+                if (lst != null && lst.Count > 0)
+                {
+                    foreach (var item in lst)
+                    {
+                        new UserDAL().deletepages(item.RoleId);
+                    }
+                }
                 string count = Request.Form["hdncount"];
                 List<string> lstpage = new List<string>();
                 string[] stringSeparators = new string[] { "," };
                 lstpage = count.Split(stringSeparators, StringSplitOptions.None).ToList();
                 for(int i=0; i<lstpage.Count;i++)
                 {
-                    string pageid = Request.Form["txtid_" + i];
+                    string pageid = Request.Form["txtid_" + lstpage[i]];
                     userpage.PageId = Convert.ToInt32(pageid);
                     userpage.RoleId = Convert.ToInt32(ID);
-                    List<tblUserRolePage> lst = db.tblUserRolePages.Where(x => x.RoleId == ID).ToList();
-                    if(lst!=null && lst.Count>0)
-                    {
-                        foreach(var item in lst)
-                        {
-                            new UserDAL().deletepages(item.RoleId);
-                        }
-                    }
+                   
                     new UserDAL().insertRolePages(userpage);
                 }
 

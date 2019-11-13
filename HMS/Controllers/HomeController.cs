@@ -66,12 +66,12 @@ namespace HMS.Controllers
         public ActionResult Menu()
         {
             int ID = 0;
-            List<GetMenu_Result> Menu = db.GetMenu().Where(x => x.Active_role == true && x.IsActive == true && x.is_active == true && x.show_in_menu == true).ToList();
-              HttpCookie cookie = Request.Cookies["AdminCookies"];
-            if (cookie != null)
+            List<GetUserPagesbyId_Result> Menu = new List<GetUserPagesbyId_Result>();
+            User UserObj = HttpContext.Session["User"] as User;
+            
+            if (UserObj != null)
             {
-                ID = Convert.ToInt32(cookie.Values["ID"]);
-                Menu = Menu.Where(x => x.ID == ID).ToList();
+               Menu = db.GetUserPagesbyId(Convert.ToInt32(UserObj.ID)).Where( x=>x.is_active == true && x.show_in_menu == true).ToList();
             }
             else
             {

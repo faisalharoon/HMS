@@ -17,7 +17,7 @@ namespace HMS.Controllers
         {
             var currentUser=Session["User"] as User;
 
-            var list = new UserDAL().GetAllUser().Where(x=>x.Hospital_ID==currentUser.Hospital_ID).ToList();
+            var list = new UserDAL().GetAllUser().Where(x=>x.Hospital_ID==currentUser.Hospital_ID&&x.IsClosed==false).ToList();
             ViewData["listOfData"] = list;
             return View();
         }
@@ -29,14 +29,21 @@ namespace HMS.Controllers
         }
 
         // GET: User/Create
-        public ActionResult AddUser()
+        public ActionResult AddUser(int user_id)
         {
+            var model = new User();
+            if (user_id != 0)
+            {
+
+                model = new UserDAL().GetUserByID(Convert.ToInt32(user_id));
+            }
+          
             var listHospital = db.tblHospitals.ToList();
             ViewBag.ExemploList = listHospital;
             var Roles = db.UserRoles.ToList();
 
             ViewBag.ListRole = Roles;
-            return View();
+            return View(model);
         }
 
         // POST: User/Create
@@ -45,8 +52,7 @@ namespace HMS.Controllers
         {
             try
             {
-
-                    objuser.IsSuperUser = false;
+                objuser.IsSuperUser = false;
                 objuser.IsActive = true;
                 objuser.IsClosed = false;
                 objuser.LoginFailedAttempts = 0;
@@ -125,9 +131,22 @@ namespace HMS.Controllers
         // GET: User/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            new UserDAL().DeleteUser(id);
+            TempData["AlertTask"] = "User deleted successfully";
+            return Redirect("/user-list");
         }
+        public ActionResult userStatusChange(int UserId, bool status)
+        {
+            var objUser = db.Users.FirstOrDefault(x => x.ID == UserId);
+            objUser.IsActive = status;
+            db.Users.Attach(objUser);
+            var update = db.Entry(objUser);
+            update.Property(x => x.IsActive).IsModified = true;
+            db.SaveChanges();
 
+            TempData["AlertTask"] = "User is InActive now.";
+            return Redirect("/user-list");
+        }
         // POST: User/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)

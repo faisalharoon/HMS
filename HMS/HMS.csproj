@@ -240,6 +240,9 @@
     <Compile Include="Models\GetpatientTestDetails_Result.cs">
       <DependentUpon>HMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetUserPagesbyId_Result.cs">
+      <DependentUpon>HMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\HMSModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -687,7 +690,7 @@
     <Content Include="Views\Test\TestCategory.cshtml" />
     <Content Include="Views\Test\TestList.cshtml" />
     <Content Include="Views\Shared\Menu.cshtml" />
-    <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Search\_Menu.cshtml" />
     <Content Include="Views\PatientsBill\EditPatient.cshtml" />
     <Content Include="Views\Shared\Partial2.cshtml" />
     <Content Include="Views\Shared\PatientsBillDelete.cshtml" />

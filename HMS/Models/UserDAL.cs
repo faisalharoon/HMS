@@ -45,8 +45,6 @@ namespace HMS.Models
             update.Property(x => x.IsLockedOut).IsModified = true;
             update.Property(x => x.IsSuperUser).IsModified = true;
             update.Property(x => x.UserPassword).IsModified = true;
-
-
             update.Property(x => x.UpdatePassword).IsModified = true;
             db.SaveChanges();
         }
@@ -82,6 +80,17 @@ namespace HMS.Models
             var del = db.tblUserRolePages.FirstOrDefault(x => x.RoleId == roleId);
             db.tblUserRolePages.Remove(del);
             db.SaveChanges();
+        }
+        public void DeleteUser(int user_id)
+        {
+            var del = db.Users.FirstOrDefault(x => x.ID == user_id);
+            del.IsActive = false;
+            del.IsClosed = true;
+            UpdateUser(del);
+        }
+         public List<GetUserPagesbyId_Result> GetUserPagesbyId(int id)
+        {
+            return db.GetUserPagesbyId(Convert.ToInt32(id)).ToList();
         }
 
 

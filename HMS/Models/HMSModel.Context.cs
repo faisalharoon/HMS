@@ -153,5 +153,14 @@ namespace HMS.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMenu_Result>("GetMenu");
         }
+    
+        public virtual ObjectResult<GetUserPagesbyId_Result> GetUserPagesbyId(Nullable<int> user_id)
+        {
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserPagesbyId_Result>("GetUserPagesbyId", user_idParameter);
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace HMS.Controllers
             User user = db.Users.Where(x => x.UserName == objuser.UserName && x.UserPassword == objuser.UserPassword).FirstOrDefault();
             if (user != null)
             {
-                new GernalFunction().SetCookie(user);
+                //new GernalFunction().SetCookie(user);
                 new GernalFunction().setSession(user);
                 TempData["Msg"] = "Login Successfully.";
                 redirect = "/";

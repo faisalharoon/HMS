@@ -5,6 +5,7 @@
 {
     string role_name = ViewBag.role_name;
     var pageslist = ViewBag.pages;
+    var UserRolePages = ViewBag.UserRolePages;
     int count = 0;
     <section class="content">
         <div class="container-fluid">
@@ -38,18 +39,32 @@
                                         string page = "txtpage_" + count;
                                         string url = "txturl_" + count;
                                         string chk = "chkpage_" + count;
+                                        string checkd= "";
+                                 
+                                    <tr>
+                                        <td style="display:none;">
+                                            <input id="@id" style="display:none;" name='@id' type="text" readonly value="@item.page_id" />
 
-                                        <tr>
-                                            <td style="display:none;">
-                                                <input id="@id" style="display:none;" name='@id' type="text" readonly value="@item.page_id" />
+                                        </td>
+                                        <td>
+                                            @item.page_name
+                                        </td>
+                                        <td>@item.page_url</td>
+                                        @if (UserRolePages != null && UserRolePages.Count > 0)
+                                        {
+                                            foreach (var role in UserRolePages)
+                                            {
+                                                if (role.PageId == item.page_id)
+                                                {
+                                                    checkd = "checked";
+                                                    break;
 
-                                            </td>
-                                            <td>
-                                                @item.page_name
-                                            </td>
-                                            <td>@item.page_url</td>
-                                            <td><input type="checkbox" name='@chk' id='@chk' onclick="getpage(@count);" class="filled-in chk-col-blue" /></td>
-                                        </tr>
+                                                }
+                                            }
+                                        }
+                                        <td><input type="checkbox" name='@chk' id='@chk' onclick="getpage(@count);" class="filled-in chk-col-blue" @checkd/></td>
+
+                                    </tr>
                                         count++;
                                     }
                                 </tbody>

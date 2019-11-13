@@ -29,7 +29,8 @@
                                     <th>User ID</th>
                                     <th>User Name</th>
                                     <th>Email</th>
-                                    <th>Status By</th>
+                                    <th>Status </th>
+                                    <th>User Role</th>
                                     <th>Actions</th>
 
                                 </tr>
@@ -43,21 +44,37 @@
                                         foreach (var item in ViewData["listOfData"] as IEnumerable<HMS.Models.User>)
                                         {
                                             string status = "";
+                                            string role = "";
+                                            foreach(var userrole in item.UserInRoles)
+                                            {
+                                                role+=userrole.UserRole.RoleName+"-";
+                                            }
+                                            role= role.Remove(role.Length - 1, 1);
                                             if (item.IsActive == true)
                                             {
-                                                status = "Active";
+                                                status = "<select onchange='ChangeStatus("+item.ID+",false);'>"+
+                                                        "<option value='1' selected> Active </option>"+
+                                                           "<option value='0'> InActive </option>"+
+                                                        "</select>";
                                             }
-                                            else { status = "In Active"; }
+                                            else {
+                                                status = "<select onchange='ChangeStatus(" + item.ID + ",true);'>" +
+                                                     "<option value='1' > Active </option>" +
+                                                        "<option value='0' selected> InActive </option>" +
+                                                     "</select>";
+                                            }
                                             <tr>
                                                 <td>@item.ID</td>
                                                 <td>@item.UserName</td>                                               
                                                 <td>@item.Email</td>
-                                                <td>@status</td>
+                                                <td>@Html.Raw(status)</td>
+                                                <td>@role</td>                                                
                                                 <td>
                                                     <a href='/add-user?user_id=@item.ID'>Edit</a>
                                                     <a href='#' onclick="Delete(@item.ID);">
                                                         Delete
                                                     </a>
+                                                    
                                                 </td>
 
                                             </tr>
@@ -84,14 +101,21 @@
 </section>
 <script>
     function Delete(id) {
-        var r = confirm("Are you sure");
+        var r = confirm("Are you sure to delete this User");
         if (r == true) {
-            var url = '/delete-User?id=' + id + '';
+            var url = '/user-delete?id=' + id + '';
 
             window.location.href = url;
 
         }
         return false;
+
+    }
+    function ChangeStatus(UserId, status) {
+        debugger;
+        var url = '/user-status?UserId=' + UserId + '&status='+status+'';
+
+        window.location.href = url;
 
     }
 
